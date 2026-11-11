@@ -1,0 +1,6859 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Undangan Pernikahan - Iman & Rifa</title>
+  <meta name="theme-color" content="#4a1f14">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lora:ital,wght@0,400;0,500;1,400&family=Noto+Sans+Javanese:wght@400;700&family=Amiri:wght@400;700&family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&family=Montserrat:wght@500;700&display=swap"
+    rel="stylesheet">
+
+  <style>
+    /* ===================== TEMA WARNA ===================== */
+    :root {
+      --sogan: #4f6a06;
+      /* cokelat sogan */
+      --sogan-dark: #384704;
+      --gold: #F98093;
+      --gold-light: #fdb3c0;
+      --cream: #F4FDCE;
+      --cream-2: #e3f0aa;
+      --green: #384704;
+      /* hijau tua */
+      --maroon: #557a06;
+      /* pistachio tua */
+      --ink: #2c3a03;
+      --ff-title: 'Cinzel Decorative', 'Playfair Display', serif;
+      --ff-script: 'Great Vibes', cursive;
+      --ff-head: 'Playfair Display', serif;
+      --ff-body: 'Lora', Georgia, serif;
+      --ff-jawa: 'Noto Sans Javanese', serif;
+      /* Pola batik kawung (SVG inline) */
+      --kawung: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cg fill='none' stroke='%23F98093' stroke-opacity='.35' stroke-width='1.2'%3E%3Cellipse cx='15' cy='30' rx='13' ry='7'/%3E%3Cellipse cx='45' cy='30' rx='13' ry='7'/%3E%3Cellipse cx='30' cy='15' rx='7' ry='13'/%3E%3Cellipse cx='30' cy='45' rx='7' ry='13'/%3E%3Ccircle cx='30' cy='30' r='2.5' fill='%23F98093' fill-opacity='.4'/%3E%3C/g%3E%3C/svg%3E");
+      /* Pola parang */
+      --parang: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cg fill='none' stroke='%23F98093' stroke-opacity='.4' stroke-width='1.4'%3E%3Cpath d='M0 48C12 36 12 24 0 12M24 48C36 36 36 24 24 12M48 48C60 36 60 24 48 12M0 24C12 12 12 0 0-12M24 24C36 12 36 0 24-12M48 24C60 12 60 0 48-12'/%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%
+    }
+
+    body {
+      font-family: var(--ff-body);
+      color: var(--ink);
+      background: var(--cream);
+      line-height: 1.7;
+      overflow-x: hidden;
+      padding-bottom: 0
+    }
+
+    body.locked {
+      overflow: hidden;
+      height: 100vh
+    }
+
+    img {
+      max-width: 100%;
+      display: block
+    }
+
+    a {
+      color: inherit
+    }
+
+    .jawa {
+      font-family: var(--ff-jawa);
+    }
+
+    /* ===================== COVER (GAPURA + GERBANG) ===================== */
+    html {
+      background: #232d02
+    }
+
+    body {
+      max-width: 480px;
+      margin: 0 auto;
+      box-shadow: 0 0 60px rgba(0, 0, 0, .5)
+    }
+
+    #cover {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: min(100%, 480px);
+      height: 100vh;
+      height: 100dvh;
+      margin: 0 auto;
+      z-index: 1000;
+      overflow: hidden;
+      background: radial-gradient(ellipse at 50% 45%, #fff 0, #fbffe8 45%, var(--cream) 100%);
+      /* saat dibuka cover sedikit maju ke arah gapura sementara cahaya menutup layar */
+      transition: transform .8s cubic-bezier(.5, 0, .75, 0);
+      will-change: transform;
+      /* lebar cover & posisi atas panggung: panggung selebar layar dan menempel di bawah,
+         tapi lengkung gapura (8% tinggi panggung) tidak naik melewati 150px agar judul tetap lega */
+      --cw: min(100vw, 480px);
+      --st: max(calc(100vh - var(--cw) * 1.7778), calc(150px - var(--cw) * .142));
+      --st: max(calc(100dvh - var(--cw) * 1.7778), calc(150px - var(--cw) * .142))
+    }
+
+    #cover.open {
+      transform: scale(1.1);
+      pointer-events: none
+    }
+
+    /* Cahaya putih yang memenuhi layar saat undangan dibuka. Cover dihapus ketika layar
+       sudah putih penuh, jadi tidak ada ornamen yang tertinggal; lalu cahaya memudar
+       memperlihatkan halaman pembuka. */
+    #flash {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      pointer-events: none;
+      opacity: 0;
+      overflow: hidden;
+      background: radial-gradient(circle at 50% 46%, #fff 0, #fffdf3 35%, #fbf6da 70%, #f4fdce 100%)
+    }
+
+    #flash::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 46%;
+      width: 120vmax;
+      aspect-ratio: 1;
+      margin: -60vmax 0 0 -60vmax;
+      border-radius: 50%;
+      background: radial-gradient(circle, #fff 0, rgba(255, 249, 214, .95) 25%, rgba(255, 240, 180, .5) 45%, transparent 68%);
+      transform: scale(.1)
+    }
+
+    #flash.on {
+      animation: flashSeq 2.6s cubic-bezier(.4, 0, .2, 1) forwards
+    }
+
+    #flash.on::before {
+      animation: flashBurst 1.1s cubic-bezier(.3, 0, .2, 1) forwards
+    }
+
+    @keyframes flashSeq {
+      0% {
+        opacity: 0
+      }
+
+      30% {
+        opacity: 1
+      }
+
+      45% {
+        opacity: 1
+      }
+
+      100% {
+        opacity: 0
+      }
+    }
+
+    @keyframes flashBurst {
+      from {
+        transform: scale(.1)
+      }
+
+      to {
+        transform: scale(1.6)
+      }
+    }
+
+    /* Panggung seukuran gambar (1152x2048) selebar layar; bagian atas layar untuk judul. */
+    .stage {
+      position: absolute;
+      left: 0;
+      top: var(--st);
+      width: 100%;
+      aspect-ratio: 1152 / 2048;
+      transform-origin: 50.2% 49%;
+      transition: transform .8s cubic-bezier(.5, 0, .75, 0)
+    }
+
+    #cover.open *,
+    #cover.open *::before,
+    #cover.open *::after {
+      animation-play-state: paused !important
+    }
+
+    #cover.open .stage {
+      transform: scale(1.35)
+    }
+
+    /* joglo menutup ruang kosong di bawah gerbang; wayang & dedaunan tetap di depannya */
+    /* bunga bawah (bunga1.png) selebar layar, menutup kaki wayang & tangga joglo */
+    .bloom {
+      position: absolute;
+      bottom: -1%;
+      height: auto;
+      pointer-events: none;
+      z-index: 3;
+      animation: enterRise 1.6s 1.2s both;
+      transition: transform 1.1s cubic-bezier(.6, 0, .4, 1), opacity 1.1s, filter 1.1s
+    }
+
+    .bloom {
+      left: -4%;
+      width: 108%;
+      max-width: none;
+      transform-origin: 50% 100%
+    }
+
+    .stage .joglo {
+      position: absolute;
+      left: 3%;
+      bottom: 7%;
+      width: 94%;
+      height: auto;
+      filter: drop-shadow(0 6px 8px rgba(35, 45, 2, .35));
+      pointer-events: none;
+      animation: enterRise 1.6s .9s both
+    }
+
+    /* teks di atas panel pintu (koordinat panggung) */
+    .door-text {
+      position: absolute;
+      left: 31%;
+      width: 38%;
+      top: 37%;
+      height: 25.5%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #384704;
+      animation: enterCard 1.4s 1.6s both;
+      transition: opacity .5s, filter .5s, transform .5s
+    }
+
+    .door-text small {
+      font-size: .72rem;
+      line-height: 1.4;
+      opacity: .9
+    }
+
+    .door-text b {
+      display: block;
+      margin: 4px 0 2px;
+      font-family: var(--ff-head);
+      font-size: 1.1rem;
+      line-height: 1.25;
+      color: #384704;
+      word-break: break-word
+    }
+
+    .door-text b {
+      margin-bottom: 12px
+    }
+
+    .cover-foot {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 6px;
+      z-index: 4;
+      text-align: center;
+      font-size: .6rem;
+      font-style: italic;
+      color: #384704;
+      font-weight: 500;
+      text-shadow: 0 0 6px #fff, 0 0 3px #fff;
+      animation: enterCard 1.4s 1.8s both;
+      transition: opacity .6s
+    }
+
+    .door-text .btn {
+      white-space: nowrap;
+      padding: 9px 18px;
+      font-size: .82rem;
+      background: linear-gradient(135deg, #4f6a06, #384704);
+      color: #f4fdce;
+      border: 0
+    }
+
+    .stage .layer {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      user-select: none;
+      -webkit-user-drag: none;
+      pointer-events: none
+    }
+
+    .stage .gapura {
+      animation: enterBlur 1.6s .1s both
+    }
+
+    /* taman dipecah per bagian agar masing-masing bergerak sendiri (semua PNG 1152x2048) */
+    .scene-set {
+      position: absolute;
+      inset: 0;
+      animation: enterRise 1.8s .7s both
+    }
+
+    .scene-set img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      user-select: none;
+      -webkit-user-drag: none
+    }
+
+    /* pohon: tertiup angin. Poros di tepi layar & pangkal batang, dan pohon hanya condong ke arah
+       luar layar, sehingga tepi pohon tidak pernah tertarik ke dalam (tidak ada celah kosong). */
+    .scene-set .pohon-l {
+      transform-origin: 0 87.4%;
+      animation: treeL 5s ease-in-out infinite alternate
+    }
+
+    .scene-set .pohon-r {
+      transform-origin: 100% 87.4%;
+      animation: treeR 5.6s ease-in-out infinite alternate
+    }
+
+    /* janur: melambai dari pangkalnya di sisi gapura */
+    .scene-set .janur-l {
+      transform-origin: 1% 42%;
+      animation: janurL 3.6s ease-in-out infinite alternate
+    }
+
+    .scene-set .janur-r {
+      transform-origin: 99% 42%;
+      animation: janurR 4s ease-in-out infinite alternate
+    }
+
+    /* wayang: bergoyang pelan seperti dimainkan dalang, berporos di kaki */
+    .scene-set .wayang-l {
+      transform-origin: 17% 90%;
+      animation: wayangL 3.4s ease-in-out infinite
+    }
+
+    .scene-set .wayang-r {
+      transform-origin: 80% 90%;
+      animation: wayangR 3.8s ease-in-out infinite
+    }
+
+    @keyframes wayangL {
+      0%,
+      100% {
+        transform: rotate(0)
+      }
+
+      30% {
+        transform: rotate(-2deg) translateY(-.4%)
+      }
+
+      70% {
+        transform: rotate(1.5deg)
+      }
+    }
+
+    @keyframes wayangR {
+      0%,
+      100% {
+        transform: rotate(0)
+      }
+
+      30% {
+        transform: rotate(2deg) translateY(-.4%)
+      }
+
+      70% {
+        transform: rotate(-1.5deg)
+      }
+    }
+
+    .scene-set .tanaman {
+      transform-origin: 50% 100%;
+      animation: breathe 6s ease-in-out infinite alternate
+    }
+
+    @keyframes treeL {
+      from {
+        transform: rotate(0) scale(1.02)
+      }
+
+      to {
+        transform: rotate(-2deg) scale(1.04)
+      }
+    }
+
+    @keyframes treeR {
+      from {
+        transform: rotate(0) scale(1.02)
+      }
+
+      to {
+        transform: rotate(2deg) scale(1.04)
+      }
+    }
+
+    @keyframes janurL {
+      from {
+        transform: rotate(-1deg)
+      }
+
+      to {
+        transform: rotate(2deg)
+      }
+    }
+
+    @keyframes janurR {
+      from {
+        transform: rotate(1deg)
+      }
+
+      to {
+        transform: rotate(-2deg)
+      }
+    }
+
+
+    /* mawar pojok: kiri atas dan cerminannya di kanan atas */
+    .corner {
+      position: absolute;
+      top: 0;
+      width: 24%;
+      pointer-events: none;
+      z-index: 3;
+      transition: transform 1.1s cubic-bezier(.6, 0, .4, 1), opacity 1.1s, filter 1.1s
+    }
+
+    .corner img {
+      display: block;
+      width: 100%;
+      height: auto
+    }
+
+    .corner.l {
+      left: 0;
+      transform-origin: 0 0;
+      animation: enterCorner 1.6s 1s both, swayL 4.2s 2.6s ease-in-out infinite alternate
+    }
+
+    .corner.r {
+      right: 0;
+      transform-origin: 100% 0;
+      animation: enterCorner 1.6s 1.1s both, swayR 4.8s 2.7s ease-in-out infinite alternate
+    }
+
+
+        /* halaman pembuka masuk: latar mengecil dari zoom, kartu muncul dari buram, mawar turun */
+    #hero.enter .hero-scene {
+      animation: heroBgIn 1.3s cubic-bezier(.45, 0, .2, 1) both
+    }
+
+    #hero.enter .hero-top {
+      animation: heroTopIn 1.2s cubic-bezier(.45, 0, .2, 1) both
+    }
+
+    @keyframes heroTopIn {
+      from {
+        transform: translateY(-30%);
+        opacity: 0
+      }
+    }
+
+    /* teks kartu: tersembunyi sampai undangan dibuka, lalu masuk satu per satu */
+    #hero .hin {
+      opacity: 0
+    }
+
+    #hero.enter .hero-tag {
+      animation: hinTag 1s .7s cubic-bezier(.2, .7, .3, 1) both
+    }
+
+    #hero.enter .hero-names {
+      animation: hinNames 1.2s .9s cubic-bezier(.2, .7, .3, 1) both
+    }
+
+    #hero.enter .hero-orn {
+      animation: hinPop .8s 1.3s cubic-bezier(.3, 1.5, .5, 1) both
+    }
+
+    #hero.enter .hero-date {
+      animation: hinUp .9s 1.45s cubic-bezier(.2, .7, .3, 1) both
+    }
+
+    #hero.enter .hero-cd-label {
+      animation: hinUp .9s 1.65s cubic-bezier(.2, .7, .3, 1) both
+    }
+
+    #hero.enter .hero-cd .hin {
+      animation: hinPop .7s cubic-bezier(.3, 1.5, .5, 1) both
+    }
+
+    #hero.enter .hero-cd .hin:nth-child(1) {
+      animation-delay: 1.85s
+    }
+
+    #hero.enter .hero-cd .hin:nth-child(2) {
+      animation-delay: 2s
+    }
+
+    #hero.enter .hero-cd .hin:nth-child(3) {
+      animation-delay: 2.15s
+    }
+
+    #hero.enter .hero-cd .hin:nth-child(4) {
+      animation-delay: 2.3s
+    }
+
+    @keyframes hinTag {
+      from {
+        opacity: 0;
+        letter-spacing: 1em;
+        transform: translateY(-8px)
+      }
+
+      to {
+        opacity: 1
+      }
+    }
+
+    @keyframes hinNames {
+      from {
+        opacity: 0;
+        transform: scale(.7);
+        filter: blur(8px)
+      }
+
+      to {
+        opacity: 1;
+        transform: none;
+        filter: none
+      }
+    }
+
+    @keyframes hinPop {
+      from {
+        opacity: 0;
+        transform: scale(.4)
+      }
+
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
+
+    @keyframes hinUp {
+      from {
+        opacity: 0;
+        transform: translateY(14px)
+      }
+
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
+
+    #hero.enter .wrap {
+      animation: heroCardIn 1.1s .2s cubic-bezier(.45, 0, .2, 1) both
+    }
+
+    @keyframes heroBgIn {
+      from {
+        transform: scale(1.15);
+        opacity: .4
+      }
+    }
+
+    @keyframes heroRoseIn {
+      from {
+        transform: translateY(-40%);
+        opacity: 0
+      }
+    }
+
+    @keyframes heroCardIn {
+      from {
+        opacity: 0;
+        transform: scale(.92) translateY(24px)
+      }
+    }
+
+    /* teks cover di atas kartu kaca buram: tidak tertutup gambar apa pun */
+    .cover-head > :not(.cover-names) {
+      text-shadow: 0 0 10px #fbffe8, 0 0 4px #fbffe8, 0 0 2px #fff
+    }
+
+    .cover-head .cover-names {
+      filter: drop-shadow(0 0 4px #fbffe8) drop-shadow(0 0 2px #fff)
+    }
+
+    /* HP pendek: judul lebih ringkas */
+    @media (max-height: 720px) {
+      .cover-head .cover-aksara {
+        display: none
+      }
+
+      .cover-head .cover-names {
+        font-size: 1.9rem
+      }
+    }
+
+    .cover-head {
+      padding-left: 25% !important;
+      padding-right: 25% !important;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: calc(var(--st) + var(--cw) * .142);
+      z-index: 4;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 0 16px 2%;
+      text-align: center;
+      color: #384704;
+      animation: enterCard 1.4s 1.3s both;
+      transition: opacity .5s, filter .5s, transform .5s
+    }
+
+
+
+    .cover-head .tag {
+      font-family: var(--ff-head);
+      letter-spacing: .32em;
+      font-size: .68rem;
+      color: #699407;
+      text-transform: uppercase
+    }
+
+    .cover-names {
+      font-family: var(--ff-script);
+      font-size: clamp(2rem, 9.5vw, 2.7rem);
+      line-height: 1.15;
+      color: #384704;
+      margin: 2px 0 0
+    }
+
+    .cover-date {
+      font-family: var(--ff-head);
+      font-size: .92rem;
+      color: #384704
+    }
+
+    .cover-aksara {
+      font-family: var(--ff-jawa);
+      font-size: 1.4rem;
+      color: var(--gold);
+      margin: 4px 0 10px;
+      letter-spacing: .05em
+    }
+
+    .cover-head .cover-aksara {
+      margin: 2px 0;
+      font-size: 1.05rem;
+      color: #d9566e
+    }
+
+    .guest {
+      margin: 10px 0 4px;
+      font-size: .8rem
+    }
+
+    .guest b {
+      display: block;
+      font-family: var(--ff-head);
+      font-size: 1.15rem;
+      color: #384704;
+      margin-top: 1px;
+      word-break: break-word
+    }
+
+    .cover-note {
+      font-size: .62rem;
+      opacity: .75;
+      margin-bottom: 12px;
+      font-style: italic
+    }
+
+    @keyframes enterBlur {
+      from {
+        opacity: 0;
+        filter: blur(14px);
+        transform: scale(1.06)
+      }
+    }
+
+    @keyframes enterRise {
+      from {
+        opacity: 0;
+        filter: blur(12px);
+        transform: translateY(8%)
+      }
+    }
+
+    @keyframes enterCorner {
+      from {
+        opacity: 0;
+        filter: blur(10px);
+        transform: translateY(-30%) rotate(0)
+      }
+    }
+
+    @keyframes enterCard {
+      from {
+        opacity: 0;
+        filter: blur(12px);
+        transform: translateY(24px) scale(.96)
+      }
+    }
+
+    @keyframes breathe {
+      from {
+        transform: scale(1)
+      }
+
+      to {
+        transform: scale(1.025)
+      }
+    }
+
+    /* bunga bergoyang seperti tertiup angin */
+    @keyframes swayL {
+      0% {
+        transform: rotate(0) scale(1)
+      }
+
+      35% {
+        transform: rotate(5deg) scale(1.05)
+      }
+
+      65% {
+        transform: rotate(-1.5deg) scale(1.01)
+      }
+
+      100% {
+        transform: rotate(3.5deg) scale(1.06)
+      }
+    }
+
+    @keyframes swayR {
+      0% {
+        transform: rotate(0) scale(1)
+      }
+
+      35% {
+        transform: rotate(-5deg) scale(1.05)
+      }
+
+      65% {
+        transform: rotate(1.5deg) scale(1.01)
+      }
+
+      100% {
+        transform: rotate(-3.5deg) scale(1.06)
+      }
+    }
+
+    .btn.dark {
+      background: linear-gradient(135deg, #4f6a06, #384704);
+      color: var(--cream);
+      border: 1px solid #699407
+    }
+
+    .btn.dark::after {
+      background: linear-gradient(100deg, transparent, rgba(249, 128, 147, .5), transparent)
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 0;
+      cursor: pointer;
+      font-family: var(--ff-head);
+      font-size: .95rem;
+      padding: 12px 26px;
+      border-radius: 40px;
+      color: var(--sogan-dark);
+      text-decoration: none;
+      background: linear-gradient(135deg, var(--gold-light), var(--gold) 55%, #d9566e);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, .35);
+      transition: transform .2s, box-shadow .2s;
+      position: relative;
+      overflow: hidden
+    }
+
+    .btn:hover {
+      transform: translateY(-2px)
+    }
+
+    .btn::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -80%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .7), transparent);
+      animation: shine 3.2s infinite
+    }
+
+    @keyframes shine {
+      to {
+        left: 140%
+      }
+    }
+
+    .btn.sm {
+      padding: 8px 18px;
+      font-size: .82rem
+    }
+
+    .btn.ghost {
+      background: transparent;
+      color: var(--gold-light);
+      border: 1px solid var(--gold);
+      box-shadow: none
+    }
+
+    /* ===================== KELOPAK MELATI ===================== */
+    #petals {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 900;
+      overflow: hidden
+    }
+
+    /* butiran cahaya keemasan yang turun dari atas ke bawah (seperti percikan cahaya di cover) */
+    .petal {
+      position: absolute;
+      top: -12px;
+      border-radius: 50%;
+      background: #fff6c8;
+      box-shadow: 0 0 8px 3px rgba(246, 220, 140, .85);
+      opacity: 0;
+      animation: lightFall linear infinite
+    }
+
+    @keyframes lightFall {
+      0% {
+        transform: translate(0, 0) scale(.5);
+        opacity: 0
+      }
+
+      12% {
+        opacity: 1
+      }
+
+      50% {
+        transform: translate(-16px, 50vh) scale(1)
+      }
+
+      88% {
+        opacity: .85
+      }
+
+      100% {
+        transform: translate(12px, 102vh) scale(.6);
+        opacity: 0
+      }
+    }
+
+    /* ===================== UMUM SECTION ===================== */
+    section {
+      position: relative;
+      padding: 72px 20px;
+      text-align: center
+    }
+
+    .wrap {
+      max-width: 560px;
+      margin: 0 auto;
+      position: relative
+    }
+
+    .sec-title {
+      font-family: var(--ff-title);
+      font-size: clamp(1.4rem, 6vw, 1.9rem);
+      color: var(--maroon);
+      margin-bottom: 6px;
+      letter-spacing: .04em
+    }
+
+    .sec-sub {
+      font-family: var(--ff-script);
+      font-size: 2rem;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 6px
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin: 12px auto 28px;
+      color: var(--gold)
+    }
+
+    .divider::before,
+    .divider::after {
+      content: "";
+      height: 1px;
+      width: 70px;
+      background: linear-gradient(90deg, transparent, var(--gold))
+    }
+
+    .divider::after {
+      transform: scaleX(-1)
+    }
+
+    .bg-cream {
+      background: var(--cream)
+    }
+
+    .bg-batik {
+      background: var(--kawung), var(--cream-2);
+      background-size: 60px 60px, auto
+    }
+
+    .bg-dark {
+      background: var(--kawung), linear-gradient(180deg, var(--green), #2a3503);
+      background-size: 60px 60px, auto;
+      color: var(--cream)
+    }
+
+    .bg-dark .sec-title {
+      color: var(--gold-light)
+    }
+
+    .bg-maroon {
+      background: var(--parang), linear-gradient(180deg, var(--maroon), #4d6a05);
+      background-size: 48px 48px, auto;
+      color: var(--cream)
+    }
+
+    .bg-maroon .sec-title {
+      color: var(--gold-light)
+    }
+
+    .border-batik {
+      height: 22px;
+      background: var(--parang);
+      background-size: 48px 48px;
+      background-color: var(--sogan-dark);
+      border-top: 2px solid var(--gold);
+      border-bottom: 2px solid var(--gold)
+    }
+
+    /* animasi muncul saat scroll */
+    .rv {
+      opacity: 0;
+      transition: opacity 1s ease, transform 1s ease
+    }
+
+    .rv.up {
+      transform: translateY(40px)
+    }
+
+    .rv.left {
+      transform: translateX(-50px)
+    }
+
+    .rv.right {
+      transform: translateX(50px)
+    }
+
+    .rv.zoom {
+      transform: scale(.88)
+    }
+
+    .rv.in {
+      opacity: 1;
+      transform: none
+    }
+
+    .d1 {
+      transition-delay: .15s
+    }
+
+    .d2 {
+      transition-delay: .3s
+    }
+
+    .d3 {
+      transition-delay: .45s
+    }
+
+    /* ===================== HERO ===================== */
+    #hero {
+      height: 100vh;
+      height: 100dvh;
+      min-height: 600px;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--glass);
+      overflow: hidden;
+      background: radial-gradient(ellipse at 50% 45%, #fff 0, #fbffe8 45%, var(--cream) 100%);
+      /* ukuran & posisi panggung sama dengan cover */
+      --cw: min(100vw, 480px);
+      --st: max(calc(100vh - var(--cw) * 1.7778), calc(150px - var(--cw) * .142));
+      --st: max(calc(100dvh - var(--cw) * 1.7778), calc(150px - var(--cw) * .142))
+    }
+
+    /* latar halaman pembuka: taman, janur, pohon, wayang yang sama dengan cover,
+       dengan ukuran, posisi, dan animasi yang sama persis */
+    .hero-scene {
+      position: absolute;
+      left: 0;
+      top: var(--st);
+      width: 100%;
+      aspect-ratio: 1152 / 2048;
+      pointer-events: none
+    }
+
+    .hero-scene .scene-set {
+      animation: none
+    }
+
+    /* bagian atas: foto mempelai berbentuk "U" — sisi lurus lalu lengkung setengah lingkaran di bawah,
+       ujung lengkungnya ditimpa kartu (sesuai sketsa) */
+    .hero-top {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 72%;
+      z-index: 2;
+      overflow: hidden;
+      border-radius: 0 0 calc(var(--cw) / 2) calc(var(--cw) / 2);
+      border-bottom: 5px solid #F98093;
+      box-shadow: 0 6px 0 #fdb3c0, 0 14px 30px rgba(35, 45, 2, .35)
+    }
+
+    .hero-top img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 50% 30%;
+      /* zoom pelan dengan titik pusat di bawah wajah, sehingga mempelai terangkat ke atas
+         dan ruang kosong di atas kepala berkurang; tidak pernah lebih kecil dari bingkai */
+      transform-origin: 50% 68%;
+      animation: heroZoom 14s ease-in-out infinite alternate
+    }
+
+    @keyframes heroZoom {
+      from {
+        transform: scale(1.25)
+      }
+
+      to {
+        transform: scale(1.5)
+      }
+    }
+
+    /* setengah layar bawah: latar taman + nama, tanggal, hitung mundur */
+    #hero {
+      align-items: flex-end !important
+    }
+
+    /* hitung mundur di halaman pembuka */
+    .hero-cd {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 4px
+    }
+
+    .hero-cd div {
+      min-width: 0;
+      flex: 1;
+      max-width: 60px;
+      padding: 6px 4px;
+      border-radius: 12px;
+      background: linear-gradient(160deg, #4f6a06, #384704);
+      color: #f4fdce;
+      box-shadow: 0 4px 12px rgba(35, 45, 2, .25);
+      animation: cardGlow 2.5s ease-in-out infinite alternate
+    }
+
+    .hero-cd b {
+      display: block;
+      font-family: var(--ff-head);
+      font-size: 1.35rem;
+      line-height: 1.2;
+      color: #fdb3c0
+    }
+
+    .hero-cd span {
+      font-size: .62rem;
+      letter-spacing: .12em;
+      text-transform: uppercase
+    }
+
+    #hero .wrap {
+      z-index: 4;
+      width: 72%;
+      max-width: 340px;
+      margin: 0 auto max(15%, 96px);
+      padding: 12px 12px 16px;
+      border-radius: 28px;
+      background: rgba(255, 255, 250, .96);
+      border: 1px solid rgba(217, 180, 90, .75);
+      box-shadow: 0 12px 40px rgba(35, 45, 2, .25)
+    }
+
+    /* --- tipografi kartu halaman pembuka --- */
+    .hero-tag {
+      font-family: var(--ff-head);
+      font-size: .6rem;
+      letter-spacing: .4em;
+      text-transform: uppercase;
+      color: #699407;
+      padding-left: .4em
+    }
+
+    .hero-names {
+      font-family: var(--ff-script);
+      font-size: clamp(2.5rem, 12vw, 3.1rem);
+      line-height: 1;
+      color: #384704;
+      margin: 4px 0 2px
+    }
+
+    .hero-names .hero-amp {
+      font-family: var(--ff-head);
+      font-style: italic;
+      font-size: .42em;
+      color: #d9566e;
+      margin: 0 8px;
+      vertical-align: middle
+    }
+
+    .hero-orn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: #F98093;
+      font-size: .7rem;
+      margin: 4px 0 8px
+    }
+
+    .hero-orn::before,
+    .hero-orn::after {
+      content: "";
+      width: 46px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #F98093)
+    }
+
+    .hero-orn::after {
+      transform: scaleX(-1)
+    }
+
+    /* tanggal: SABTU | 05 | DES 2026 */
+    .hero-date {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      color: #384704
+    }
+
+    .hero-date small {
+      font-family: var(--ff-head);
+      font-size: .66rem;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      padding: 4px 0;
+      border-top: 1px solid #c9d88f;
+      border-bottom: 1px solid #c9d88f;
+      min-width: 64px
+    }
+
+    .hero-date b {
+      font-family: var(--ff-head);
+      font-size: 2.3rem;
+      font-weight: 600;
+      line-height: 1;
+      color: #d9566e
+    }
+
+    .hero-cd-label {
+      font-family: var(--ff-head);
+      font-style: italic;
+      font-size: .78rem;
+      color: #699407;
+      margin-top: 10px
+    }
+
+    .gleam {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--gold-light);
+      box-shadow: 0 0 10px 3px var(--gold);
+      animation: twinkle 3s ease-in-out infinite
+    }
+
+    @keyframes twinkle {
+
+      0%,
+      100% {
+        opacity: .1;
+        transform: scale(.5)
+      }
+
+      50% {
+        opacity: 1;
+        transform: scale(1.4)
+      }
+    }
+
+    /* ===================== SALAM ===================== */
+    /* --- SALAM --- */
+    /* untaian bunga menjadi pembatas dengan halaman pembuka: bagian atasnya menutupi garis batas,
+       juntaian kiri & kanan dibiarkan utuh memanjang ke bawah */
+    #salam {
+      z-index: 5;
+      overflow: visible;
+      padding-top: 150px
+    }
+
+    #salam .wrap {
+      padding: 0 14%
+    }
+
+    #salam .salam-intro,
+    #salam .quote-box {
+      margin-left: -10%;
+      margin-right: -10%
+    }
+
+    .salam-garland {
+      position: absolute;
+      top: -40px;
+      left: -8%;
+      width: 116%;
+      max-width: none;
+      height: auto;
+      z-index: 6;
+      pointer-events: none;
+      /* ujung juntaian samping memudar halus */
+      -webkit-mask-image: linear-gradient(#000 80%, transparent);
+      mask-image: linear-gradient(#000 80%, transparent);
+      transform-origin: 50% 0;
+      animation: garlandSway 5s ease-in-out infinite alternate;
+      pointer-events: none
+    }
+
+    @keyframes garlandSway {
+      from {
+        transform: scaleY(1) skewX(-1.5deg)
+      }
+
+      to {
+        transform: scaleY(1.07) skewX(1.5deg)
+      }
+    }
+
+    .salam-bismillah {
+      font-family: 'Amiri', serif;
+      font-size: 1.6rem;
+      color: #384704;
+      direction: rtl;
+      margin-bottom: 10px
+    }
+
+    .salam-title {
+      font-family: var(--ff-head);
+      font-weight: 600;
+      font-size: 1.55rem;
+      line-height: 1.25;
+      color: #384704;
+      letter-spacing: .02em
+    }
+
+    .salam-title em {
+      display: block;
+      font-weight: 400;
+      font-size: .58em;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: #699407
+    }
+
+    .salam-greet {
+      font-family: var(--ff-script);
+      font-size: 2.4rem;
+      line-height: 1;
+      color: #d9566e
+    }
+
+    .salam-greet-id {
+      font-style: italic;
+      font-size: .78rem;
+      color: #699407;
+      margin: 6px 0 22px
+    }
+
+    .salam-intro {
+      text-align: left;
+      padding: 0 4px;
+      margin-bottom: 26px
+    }
+
+    .jv-lead {
+      font-family: var(--ff-head);
+      font-size: 1.02rem;
+      line-height: 1.75;
+      color: #384704
+    }
+
+    .dropcap {
+      float: left;
+      font-family: var(--ff-title);
+      font-size: 3.4rem;
+      line-height: .85;
+      margin: 4px 8px 0 0;
+      color: #d9566e
+    }
+
+    .id-lead {
+      clear: both;
+      margin-top: 10px;
+      padding-left: 12px;
+      border-left: 3px solid #fdb3c0;
+      font-size: .82rem;
+      font-style: italic;
+      color: #5b6b2a
+    }
+
+    .quote-box {
+      position: relative;
+      padding: 34px 22px 22px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, .8);
+      border: 1px solid #fbd3da;
+      box-shadow: 0 10px 30px rgba(217, 86, 110, .15)
+    }
+
+    .quote-mark {
+      position: absolute;
+      top: -26px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #F98093, #d9566e);
+      color: #fff;
+      font-family: var(--ff-head);
+      font-size: 2.6rem;
+      line-height: 64px
+    }
+
+    .jv {
+      font-family: var(--ff-head);
+      font-style: italic;
+      font-size: 1.08rem;
+      line-height: 1.7;
+      color: #384704
+    }
+
+    .jv b {
+      font-style: normal;
+      font-weight: 600;
+      color: #d9566e
+    }
+
+    .quote-sep {
+      color: #F98093;
+      font-size: .8rem;
+      margin: 12px 0
+    }
+
+    .id {
+      font-size: .84rem;
+      line-height: 1.7;
+      color: #5b6b2a
+    }
+
+    .quote-src {
+      display: inline-block;
+      margin-top: 14px;
+      padding: 5px 16px;
+      border-radius: 20px;
+      background: #384704;
+      color: #f4fdce;
+      font-family: var(--ff-head);
+      font-weight: 600;
+      font-size: .72rem;
+      letter-spacing: .18em;
+      text-transform: uppercase
+    }
+
+    /* ===================== PROFIL ===================== */
+    .frame {
+      position: relative;
+      width: 230px;
+      height: 290px;
+      margin: 0 auto 18px;
+      padding: 12px;
+      background: var(--parang), linear-gradient(135deg, var(--gold-light), var(--gold), #d9566e);
+      background-size: 48px 48px, auto;
+      border-radius: 120px 120px 10px 10px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, .35)
+    }
+
+    .frame .photo {
+      width: 100%;
+      height: 100%;
+      border-radius: 110px 110px 4px 4px;
+      overflow: hidden;
+      border: 3px solid var(--sogan-dark);
+      background: var(--sogan)
+    }
+
+    .frame .photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover
+    }
+
+    .nama-lengkap {
+      font-family: var(--ff-script);
+      font-size: 2.4rem;
+      color: var(--gold-light);
+      line-height: 1.1
+    }
+
+    .ortu {
+      font-size: .92rem;
+      opacity: .92
+    }
+
+    .amp {
+      font-family: var(--ff-script);
+      font-size: 4rem;
+      color: var(--gold);
+      margin: 14px 0;
+      animation: twinkle 4s infinite
+    }
+
+    /* ===================== ACARA ===================== */
+    .card {
+      background: var(--kawung), linear-gradient(160deg, #fafee6, #e6f3b2);
+      background-size: 60px 60px, auto;
+      border: 2px solid var(--gold);
+      border-radius: 10px;
+      padding: 28px 20px;
+      margin-bottom: 22px;
+      box-shadow: 0 8px 22px rgba(58, 31, 18, .25), inset 0 0 0 5px rgba(110, 20, 35, .08);
+      position: relative
+    }
+
+    .card::before,
+    .card::after {
+      content: "❖";
+      position: absolute;
+      color: var(--gold);
+      font-size: 1.1rem
+    }
+
+    .card::before {
+      top: 6px;
+      left: 10px
+    }
+
+    .card::after {
+      bottom: 6px;
+      right: 10px
+    }
+
+    .card h3 {
+      font-family: var(--ff-title);
+      color: var(--maroon);
+      font-size: 1.2rem;
+      margin-bottom: 4px
+    }
+
+    .card .tgl {
+      font-family: var(--ff-head);
+      font-weight: 600;
+      font-size: 1.05rem;
+      color: var(--sogan-dark)
+    }
+
+    .card .jam {
+      color: var(--maroon);
+      margin-bottom: 8px
+    }
+
+    .card p {
+      font-size: .92rem;
+      margin-bottom: 14px
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 6px
+    }
+
+    /* ===================== COUNTDOWN ===================== */
+    .cd {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      max-width: 420px;
+      margin: 0 auto
+    }
+
+    .cd div {
+      background: rgba(0, 0, 0, .25);
+      border: 1px solid var(--gold);
+      border-radius: 8px;
+      padding: 14px 4px
+    }
+
+    .cd b {
+      display: block;
+      font-family: var(--ff-title);
+      font-size: clamp(1.5rem, 8vw, 2.2rem);
+      color: var(--gold-light)
+    }
+
+    .cd span {
+      font-size: .72rem;
+      letter-spacing: .15em;
+      text-transform: uppercase
+    }
+
+    /* ===================== PROSESI ===================== */
+    .pro {
+      display: grid;
+      gap: 16px;
+      text-align: left
+    }
+
+    .pro-item {
+      display: flex;
+      gap: 14px;
+      background: rgba(255, 255, 255, .55);
+      border: 1px solid var(--gold);
+      border-radius: 10px;
+      padding: 16px
+    }
+
+    .pro-ico {
+      flex: 0 0 54px;
+      height: 54px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 1.7rem;
+      background: radial-gradient(circle, var(--gold-light), var(--gold));
+      border: 2px solid var(--maroon)
+    }
+
+    .pro-item h4 {
+      font-family: var(--ff-head);
+      color: var(--maroon);
+      font-size: 1.05rem
+    }
+
+    .pro-item p {
+      font-size: .87rem
+    }
+
+    .pro-item ul {
+      font-size: .85rem;
+      margin: 6px 0 0 18px
+    }
+
+    /* ===================== GALERI ===================== */
+    .gal {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px
+    }
+
+    .gal figure {
+      aspect-ratio: 3/4;
+      overflow: hidden;
+      border: 3px solid var(--gold);
+      border-radius: 8px;
+      cursor: pointer;
+      background: var(--sogan);
+      position: relative
+    }
+
+    .gal figure:nth-child(3n+1) {
+      grid-row: span 1
+    }
+
+    .gal img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .6s
+    }
+
+    .gal figure:hover img {
+      animation-play-state: paused;
+      transform: scale(1.1)
+    }
+
+    #lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .9);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px
+    }
+
+    #lightbox.show {
+      display: flex
+    }
+
+    #lightbox img {
+      max-height: 90vh;
+      border: 3px solid var(--gold)
+    }
+
+    /* ===================== TIMELINE ===================== */
+    .tl {
+      position: relative;
+      text-align: left;
+      padding-left: 34px
+    }
+
+    .tl::before {
+      content: "";
+      position: absolute;
+      left: 11px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(var(--gold), var(--maroon))
+    }
+
+    .tl-item {
+      position: relative;
+      margin-bottom: 26px;
+      background: rgba(255, 255, 255, .08);
+      border: 1px solid var(--gold);
+      border-radius: 8px;
+      padding: 14px 16px
+    }
+
+    .tl-item::before {
+      content: "";
+      position: absolute;
+      left: -30px;
+      top: 18px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--gold-light);
+      border: 3px solid var(--maroon)
+    }
+
+    .tl-item .th {
+      font-family: var(--ff-title);
+      color: var(--gold-light);
+      font-size: .85rem
+    }
+
+    .tl-item h4 {
+      font-family: var(--ff-head);
+      font-size: 1.1rem;
+      margin: 2px 0
+    }
+
+    .tl-item p {
+      font-size: .88rem
+    }
+
+    /* ===================== RSVP ===================== */
+    form {
+      text-align: left;
+      display: grid;
+      gap: 14px;
+      background: rgba(255, 255, 255, .55);
+      border: 1px solid var(--gold);
+      border-radius: 10px;
+      padding: 22px 18px
+    }
+
+    label {
+      font-family: var(--ff-head);
+      font-size: .9rem;
+      color: var(--maroon)
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 11px 12px;
+      border: 1px solid var(--gold);
+      border-radius: 6px;
+      background: #fbffe8;
+      font: inherit;
+      color: var(--ink)
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: 2px solid var(--maroon)
+    }
+
+    #wishes {
+      margin-top: 24px;
+      max-height: 420px;
+      overflow-y: auto;
+      text-align: left;
+      display: grid;
+      gap: 12px;
+      padding-right: 4px
+    }
+
+    .wish {
+      background: #fbffe8;
+      border-left: 4px solid var(--maroon);
+      border-radius: 6px;
+      padding: 12px 14px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, .1);
+      animation: pop .5s
+    }
+
+    @keyframes pop {
+      from {
+        opacity: 0;
+        transform: translateY(14px)
+      }
+    }
+
+    .wish b {
+      font-family: var(--ff-head);
+      color: var(--maroon)
+    }
+
+    .wish em {
+      font-size: .72rem;
+      background: var(--green);
+      color: var(--cream);
+      padding: 2px 8px;
+      border-radius: 20px;
+      margin-left: 6px;
+      font-style: normal
+    }
+
+    .wish p {
+      font-size: .9rem;
+      margin-top: 4px;
+      word-break: break-word
+    }
+
+    /* ===================== AMPLOP ===================== */
+    .gift {
+      background: linear-gradient(135deg, #fbffe8, #e3f0aa);
+      color: var(--ink);
+      border: 2px solid var(--gold);
+      border-radius: 12px;
+      padding: 24px 18px;
+      max-width: 380px;
+      margin: 0 auto;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, .4)
+    }
+
+    .gift .bank {
+      font-family: var(--ff-title);
+      color: var(--maroon);
+      font-size: 1.3rem
+    }
+
+    .gift .rek {
+      font-family: var(--ff-head);
+      font-size: 1.6rem;
+      letter-spacing: .08em;
+      margin: 8px 0 2px;
+      word-break: break-all
+    }
+
+    /* ===================== PENUTUP ===================== */
+    #penutup {
+      background: radial-gradient(ellipse at 50% 0, rgba(249, 128, 147, .3), transparent 60%), var(--kawung), linear-gradient(180deg, #2a3503, #232d02);
+      background-size: auto, 60px 60px, auto;
+      color: var(--cream);
+      padding-bottom: 110px
+    }
+
+    #penutup .big {
+      font-family: var(--ff-script);
+      font-size: clamp(2.6rem, 12vw, 4rem);
+      color: var(--gold-light);
+      line-height: 1.1;
+      margin: 10px 0
+    }
+
+    /* ===================== MUSIK & NAV ===================== */
+    /* tombol musik: piringan hitam berputar + equalizer + ikon putar/jeda */
+    #musicBtn {
+      position: fixed;
+      right: max(14px, calc(50vw - 226px));
+      bottom: 94px;
+      z-index: 950;
+      width: 54px;
+      height: 54px;
+      padding: 0;
+      border: 0;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      background: none;
+      -webkit-tap-highlight-color: transparent
+    }
+
+    #musicBtn.show {
+      display: block;
+      animation: hinPop .6s cubic-bezier(.3, 1.5, .5, 1)
+    }
+
+    /* cincin cahaya berdenyut saat musik diputar */
+    #musicBtn::before,
+    #musicBtn::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 2px solid rgba(249, 128, 147, .6);
+      opacity: 0
+    }
+
+    #musicBtn.play::before {
+      animation: mbRipple 2s ease-out infinite
+    }
+
+    #musicBtn.play::after {
+      animation: mbRipple 2s 1s ease-out infinite
+    }
+
+    .mb-disc {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle, transparent 0 34%, rgba(255, 255, 255, .08) 35% 36%, transparent 37% 46%, rgba(255, 255, 255, .07) 47% 48%, transparent 49% 58%, rgba(255, 255, 255, .06) 59% 60%, transparent 61%),
+        conic-gradient(from 30deg, #1b1b1b, #3a3a3a 12%, #111 25%, #2e2e2e 40%, #111 55%, #3a3a3a 70%, #151515 85%, #1b1b1b);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, .35), inset 0 0 0 2px #F98093;
+      display: grid;
+      place-items: center;
+      animation: spin 4s linear infinite;
+      animation-play-state: paused
+    }
+
+    #musicBtn.play .mb-disc {
+      animation-play-state: running
+    }
+
+    .mb-disc img {
+      width: 46%;
+      height: 46%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #F98093
+    }
+
+    .mb-icon {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: rgba(56, 71, 4, .45);
+      color: #fff;
+      font-size: .9rem;
+      font-style: normal;
+      transition: opacity .3s
+    }
+
+    .mb-icon i {
+      font-style: normal;
+      grid-area: 1 / 1
+    }
+
+    .mb-icon .pause,
+    #musicBtn.play .mb-icon .playi {
+      display: none
+    }
+
+    #musicBtn.play .mb-icon {
+      opacity: 0
+    }
+
+    /* equalizer kecil di samping piringan */
+    .mb-eq {
+      position: absolute;
+      left: -30px;
+      top: 50%;
+      display: flex;
+      align-items: flex-end;
+      gap: 2px;
+      height: 18px;
+      padding: 4px 5px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, .9);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, .15);
+      transform: translateY(-50%) scale(.6);
+      opacity: 0;
+      transition: opacity .3s, transform .3s
+    }
+
+    #musicBtn.play .mb-eq {
+      opacity: 1;
+      transform: translateY(-50%)
+    }
+
+    .mb-eq i {
+      width: 3px;
+      height: 30%;
+      border-radius: 2px;
+      background: linear-gradient(#F98093, #699407)
+    }
+
+    #musicBtn.play .mb-eq i {
+      animation: mbEq .8s ease-in-out infinite alternate
+    }
+
+    .mb-eq i:nth-child(2) {
+      animation-delay: -.3s !important
+    }
+
+    .mb-eq i:nth-child(3) {
+      animation-delay: -.55s !important
+    }
+
+    .mb-eq i:nth-child(4) {
+      animation-delay: -.15s !important
+    }
+
+    @keyframes mbEq {
+      from {
+        height: 20%
+      }
+
+      to {
+        height: 100%
+      }
+    }
+
+    @keyframes mbRipple {
+      0% {
+        transform: scale(1);
+        opacity: .9
+      }
+
+      100% {
+        transform: scale(1.7);
+        opacity: 0
+      }
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg)
+      }
+    }
+
+    #nav {
+      position: fixed;
+      left: 50%;
+      bottom: 14px;
+      transform: translateX(-50%) translateY(150%);
+      z-index: 950;
+      display: flex;
+      gap: 2px;
+      padding: 6px 8px;
+      border-radius: 40px;
+      background: rgba(58, 31, 18, .94);
+      border: 1px solid var(--gold);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, .5);
+      backdrop-filter: blur(6px);
+      transition: transform .8s .5s;
+      max-width: 96vw
+    }
+
+    #nav.show {
+      transform: translateX(-50%)
+    }
+
+    #nav a {
+      text-decoration: none;
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      font-size: 1.15rem;
+      color: var(--gold-light);
+      transition: .2s
+    }
+
+    #nav a.act,
+    #nav a:hover {
+      background: var(--gold);
+      color: var(--sogan-dark)
+    }
+
+    #toast {
+      position: fixed;
+      left: 50%;
+      top: 20px;
+      transform: translate(-50%, calc(-100% - 30px));
+      background: var(--green);
+      color: var(--cream);
+      padding: 10px 20px;
+      border-radius: 30px;
+      z-index: 3000;
+      transition: transform .4s;
+      border: 1px solid var(--gold)
+    }
+
+    #toast.show {
+      transform: translate(-50%, 0)
+    }
+
+    @media(min-width:700px) {
+      .gal {
+        grid-template-columns: repeat(3, 1fr)
+      }
+
+      .wrap {
+        max-width: 640px
+      }
+    }
+
+    /* ===================== ANIMASI BERKELANJUTAN (selalu bergerak) ===================== */
+    /* --- cover --- */
+    .stage .rays {
+      position: absolute;
+      left: 18.32%;
+      top: 15.97%;
+      width: 63.8%;
+      height: 66.55%;
+      border-radius: 50% 50% 0 0 / 27% 27% 0 0;
+      overflow: hidden;
+      pointer-events: none;
+      animation: enterBlur 1.6s .3s both
+    }
+
+    .stage .rays::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 40%;
+      width: 260%;
+      aspect-ratio: 1;
+      transform: translate(-50%, -50%);
+      background: repeating-conic-gradient(rgba(255, 236, 170, .55) 0 5deg, transparent 5deg 15deg);
+      -webkit-mask-image: radial-gradient(circle, #000 0, transparent 60%);
+      mask-image: radial-gradient(circle, #000 0, transparent 60%);
+      animation: spinRays 40s linear infinite
+    }
+
+    .stage .rays::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 40%, rgba(255, 255, 255, .9), transparent 65%);
+      animation: glowPulse 4s ease-in-out infinite alternate
+    }
+
+    .spark {
+      position: absolute;
+      bottom: -10px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #fff6c8;
+      box-shadow: 0 0 8px 3px rgba(246, 220, 140, .85);
+      z-index: 3;
+      pointer-events: none;
+      opacity: 0;
+      animation: sparkUp linear infinite
+    }
+
+    /* bunga bawah melambai seperti tertiup angin, dasar tetap di tempat */
+    .bloom {
+      animation: enterRise 1.6s 1.2s both, bloomWave 3.6s 2.8s ease-in-out infinite alternate
+    }
+
+    @keyframes bloomWave {
+      0% {
+        transform: skewX(-2deg) scaleY(1)
+      }
+
+      50% {
+        transform: skewX(0) scaleY(1.06)
+      }
+
+      100% {
+        transform: skewX(2deg) scaleY(1.02)
+      }
+    }
+
+    .cover-names {
+      background: linear-gradient(100deg, #384704 0%, #384704 40%, #8fb12a 50%, #384704 60%, #384704 100%);
+      background-size: 250% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmerText 5s linear infinite
+    }
+
+    .door-text .btn {
+      animation: btnPulse 2.2s ease-in-out infinite
+    }
+
+    .cover-head .tag,
+    .cover-head .cover-aksara {
+      animation: softBlink 3.5s ease-in-out infinite alternate
+    }
+
+    /* --- halaman --- */
+
+    .bg-batik,
+    .bg-dark {
+      animation: batikDrift 40s linear infinite
+    }
+
+    .bg-maroon {
+      animation: parangDrift 30s linear infinite
+    }
+
+    .sec-title {
+      background: linear-gradient(100deg, var(--maroon) 0%, var(--maroon) 40%, #d9566e 50%, var(--maroon) 60%, var(--maroon) 100%);
+      background-size: 250% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmerText 6s linear infinite
+    }
+
+    .bg-dark .sec-title,
+    .bg-maroon .sec-title {
+      background-image: linear-gradient(100deg, var(--gold-light) 0%, var(--gold-light) 40%, #fff 50%, var(--gold-light) 60%, var(--gold-light) 100%)
+    }
+
+    .frame {
+      animation: floatY 5s ease-in-out infinite alternate, frameGlow 3s ease-in-out infinite alternate
+    }
+
+    .card {
+      animation: cardGlow 3.5s ease-in-out infinite alternate
+    }
+
+    .card::before,
+    .card::after {
+      display: inline-block;
+      animation: spinSlow 8s linear infinite
+    }
+
+    .cd div {
+      animation: cardGlow 2s ease-in-out infinite alternate
+    }
+
+    .cd b {
+      animation: numGlow 1s ease-in-out infinite alternate
+    }
+
+    .pro-ico {
+      animation: bob 2.6s ease-in-out infinite alternate
+    }
+
+    .pro-item:nth-child(2n) .pro-ico {
+      animation-delay: -1.3s
+    }
+
+    .gal img {
+      animation: kenBurns 14s ease-in-out infinite alternate
+    }
+
+    .gal figure:nth-child(2n) img {
+      animation-direction: alternate-reverse
+    }
+
+    .tl-item::before {
+      animation: dotPulse 1.8s ease-out infinite
+    }
+
+    .gift {
+      position: relative;
+      overflow: hidden;
+      animation: cardGlow 3s ease-in-out infinite alternate
+    }
+
+    .gift::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -60%;
+      width: 40%;
+      height: 100%;
+      background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .6), transparent);
+      animation: shine 4s ease-in-out infinite;
+      pointer-events: none
+    }
+
+    #nav a.act {
+      animation: btnPulse 2s ease-in-out infinite
+    }
+
+    @keyframes spinRays {
+      to {
+        transform: translate(-50%, -50%) rotate(360deg)
+      }
+    }
+
+    @keyframes glowPulse {
+      from {
+        opacity: .45
+      }
+
+      to {
+        opacity: 1
+      }
+    }
+
+    @keyframes sparkUp {
+      0% {
+        transform: translate(0, 0) scale(.6);
+        opacity: 0
+      }
+
+      15% {
+        opacity: 1
+      }
+
+      50% {
+        transform: translate(18px, -45vh) scale(1)
+      }
+
+      85% {
+        opacity: .8
+      }
+
+      100% {
+        transform: translate(-12px, -95vh) scale(.5);
+        opacity: 0
+      }
+    }
+
+    @keyframes swayBloomA {
+      0% {
+        transform: rotate(-3.5deg) scale(1)
+      }
+
+      50% {
+        transform: rotate(1deg) translateY(-3%) scale(1.06)
+      }
+
+      100% {
+        transform: rotate(3.5deg) scale(1.02)
+      }
+    }
+
+    @keyframes swayBloomB {
+      0% {
+        transform: rotate(3.5deg) scale(1.02)
+      }
+
+      50% {
+        transform: rotate(-1deg) translateY(-3%) scale(1.06)
+      }
+
+      100% {
+        transform: rotate(-3.5deg) scale(1)
+      }
+    }
+
+    @keyframes shimmerText {
+      from {
+        background-position: 100% 0
+      }
+
+      to {
+        background-position: -150% 0
+      }
+    }
+
+    @keyframes btnPulse {
+      0%,
+      100% {
+        box-shadow: 0 4px 16px rgba(0, 0, 0, .3), 0 0 0 0 rgba(249, 128, 147, .55)
+      }
+
+      50% {
+        box-shadow: 0 4px 16px rgba(0, 0, 0, .3), 0 0 0 10px rgba(249, 128, 147, 0)
+      }
+    }
+
+    @keyframes softBlink {
+      from {
+        opacity: .65
+      }
+
+      to {
+        opacity: 1
+      }
+    }
+
+    @keyframes floatY {
+      from {
+        transform: translateY(0)
+      }
+
+      to {
+        transform: translateY(-8px)
+      }
+    }
+
+    @keyframes batikDrift {
+      from {
+        background-position: 0 0, 0 0
+      }
+
+      to {
+        background-position: 120px 120px, 0 0
+      }
+    }
+
+    @keyframes parangDrift {
+      from {
+        background-position: 0 0, 0 0
+      }
+
+      to {
+        background-position: 96px 0, 0 0
+      }
+    }
+
+    @keyframes frameGlow {
+      from {
+        box-shadow: 0 8px 24px rgba(0, 0, 0, .35)
+      }
+
+      to {
+        box-shadow: 0 8px 24px rgba(0, 0, 0, .35), 0 0 26px 6px rgba(249, 128, 147, .55)
+      }
+    }
+
+    @keyframes spinSlow {
+      to {
+        transform: rotate(360deg)
+      }
+    }
+
+    @keyframes cardGlow {
+      from {
+        box-shadow: 0 8px 22px rgba(58, 31, 18, .2)
+      }
+
+      to {
+        box-shadow: 0 8px 22px rgba(58, 31, 18, .2), 0 0 22px 2px rgba(249, 128, 147, .45)
+      }
+    }
+
+    @keyframes numGlow {
+      from {
+        text-shadow: 0 0 0 transparent
+      }
+
+      to {
+        text-shadow: 0 0 14px rgba(253, 179, 192, .9)
+      }
+    }
+
+    @keyframes bob {
+      from {
+        transform: translateY(0) rotate(-4deg)
+      }
+
+      to {
+        transform: translateY(-6px) rotate(4deg)
+      }
+    }
+
+    @keyframes kenBurns {
+      from {
+        transform: scale(1) translate(0, 0)
+      }
+
+      to {
+        transform: scale(1.15) translate(-3%, -2%)
+      }
+    }
+
+    @keyframes dotPulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(253, 179, 192, .8)
+      }
+
+      100% {
+        box-shadow: 0 0 0 12px rgba(253, 179, 192, 0)
+      }
+    }
+
+    /* ===================== LATAR POLOS BERGRADASI (tanpa corak) =====================
+       Semua bagian memakai gradasi lembut yang sama dengan cover & halaman pembuka. */
+    .bg-batik,
+    .bg-dark,
+    .bg-maroon,
+    #penutup {
+      background: radial-gradient(ellipse at 50% 45%, #fff 0, #fbffe8 45%, #F4FDCE 100%) !important;
+      color: var(--ink) !important;
+      animation: none !important
+    }
+
+    .bg-dark .sec-title,
+    .bg-maroon .sec-title {
+      background-image: linear-gradient(100deg, var(--maroon) 0%, var(--maroon) 40%, #d9566e 50%, var(--maroon) 60%, var(--maroon) 100%)
+    }
+
+    .sec-sub {
+      color: #d9566e
+    }
+
+    .frame {
+      background: linear-gradient(135deg, #fbd3da, #F98093 50%, #699407)
+    }
+
+    .card {
+      background: linear-gradient(160deg, #fff, #fafee6 60%, #eef7cf)
+    }
+
+    .nama-lengkap {
+      color: #384704
+    }
+
+    .cd div {
+      background: linear-gradient(160deg, #4f6a06, #384704);
+      border-color: #699407;
+      color: #f4fdce
+    }
+
+    .cd b {
+      color: #fdb3c0
+    }
+
+    .tl-item {
+      background: rgba(255, 255, 255, .75)
+    }
+
+    .tl-item .th {
+      color: #d9566e
+    }
+
+    #penutup .big {
+      color: #384704
+    }
+
+    /* gradasi berbeda untuk bagian yang bersebelahan, agar tiap bagian mudah dibedakan */
+    #salam,
+    #hitung,
+    #kisah,
+    #penutup {
+      background: linear-gradient(180deg, #fff7f8 0%, #fde6ea 100%) !important
+    }
+
+    #mempelai,
+    #galeri,
+    #amplop {
+      background: linear-gradient(180deg, #f6fbe0 0%, #e2efb4 100%) !important
+    }
+
+    #acara,
+    #rsvp {
+      background: linear-gradient(180deg, #fffdf6 0%, #f5edd6 100%) !important
+    }
+
+    #prosesi {
+      background: linear-gradient(180deg, #fffdf6 0%, #f5edd6 100%) !important
+    }
+
+    /* ===================== MEMPELAI (kartu ringkas, foto & nama berdampingan) ===================== */
+    .mp-intro {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1rem;
+      color: #5b6b2a;
+      margin: 2px 0 18px
+    }
+
+    .mp {
+      position: relative;
+      padding: 16px 14px 14px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, .62);
+      border: 1px solid rgba(249, 128, 147, .35);
+      box-shadow: 0 12px 30px rgba(35, 45, 2, .1);
+      overflow: hidden
+    }
+
+    /* huruf awal besar sebagai watermark */
+    .mp-initial {
+      position: absolute;
+      top: -30px;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 11rem;
+      line-height: 1;
+      color: rgba(249, 128, 147, .13);
+      pointer-events: none
+    }
+
+    .groom .mp-initial {
+      right: 4px
+    }
+
+    .bride .mp-initial {
+      left: 4px;
+      color: rgba(105, 148, 7, .12)
+    }
+
+    .mp-row {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 20px
+    }
+
+    .bride .mp-row {
+      flex-direction: row-reverse
+    }
+
+    .mp-photo {
+      position: relative;
+      flex: 0 0 44%
+    }
+
+    .mp-photo::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 999px 999px 16px 16px;
+      border: 2px solid #F98093;
+      transform: translate(7px, 7px)
+    }
+
+    .bride .mp-photo::before {
+      transform: translate(-7px, 7px);
+      border-color: #699407
+    }
+
+    .mp-frame {
+      position: relative;
+      aspect-ratio: 3 / 4;
+      border-radius: 999px 999px 16px 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 24px rgba(35, 45, 2, .25)
+    }
+
+    .mp-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 50% 18%;
+      transform: scale(1.08)
+    }
+
+    /* blok nama: rata tengah di kolomnya, tersusun rapi dari label sampai aksara */
+    .mp-text,
+    .bride .mp-text {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center
+    }
+
+    .mp-label {
+      display: inline-block;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: .58rem;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+      color: #fff;
+      background: #d9566e;
+      padding: 4px 9px 4px 11px;
+      border-radius: 20px
+    }
+
+    .bride .mp-label {
+      background: #699407
+    }
+
+    .mp-name {
+      margin: 10px 0 0;
+      font-weight: 400;
+      line-height: 1;
+      width: 100%
+    }
+
+    .mp-name .first {
+      display: block;
+      font-family: var(--ff-script);
+      font-size: clamp(2rem, 9.5vw, 2.5rem);
+      line-height: 1.1;
+      color: #384704;
+      white-space: nowrap
+    }
+
+    .mp-name .last {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      letter-spacing: .22em;
+      padding-left: .22em;
+      text-transform: uppercase;
+      color: #d9566e;
+      margin-top: 4px;
+      white-space: nowrap
+    }
+
+    .mp-name .last small {
+      font-style: italic;
+      font-size: .78em;
+      letter-spacing: .02em;
+      text-transform: none;
+      color: #5b6b2a
+    }
+
+    .mp-orn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin: 8px 0 2px;
+      font-size: .6rem;
+      color: #F98093
+    }
+
+    .mp-orn::before,
+    .mp-orn::after {
+      content: "";
+      width: 22px;
+      height: 1px;
+      background: currentColor
+    }
+
+    .bride .mp-orn {
+      color: #699407
+    }
+
+    .bride .mp-name .last {
+      color: #699407
+    }
+
+    .mp-degree {
+      display: inline-block;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 700;
+      font-size: .95rem;
+      color: #5b6b2a;
+      border-bottom: 1px solid #F98093
+    }
+
+    .mp-aksara {
+      font-family: var(--ff-jawa);
+      font-size: .85rem;
+      color: #a3567c;
+      opacity: .8;
+      margin-top: 2px
+    }
+
+    .mp-info {
+      position: relative;
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px dashed rgba(105, 148, 7, .35);
+      text-align: center
+    }
+
+    .mp-child {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 500;
+      font-size: .6rem;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: #699407
+    }
+
+    .mp-parents {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 1.12rem;
+      line-height: 1.3;
+      color: #2c3a03;
+      margin-top: 2px
+    }
+
+    .mp-parents em {
+      font-family: var(--ff-script);
+      font-style: normal;
+      font-weight: 400;
+      font-size: 1.3rem;
+      color: #F98093;
+      margin: 0 3px
+    }
+
+    .mp-addr {
+      display: inline-flex;
+      gap: 6px;
+      margin-top: 8px;
+      padding: 6px 12px;
+      border-radius: 12px;
+      background: #fff;
+      border: 1px solid #fbd3da;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 500;
+      font-size: .9rem;
+      line-height: 1.35;
+      color: #4a5a1a;
+      text-align: center;
+      justify-content: center;
+      align-items: center
+    }
+
+    .mp-addr i {
+      font-style: normal;
+      font-size: .8rem
+    }
+
+    /* bunga di dasar bagian mempelai */
+    #mempelai {
+      padding-bottom: 120px;
+      overflow: visible;
+      z-index: 3
+    }
+
+    .mp-bloom {
+      position: absolute;
+      left: -5%;
+      bottom: -30px;
+      width: 110%;
+      max-width: none;
+      height: auto;
+      pointer-events: none;
+      transform-origin: 50% 100%;
+      -webkit-mask-image: linear-gradient(transparent, #000 35%);
+      mask-image: linear-gradient(transparent, #000 35%);
+      animation: bloomWave 4s ease-in-out infinite alternate
+    }
+
+    .mp-amp {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 16px 0
+    }
+
+    .mp-amp::before,
+    .mp-amp::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #F98093)
+    }
+
+    .mp-amp::after {
+      transform: scaleX(-1)
+    }
+
+    .mp-amp span {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-family: var(--ff-script);
+      font-size: 1.9rem;
+      color: #fff;
+      background: linear-gradient(135deg, #F98093, #d9566e);
+      box-shadow: 0 0 0 5px rgba(249, 128, 147, .2);
+      animation: btnPulse 2.4s ease-in-out infinite
+    }
+
+    /* ===================== MEMPELAI: animasi masuk & animasi berkelanjutan ===================== */
+    .mp-name-rev .last {
+      margin: 0 0 2px
+    }
+
+    /* keadaan awal (sebelum terlihat) */
+    .mp {
+      opacity: 0;
+      transform: translateY(40px) scale(.96);
+      transition: opacity .9s, transform .9s cubic-bezier(.2, .7, .3, 1)
+    }
+
+    .mp .mp-frame {
+      clip-path: inset(100% 0 0 0 round 999px 999px 16px 16px)
+    }
+
+    .mp .mp-photo::before,
+    .mp .mp-label,
+    .mp .mp-name .last,
+    .mp .mp-orn,
+    .mp .mp-aksara,
+    .mp .mp-info>* {
+      opacity: 0
+    }
+
+    .mp .mp-name .first {
+      clip-path: inset(0 100% 0 0)
+    }
+
+    .mp .mp-initial {
+      opacity: 0;
+      transform: scale(1.6)
+    }
+
+    /* saat terlihat */
+    .mp.show {
+      opacity: 1;
+      transform: none
+    }
+
+    .mp.show .mp-frame {
+      animation: mpReveal 1.2s .25s cubic-bezier(.65, 0, .25, 1) forwards
+    }
+
+    .mp.show .mp-frame img {
+      animation: mpZoom 9s 1.5s ease-in-out infinite alternate
+    }
+
+    .mp.show .mp-photo::before {
+      animation: fadeIn .6s 1.2s forwards, mpFloatG 4s 1.8s ease-in-out infinite alternate
+    }
+
+    .bride.show .mp-photo::before {
+      animation: fadeIn .6s 1.2s forwards, mpFloatB 4s 1.8s ease-in-out infinite alternate
+    }
+
+    .mp.show .mp-initial {
+      animation: mpInitial 1.4s .3s cubic-bezier(.2, .7, .3, 1) forwards, mpDrift 7s 1.8s ease-in-out infinite alternate
+    }
+
+    .mp.show .mp-label {
+      animation: hinPop .6s .7s cubic-bezier(.3, 1.5, .5, 1) forwards, mpLabel 3s 1.5s ease-in-out infinite
+    }
+
+    .mp.show .mp-name .first {
+      animation: mpWrite 1.4s .9s cubic-bezier(.6, 0, .3, 1) forwards
+    }
+
+    .mp.show .mp-name-rev .first {
+      animation-delay: 1.2s
+    }
+
+    .mp.show .mp-name .last {
+      animation: hinTag 1s 1.1s cubic-bezier(.2, .7, .3, 1) forwards
+    }
+
+    .mp.show .mp-name-rev .last {
+      animation-delay: .9s
+    }
+
+    .mp.show .mp-orn {
+      animation: hinPop .6s 1.8s cubic-bezier(.3, 1.5, .5, 1) forwards
+    }
+
+    .mp.show .mp-aksara {
+      animation: hinUp .7s 2s forwards, softBlink 3s 2.7s ease-in-out infinite alternate
+    }
+
+    .mp.show .mp-info>* {
+      animation: hinUp .8s cubic-bezier(.2, .7, .3, 1) forwards
+    }
+
+    .mp.show .mp-info>:nth-child(1) {
+      animation-delay: 1.6s
+    }
+
+    .mp.show .mp-info>:nth-child(2) {
+      animation-delay: 1.75s
+    }
+
+    .mp.show .mp-info>:nth-child(3) {
+      animation-delay: 1.9s
+    }
+
+    .mp.show .mp-addr i {
+      display: inline-block;
+      animation: mpPin 1.6s 2.6s ease-in-out infinite
+    }
+
+    .mp-orn {
+      transition: none
+    }
+
+    .mp.show .mp-orn::before,
+    .mp.show .mp-orn::after {
+      animation: mpLine 2.4s 2.4s ease-in-out infinite alternate
+    }
+
+    .mp.done .mp-frame,
+    .mp.done .mp-name .first {
+      clip-path: none
+    }
+
+    .mp.done .mp-photo::before,
+    .mp.done .mp-label,
+    .mp.done .mp-name .last,
+    .mp.done .mp-orn,
+    .mp.done .mp-aksara,
+    .mp.done .mp-info>*,
+    .mp.done .mp-initial {
+      opacity: 1
+    }
+
+    .mp.done .mp-initial {
+      transform: none
+    }
+
+    /* nama kaligrafi berkilau seperti nama di cover */
+    .mp-name .first {
+      background: linear-gradient(100deg, #384704 0%, #384704 38%, #b6d84a 47%, #fff6c8 50%, #b6d84a 53%, #384704 62%, #384704 100%);
+      background-size: 250% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      padding: 0 .12em
+    }
+
+    .mp.show .mp-name .first {
+      animation: mpWrite 1.4s .9s cubic-bezier(.6, 0, .3, 1) forwards, shimmerText 4.5s 2.4s linear infinite
+    }
+
+    .mp.show .mp-name-rev .first {
+      animation: mpWrite 1.4s 1.2s cubic-bezier(.6, 0, .3, 1) forwards, shimmerText 4.5s 2.8s linear infinite
+    }
+
+    .mp.show .mp-name .last {
+      background: linear-gradient(100deg, currentColor 0%, currentColor 40%, #ffd2da 50%, currentColor 60%, currentColor 100%);
+      background-size: 250% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: hinTag 1s 1.1s cubic-bezier(.2, .7, .3, 1) forwards, shimmerText 5s 2.4s linear infinite
+    }
+
+    .mp.show .mp-name-rev .last {
+      animation: hinTag 1s .9s cubic-bezier(.2, .7, .3, 1) forwards, shimmerText 5s 2.2s linear infinite
+    }
+
+    .mp-name .last small {
+      -webkit-text-fill-color: #5b6b2a
+    }
+
+    @keyframes mpReveal {
+      to {
+        clip-path: inset(0 0 0 0 round 999px 999px 16px 16px)
+      }
+    }
+
+    @keyframes mpWrite {
+      to {
+        clip-path: inset(0 -10% 0 0)
+      }
+    }
+
+    @keyframes mpInitial {
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1
+      }
+    }
+
+    @keyframes mpZoom {
+      from {
+        transform: scale(1.08)
+      }
+
+      to {
+        transform: scale(1.18)
+      }
+    }
+
+    @keyframes mpFloatG {
+      from {
+        transform: translate(7px, 7px)
+      }
+
+      to {
+        transform: translate(12px, 12px)
+      }
+    }
+
+    @keyframes mpFloatB {
+      from {
+        transform: translate(-7px, 7px)
+      }
+
+      to {
+        transform: translate(-12px, 12px)
+      }
+    }
+
+    @keyframes mpDrift {
+      from {
+        transform: translateY(0) rotate(0)
+      }
+
+      to {
+        transform: translateY(12px) rotate(-4deg)
+      }
+    }
+
+    @keyframes mpLabel {
+      0%,
+      100% {
+        box-shadow: 0 0 0 0 rgba(249, 128, 147, .5)
+      }
+
+      50% {
+        box-shadow: 0 0 0 6px rgba(249, 128, 147, 0)
+      }
+    }
+
+    @keyframes mpPin {
+      0%,
+      100% {
+        transform: translateY(0)
+      }
+
+      30% {
+        transform: translateY(-4px)
+      }
+
+      55% {
+        transform: translateY(0)
+      }
+    }
+
+    @keyframes mpLine {
+      from {
+        width: 22px
+      }
+
+      to {
+        width: 34px
+      }
+    }
+
+    /* ===================== RANGKAIAN ACARA: tampilan peta dengan rute ===================== */
+    #acara {
+      z-index: 5;
+      overflow: visible;
+      padding-top: 150px;
+      padding-bottom: 60px;
+      background:
+        repeating-linear-gradient(0deg, transparent 0 39px, rgba(105, 148, 7, .07) 39px 40px),
+        repeating-linear-gradient(90deg, transparent 0 39px, rgba(105, 148, 7, .07) 39px 40px),
+        radial-gradient(circle at 15% 30%, rgba(249, 128, 147, .12), transparent 30%),
+        radial-gradient(circle at 85% 70%, rgba(105, 148, 7, .1), transparent 32%),
+        linear-gradient(180deg, #fffdf6 0%, #f5edd6 100%) !important
+    }
+
+    .acara-garland {
+      position: absolute;
+      top: -40px;
+      left: -8%;
+      width: 116%;
+      max-width: none;
+      height: auto;
+      z-index: 6;
+      pointer-events: none;
+      transform-origin: 50% 0;
+      -webkit-mask-image: linear-gradient(#000 80%, transparent);
+      mask-image: linear-gradient(#000 80%, transparent);
+      animation: garlandSway 5s ease-in-out infinite alternate
+    }
+
+    .map-compass {
+      position: absolute;
+      right: 18px;
+      top: 300px;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      border: 1px dashed #699407;
+      display: grid;
+      place-items: center;
+      font-size: 1.3rem;
+      color: #d9566e;
+      animation: spinSlow 18s linear infinite;
+      opacity: .7
+    }
+
+    .map-compass span {
+      position: absolute;
+      top: -9px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: .6rem;
+      color: #384704
+    }
+
+    .route-intro {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.02rem;
+      color: #5b6b2a;
+      margin: 4px 0 18px
+    }
+
+    .route {
+      position: relative;
+      padding: 6px 0
+    }
+
+    .route-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+      pointer-events: none
+    }
+
+    .route-bg {
+      fill: none;
+      stroke: rgba(255, 255, 255, .9);
+      stroke-width: 12;
+      stroke-linecap: round
+    }
+
+    .route-line {
+      fill: none;
+      stroke: #F98093;
+      stroke-width: 3;
+      stroke-dasharray: 2 10;
+      stroke-linecap: round;
+      animation: routeDash 1.2s linear infinite
+    }
+
+    .route-dot {
+      fill: #d9566e;
+      stroke: #fff;
+      stroke-width: 3;
+      filter: drop-shadow(0 2px 4px rgba(217, 86, 110, .5))
+    }
+
+    @keyframes routeDash {
+      to {
+        stroke-dashoffset: -12
+      }
+    }
+
+    .route-flag {
+      position: relative;
+      z-index: 1;
+      display: table;
+      margin: 0 auto 26px;
+      padding: 6px 16px;
+      border-radius: 30px;
+      background: #384704;
+      color: #f4fdce;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: .64rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      box-shadow: 0 6px 14px rgba(35, 45, 2, .25)
+    }
+
+    .route-flag.end {
+      margin: 26px auto 0;
+      background: linear-gradient(135deg, #F98093, #d9566e)
+    }
+
+    .stop {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: flex-end;
+      gap: 12px;
+      margin-bottom: 30px;
+      text-align: left
+    }
+
+    .stop.alt {
+      flex-direction: row-reverse;
+      text-align: right
+    }
+
+    /* penanda lokasi berbentuk pin peta */
+    .pin {
+      flex: 0 0 50px;
+      height: 50px;
+      border-radius: 50% 50% 50% 0;
+      transform: rotate(-45deg);
+      background: linear-gradient(135deg, #F98093, #d9566e);
+      display: grid;
+      place-items: center;
+      box-shadow: 0 6px 14px rgba(217, 86, 110, .4);
+      animation: pinBounce 2.4s ease-in-out infinite
+    }
+
+    .stop.alt .pin {
+      background: linear-gradient(135deg, #8fb12a, #4f6a06);
+      box-shadow: 0 6px 14px rgba(56, 71, 4, .35)
+    }
+
+    .pin span {
+      transform: rotate(45deg);
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #fff;
+      display: grid;
+      place-items: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: #384704
+    }
+
+    .stop:nth-of-type(2n) .pin {
+      animation-delay: -1.2s
+    }
+
+    @keyframes pinBounce {
+
+      0%,
+      100% {
+        transform: rotate(-45deg) translate(0, 0)
+      }
+
+      50% {
+        transform: rotate(-45deg) translate(3px, -3px)
+      }
+    }
+
+    /* --- kartu acara berbentuk balon chat --- */
+    .bubble-wrap {
+      position: relative;
+      flex: 1;
+      min-width: 0
+    }
+
+    .stop-card {
+      position: relative;
+      padding: 14px 16px 22px;
+      border-radius: 24px 24px 24px 6px;
+      background: linear-gradient(160deg, #ffffff 0%, #fff4f6 55%, #fde6ea 100%);
+      box-shadow: 0 12px 26px rgba(217, 86, 110, .16), inset 0 0 0 1px rgba(249, 128, 147, .25);
+      transform-origin: 0 100%
+    }
+
+    /* ekor balon menunjuk ke pin */
+    .stop-card::before {
+      content: "";
+      position: absolute;
+      left: -9px;
+      bottom: 14px;
+      width: 20px;
+      height: 20px;
+      background: #fde6ea;
+      clip-path: polygon(100% 0, 0 100%, 100% 100%);
+      border-radius: 0 0 4px 0
+    }
+
+    .stop.alt .stop-card {
+      border-radius: 24px 24px 6px 24px;
+      background: linear-gradient(200deg, #ffffff 0%, #f6fbe0 55%, #e2efb4 100%);
+      box-shadow: 0 12px 26px rgba(56, 71, 4, .14), inset 0 0 0 1px rgba(105, 148, 7, .22);
+      transform-origin: 100% 100%
+    }
+
+    .stop.alt .stop-card::before {
+      left: auto;
+      right: -9px;
+      background: #e2efb4;
+      clip-path: polygon(0 0, 0 100%, 100% 100%);
+      border-radius: 0 0 0 4px
+    }
+
+    /* tanggal: angka besar + hari/bulan */
+    .bb-date {
+      display: flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .stop.alt .bb-date {
+      flex-direction: row-reverse
+    }
+
+    .bb-day {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 2.6rem;
+      line-height: .9;
+      background: linear-gradient(135deg, #F98093, #d9566e 60%, #a3374c);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent
+    }
+
+    .stop.alt .bb-day {
+      background-image: linear-gradient(135deg, #8fb12a, #4f6a06 60%, #2c3a03)
+    }
+
+    .bb-dm {
+      display: flex;
+      flex-direction: column;
+      font-family: 'Montserrat', sans-serif;
+      font-size: .54rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: #5b6b2a;
+      padding: 2px 8px;
+      border-left: 2px solid #F98093
+    }
+
+    .stop.alt .bb-dm {
+      border-left: 0;
+      border-right: 2px solid #699407
+    }
+
+    .bb-dm b {
+      font-weight: 700;
+      color: #384704
+    }
+
+    .bb-title {
+      font-family: var(--ff-script);
+      font-weight: 400;
+      font-size: 2.15rem;
+      line-height: 1.15;
+      margin-top: 6px;
+      background: linear-gradient(100deg, #384704 0%, #384704 38%, #b6d84a 47%, #fff6c8 50%, #b6d84a 53%, #384704 62%, #384704 100%);
+      background-size: 250% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmerText 5s linear infinite
+    }
+
+    .bb-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1rem;
+      color: #d9566e
+    }
+
+    .stop.alt .bb-sub {
+      color: #699407
+    }
+
+    .bb-sub::before,
+    .bb-sub::after {
+      content: " ~ ";
+      opacity: .6
+    }
+
+    .bb-time {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 4px;
+      margin-top: 6px;
+      padding: 4px 12px;
+      border-radius: 30px;
+      background: #384704;
+      color: #fdb3c0;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 1.35rem;
+      line-height: 1.2
+    }
+
+    .bb-time small {
+      font-family: 'Montserrat', sans-serif;
+      font-size: .52rem;
+      letter-spacing: .1em;
+      color: #f4fdce
+    }
+
+    .bb-clock {
+      font-size: .8rem;
+      display: inline-block;
+      animation: swayL 1.2s ease-in-out infinite alternate
+    }
+
+    .bb-addr {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: .92rem;
+      line-height: 1.35;
+      color: #4a5a1a;
+      margin: 8px 0 10px;
+      padding-bottom: 8px;
+      border-bottom: 1px dashed rgba(105, 148, 7, .35)
+    }
+
+    .bb-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px
+    }
+
+    .stop.alt .bb-actions {
+      justify-content: flex-end
+    }
+
+    /* jam & centang seperti pesan terkirim */
+    .bb-meta {
+      position: absolute;
+      right: 14px;
+      bottom: 5px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: .5rem;
+      letter-spacing: .05em;
+      color: #8a9a5a
+    }
+
+    .stop.alt .bb-meta {
+      right: auto;
+      left: 14px
+    }
+
+    .bb-meta b {
+      color: #4fa3e0
+    }
+
+    /* indikator "sedang mengetik" sebelum balon muncul */
+    .typing {
+      position: absolute;
+      left: 6px;
+      bottom: 8px;
+      display: flex;
+      gap: 4px;
+      padding: 10px 12px;
+      border-radius: 18px 18px 18px 4px;
+      background: #fff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, .08);
+      opacity: 0;
+      pointer-events: none
+    }
+
+    .stop.alt .typing {
+      left: auto;
+      right: 6px;
+      border-radius: 18px 18px 4px 18px
+    }
+
+    .typing i {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #F98093;
+      animation: typingDot 1s ease-in-out infinite
+    }
+
+    .typing i:nth-child(2) {
+      animation-delay: .15s
+    }
+
+    .typing i:nth-child(3) {
+      animation-delay: .3s
+    }
+
+    @keyframes typingDot {
+
+      0%,
+      100% {
+        transform: translateY(0);
+        opacity: .5
+      }
+
+      50% {
+        transform: translateY(-4px);
+        opacity: 1
+      }
+    }
+
+    /* animasi masuk: titik mengetik -> balon muncul -> isi bermunculan */
+    .stop.in .typing {
+      animation: typingShow 1s .2s both
+    }
+
+    /* --- balon lebih ringkas --- */
+    .stop-card {
+      padding: 10px 13px 18px
+    }
+
+    .bb-day {
+      font-size: 2rem
+    }
+
+    .bb-headline {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 4px
+    }
+
+    .stop.alt .bb-headline {
+      justify-content: flex-end
+    }
+
+    .bb-headline .bb-title {
+      margin-top: 0
+    }
+
+    .bb-title {
+      font-size: 1.75rem;
+      white-space: nowrap
+    }
+
+    .bb-title.long {
+      font-size: clamp(1.25rem, 6vw, 1.55rem)
+    }
+
+    .bb-headline .bb-time {
+      flex: 0 0 auto;
+      margin-top: 0;
+      padding: 2px 9px;
+      font-size: 1rem
+    }
+
+    .bb-time small {
+      font-size: .45rem
+    }
+
+    .bb-clock {
+      font-size: .65rem
+    }
+
+    .bb-sub {
+      font-size: .9rem;
+      line-height: 1.3
+    }
+
+    .bb-addr {
+      font-size: .8rem;
+      line-height: 1.3;
+      margin: 5px 0 7px;
+      padding-bottom: 6px
+    }
+
+    .stop-btn {
+      padding: 5px 10px;
+      font-size: .58rem
+    }
+
+    .stop {
+      margin-bottom: 22px
+    }
+
+    .stop.in .stop-card {
+      animation: bubblePop .7s 1s cubic-bezier(.3, 1.5, .5, 1) both
+    }
+
+    .stop.in .stop-card>* {
+      animation: hinUp .5s cubic-bezier(.2, .7, .3, 1) both
+    }
+
+    .stop.in .stop-card>:nth-child(1) {
+      animation-delay: 1.35s
+    }
+
+    .stop.in .stop-card>:nth-child(2) {
+      animation: hinUp .5s 1.5s cubic-bezier(.2, .7, .3, 1) both, shimmerText 5s 2s linear infinite
+    }
+
+    .stop.in .stop-card>:nth-child(3) {
+      animation-delay: 1.65s
+    }
+
+    .stop.in .stop-card>:nth-child(4) {
+      animation-delay: 1.8s
+    }
+
+    .stop.in .stop-card>:nth-child(5) {
+      animation-delay: 1.95s
+    }
+
+    .stop.in .stop-card>:nth-child(6) {
+      animation-delay: 2.1s
+    }
+
+    .stop.in .stop-card>:nth-child(7) {
+      animation-delay: 2.25s
+    }
+
+    .stop.in .pin {
+      animation: pinDrop .7s .1s cubic-bezier(.3, 1.6, .5, 1) both, pinBounce 2.4s 1s ease-in-out infinite
+    }
+
+    @keyframes typingShow {
+      0% {
+        opacity: 0;
+        transform: scale(.6)
+      }
+
+      20%,
+      75% {
+        opacity: 1;
+        transform: none
+      }
+
+      100% {
+        opacity: 0;
+        transform: scale(.8)
+      }
+    }
+
+    @keyframes bubblePop {
+      from {
+        opacity: 0;
+        transform: scale(.3)
+      }
+
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
+
+    @keyframes pinDrop {
+      from {
+        opacity: 0;
+        transform: rotate(-45deg) translate(-30px, -30px)
+      }
+
+      to {
+        opacity: 1;
+        transform: rotate(-45deg)
+      }
+    }
+
+    .stop-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin: 2px 0 0;
+      padding: 7px 12px;
+      border-radius: 20px;
+      border: 0;
+      cursor: pointer;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: .62rem;
+      letter-spacing: .05em;
+      text-decoration: none;
+      color: #fff;
+      background: linear-gradient(135deg, #F98093, #d9566e)
+    }
+
+    .stop.alt .stop-btn {
+      background: linear-gradient(135deg, #699407, #4f6a06)
+    }
+
+    .stop-btn.ghost {
+      background: #fff;
+      color: #d9566e;
+      border: 1px solid #F98093
+    }
+
+    /* ===================== TANSAH ELING (hitung mundur modern) ===================== */
+    #hitung {
+      padding: 80px 18px 64px;
+      overflow: hidden
+    }
+
+    .cd-date {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin: 10px 0 22px;
+      padding: 8px 16px;
+      border-radius: 40px;
+      background: rgba(255, 255, 255, .8);
+      box-shadow: 0 8px 20px rgba(217, 86, 110, .15)
+    }
+
+    .cd-date span {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: .56rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: #699407
+    }
+
+    .cd-date b {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem;
+      color: #d9566e;
+      letter-spacing: .04em
+    }
+
+    .cd-date b i {
+      font-style: normal;
+      color: #699407;
+      margin: 0 3px
+    }
+
+    .cd-rings {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+      padding: 0 4px
+    }
+
+    .ring {
+      position: relative;
+      aspect-ratio: 1;
+      animation: ringFloat 4s ease-in-out infinite alternate
+    }
+
+    .ring:nth-child(2n) {
+      animation-delay: -2s
+    }
+
+    .ring svg {
+      width: 100%;
+      height: 100%;
+      transform: rotate(-90deg);
+      overflow: visible
+    }
+
+    .ring .trk {
+      fill: rgba(255, 255, 255, .85);
+      stroke: #fbd3da;
+      stroke-width: 6
+    }
+
+    .ring .bar {
+      fill: none;
+      stroke: url(#ringGrad);
+      stroke-width: 6;
+      stroke-linecap: round;
+      stroke-dasharray: 276.46;
+      stroke-dashoffset: 276.46;
+      transition: stroke-dashoffset 1.4s cubic-bezier(.3, 0, .2, 1);
+      filter: drop-shadow(0 0 3px rgba(249, 128, 147, .6))
+    }
+
+    .ring:not(.in) .bar {
+      stroke-dashoffset: 276.46 !important
+    }
+
+    .ring-val {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center
+    }
+
+    .ring-val b {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: clamp(1.4rem, 7vw, 1.9rem);
+      line-height: 1;
+      color: #384704
+    }
+
+    .ring-val b.tick {
+      animation: tickFlip .5s cubic-bezier(.3, 1.5, .5, 1)
+    }
+
+    .ring-val span {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: .48rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: #d9566e;
+      margin-top: 3px
+    }
+
+    .cd-pulse {
+      position: relative;
+      height: 40px;
+      margin: 22px 0 8px
+    }
+
+    .cd-pulse svg {
+      width: 100%;
+      height: 100%
+    }
+
+    .cd-pulse path {
+      fill: none;
+      stroke: #F98093;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 60 340;
+      animation: ecg 2.4s linear infinite
+    }
+
+    .cd-heart {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, #F98093, #d9566e);
+      color: #fff;
+      font-size: 1rem;
+      box-shadow: 0 0 0 6px rgba(249, 128, 147, .2);
+      animation: heartBeat 1.2s ease-in-out infinite
+    }
+
+    .cd-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      color: #384704
+    }
+
+    .cd-quote em {
+      font-family: var(--ff-script);
+      font-style: normal;
+      font-size: 1.6rem;
+      color: #d9566e
+    }
+
+    .cd-msg {
+      margin-top: 8px;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      color: #384704
+    }
+
+    /* hati yang melayang naik di latar */
+    .cd-hearts i {
+      position: absolute;
+      bottom: -20px;
+      font-style: normal;
+      color: rgba(249, 128, 147, .35);
+      animation: heartRise linear infinite;
+      pointer-events: none
+    }
+
+    .cd-hearts i:nth-child(1) { left: 6%; font-size: 1rem; animation-duration: 9s }
+    .cd-hearts i:nth-child(2) { left: 20%; font-size: 1.6rem; animation-duration: 12s; animation-delay: -4s }
+    .cd-hearts i:nth-child(3) { left: 36%; font-size: .8rem; animation-duration: 8s; animation-delay: -2s }
+    .cd-hearts i:nth-child(4) { left: 55%; font-size: 1.3rem; animation-duration: 11s; animation-delay: -7s }
+    .cd-hearts i:nth-child(5) { left: 70%; font-size: .9rem; animation-duration: 10s; animation-delay: -1s }
+    .cd-hearts i:nth-child(6) { left: 84%; font-size: 1.8rem; animation-duration: 13s; animation-delay: -9s }
+    .cd-hearts i:nth-child(7) { left: 94%; font-size: 1rem; animation-duration: 9.5s; animation-delay: -5s }
+
+    @keyframes heartRise {
+      0% {
+        transform: translateY(0) rotate(0);
+        opacity: 0
+      }
+
+      15% {
+        opacity: 1
+      }
+
+      100% {
+        transform: translateY(-110vh) rotate(25deg);
+        opacity: 0
+      }
+    }
+
+    @keyframes ringFloat {
+      from {
+        transform: translateY(0)
+      }
+
+      to {
+        transform: translateY(-6px)
+      }
+    }
+
+    @keyframes tickFlip {
+      0% {
+        transform: rotateX(90deg) scale(.8);
+        opacity: .2
+      }
+
+      100% {
+        transform: none;
+        opacity: 1
+      }
+    }
+
+    @keyframes ecg {
+      from {
+        stroke-dashoffset: 400
+      }
+
+      to {
+        stroke-dashoffset: 0
+      }
+    }
+
+    @keyframes heartBeat {
+
+      0%,
+      40%,
+      100% {
+        transform: translate(-50%, -50%) scale(1)
+      }
+
+      20% {
+        transform: translate(-50%, -50%) scale(1.25)
+      }
+
+      60% {
+        transform: translate(-50%, -50%) scale(1.12)
+      }
+    }
+
+    /* ===================== HIASAN BUNGA UMUM ===================== */
+    .sec-garland {
+      position: absolute;
+      top: -40px;
+      left: -8%;
+      width: 116%;
+      max-width: none;
+      height: auto;
+      z-index: 6;
+      pointer-events: none;
+      transform-origin: 50% 0;
+      -webkit-mask-image: linear-gradient(#000 80%, transparent);
+      mask-image: linear-gradient(#000 80%, transparent);
+      animation: garlandSway 5s ease-in-out infinite alternate
+    }
+
+    .sec-bloom {
+      position: absolute;
+      left: -5%;
+      bottom: -2px;
+      width: 110%;
+      max-width: none;
+      height: auto;
+      pointer-events: none;
+      transform-origin: 50% 100%;
+      -webkit-mask-image: linear-gradient(transparent, #000 35%);
+      mask-image: linear-gradient(transparent, #000 35%);
+      animation: bloomWave 4s ease-in-out infinite alternate
+    }
+
+    #hitung {
+      padding-bottom: 150px !important
+    }
+
+    /* ===================== GALERI (slider modern) ===================== */
+    #galeri {
+      z-index: 5;
+      overflow: visible;
+      padding-top: 150px
+    }
+
+    .gal-intro {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.02rem;
+      color: #5b6b2a;
+      margin: 4px 0 18px
+    }
+
+    .gal-stage {
+      position: relative;
+      margin: 0 -18px
+    }
+
+    .gal-track {
+      display: flex;
+      gap: 14px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding: 10px 15% 24px;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch
+    }
+
+    .gal-track::-webkit-scrollbar {
+      display: none
+    }
+
+    .gal-slide {
+      position: relative;
+      flex: 0 0 70%;
+      aspect-ratio: 3 / 4.3;
+      scroll-snap-align: center;
+      border-radius: 999px 999px 22px 22px;
+      overflow: hidden;
+      cursor: zoom-in;
+      transform: scale(.86);
+      opacity: .55;
+      filter: saturate(.6);
+      transition: transform .6s cubic-bezier(.2, .7, .3, 1), opacity .6s, filter .6s, box-shadow .6s;
+      box-shadow: 0 10px 22px rgba(35, 45, 2, .15)
+    }
+
+    .gal-slide.active {
+      transform: scale(1);
+      opacity: 1;
+      filter: none;
+      box-shadow: 0 18px 36px rgba(35, 45, 2, .3), 0 0 0 4px #fff, 0 0 0 6px #F98093
+    }
+
+    .gal-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 50% 30%
+    }
+
+    .gal-slide.active img {
+      animation: heroZoomGal 7s ease-in-out infinite alternate
+    }
+
+    @keyframes heroZoomGal {
+      from {
+        transform: scale(1.02)
+      }
+
+      to {
+        transform: scale(1.14)
+      }
+    }
+
+    .gal-slide::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(transparent 60%, rgba(56, 71, 4, .55))
+    }
+
+    .gal-num {
+      position: absolute;
+      left: 50%;
+      bottom: 12px;
+      z-index: 2;
+      transform: translateX(-50%);
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 2.2rem;
+      line-height: 1;
+      color: #fff;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, .4)
+    }
+
+    .gal-count {
+      position: absolute;
+      top: 18px;
+      right: 18%;
+      z-index: 3;
+      display: flex;
+      align-items: baseline;
+      gap: 3px;
+      padding: 5px 12px;
+      border-radius: 20px;
+      background: rgba(56, 71, 4, .85);
+      color: #f4fdce;
+      font-family: 'Montserrat', sans-serif;
+      font-size: .6rem;
+      letter-spacing: .1em
+    }
+
+    .gal-count b {
+      font-size: .95rem;
+      color: #fdb3c0
+    }
+
+    .gal-count em {
+      font-style: normal
+    }
+
+    .gal-nav {
+      position: absolute;
+      top: 45%;
+      z-index: 3;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 0;
+      cursor: pointer;
+      font-size: 1.6rem;
+      line-height: 1;
+      color: #fff;
+      background: linear-gradient(135deg, #F98093, #d9566e);
+      box-shadow: 0 6px 14px rgba(217, 86, 110, .35);
+      transform: translateY(-50%)
+    }
+
+    .gal-nav.prev {
+      left: 10px
+    }
+
+    .gal-nav.next {
+      right: 10px
+    }
+
+    .gal-progress {
+      height: 3px;
+      margin: 0 22%;
+      border-radius: 3px;
+      background: rgba(105, 148, 7, .2);
+      overflow: hidden
+    }
+
+    .gal-progress i {
+      display: block;
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, #F98093, #699407)
+    }
+
+    .gal-progress i.run {
+      animation: galBar 4s linear forwards
+    }
+
+    @keyframes galBar {
+      to {
+        width: 100%
+      }
+    }
+
+    .gal-thumbs {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 6px;
+      margin-top: 16px
+    }
+
+    .gal-thumbs button {
+      position: relative;
+      aspect-ratio: 3 / 4;
+      padding: 0;
+      border: 0;
+      border-radius: 10px;
+      overflow: hidden;
+      cursor: pointer;
+      opacity: .5;
+      transform: translateY(0);
+      transition: opacity .4s, transform .4s, box-shadow .4s
+    }
+
+    .gal-thumbs button img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover
+    }
+
+    .gal-thumbs button span {
+      position: absolute;
+      left: 4px;
+      top: 3px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: .5rem;
+      color: #fff;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, .6)
+    }
+
+    .gal-thumbs button.active {
+      opacity: 1;
+      transform: translateY(-4px);
+      box-shadow: 0 0 0 2px #F98093, 0 6px 12px rgba(217, 86, 110, .3)
+    }
+
+    .gal-hint {
+      margin-top: 10px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: .55rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: #8a9a5a
+    }
+
+    /* ===================== PANGESTU / RSVP (modern) ===================== */
+    #rsvp {
+      z-index: 5;
+      overflow: visible;
+      padding-top: 150px;
+      padding-bottom: 24px
+    }
+
+    #rsvp #wishes {
+      padding-bottom: 8px
+    }
+
+    .wish-empty {
+      padding: 4px 0 0
+    }
+
+    #amplop {
+      padding-top: 54px
+    }
+
+    .rs-intro {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.02rem;
+      color: #5b6b2a;
+      margin: 4px 0 16px
+    }
+
+    .rs-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 18px
+    }
+
+    .rs-stats div {
+      padding: 10px 4px;
+      border-radius: 16px;
+      background: #fff;
+      box-shadow: 0 8px 18px rgba(35, 45, 2, .08)
+    }
+
+    .rs-stats b {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.7rem;
+      line-height: 1
+    }
+
+    .rs-stats .ok b { color: #699407 }
+    .rs-stats .no b { color: #d9566e }
+    .rs-stats .mb b { color: #c9962b }
+
+    .rs-stats span {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: .5rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: #8a9a5a
+    }
+
+    .rs-card {
+      position: relative;
+      display: block;
+      padding: 30px 18px 20px;
+      border-radius: 26px;
+      background: linear-gradient(160deg, #ffffff, #fffaf0);
+      border: 0;
+      box-shadow: 0 18px 40px rgba(35, 45, 2, .12), inset 0 0 0 1px rgba(249, 128, 147, .25);
+      text-align: left
+    }
+
+    .rs-envelope {
+      position: absolute;
+      top: -24px;
+      left: 50%;
+      width: 48px;
+      height: 48px;
+      margin-left: -24px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 1.4rem;
+      background: linear-gradient(135deg, #F98093, #d9566e);
+      box-shadow: 0 8px 18px rgba(217, 86, 110, .35);
+      animation: floatY 2.4s ease-in-out infinite alternate
+    }
+
+    /* kolom dengan label melayang */
+    .fl {
+      position: relative;
+      margin-bottom: 14px
+    }
+
+    .fl input,
+    .fl textarea {
+      width: 100%;
+      padding: 20px 14px 8px;
+      border: 1.5px solid #e6e0cc;
+      border-radius: 14px;
+      background: #fffdf6;
+      font: inherit;
+      font-size: .95rem;
+      color: #2c3a03;
+      outline: none;
+      transition: border-color .3s, box-shadow .3s
+    }
+
+    .fl textarea {
+      min-height: 110px;
+      resize: vertical
+    }
+
+    .fl label {
+      position: absolute;
+      left: 15px;
+      top: 15px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      color: #8a9a5a;
+      pointer-events: none;
+      transition: all .25s
+    }
+
+    .fl input:focus,
+    .fl textarea:focus {
+      border-color: #F98093;
+      box-shadow: 0 0 0 4px rgba(249, 128, 147, .15);
+      outline: none
+    }
+
+    .fl input:focus+label,
+    .fl input:not(:placeholder-shown)+label,
+    .fl textarea:focus+label,
+    .fl textarea:not(:placeholder-shown)+label {
+      top: 6px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: .52rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: #d9566e
+    }
+
+    .rs-count {
+      position: absolute;
+      right: 12px;
+      bottom: 8px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: .5rem;
+      color: #a9b07a
+    }
+
+    .rs-label {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: .55rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: #699407;
+      margin: 2px 0 8px
+    }
+
+    .rs-choice {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin-bottom: 14px
+    }
+
+    .rs-choice label {
+      cursor: pointer
+    }
+
+    .rs-choice input {
+      position: absolute;
+      opacity: 0
+    }
+
+    .rs-choice span {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      padding: 10px 4px;
+      border-radius: 14px;
+      border: 1.5px solid #e6e0cc;
+      background: #fffdf6;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: .6rem;
+      color: #5b6b2a;
+      transition: all .3s
+    }
+
+    .rs-choice span i {
+      font-style: normal;
+      font-size: 1.2rem;
+      transition: transform .3s
+    }
+
+    .rs-choice input:checked+span {
+      border-color: transparent;
+      background: linear-gradient(135deg, #F98093, #d9566e);
+      color: #fff;
+      box-shadow: 0 8px 16px rgba(217, 86, 110, .3);
+      transform: translateY(-2px)
+    }
+
+    .rs-choice input:checked+span i {
+      transform: scale(1.2);
+      animation: bob 1.4s ease-in-out infinite alternate
+    }
+
+    .rs-send {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px;
+      border: 0;
+      border-radius: 16px;
+      cursor: pointer;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: .78rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: #f4fdce;
+      background: linear-gradient(135deg, #699407, #384704);
+      box-shadow: 0 10px 22px rgba(56, 71, 4, .3)
+    }
+
+    .rs-send::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -60%;
+      width: 40%;
+      height: 100%;
+      background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .45), transparent);
+      animation: shine 3s infinite
+    }
+
+    .rs-send i {
+      font-style: normal;
+      transition: transform .5s
+    }
+
+    .rs-send.sent i {
+      transform: translate(140px, -40px) rotate(-20deg)
+    }
+
+    .rs-wall-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin: 26px 2px 10px
+    }
+
+    .rs-wall-head b {
+      font-family: var(--ff-script);
+      font-weight: 400;
+      font-size: 1.9rem;
+      color: #384704
+    }
+
+    .rs-wall-head span {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: .55rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: #d9566e;
+      background: #fde6ea;
+      padding: 4px 10px;
+      border-radius: 20px
+    }
+
+    #wishes {
+      margin-top: 0;
+      max-height: 440px;
+      padding: 6px 2px 20px;
+      -webkit-mask-image: linear-gradient(#000 85%, transparent);
+      mask-image: linear-gradient(#000 85%, transparent)
+    }
+
+    .wish {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      padding: 12px;
+      border: 0;
+      border-radius: 18px 18px 18px 4px;
+      background: #fff;
+      box-shadow: 0 6px 16px rgba(35, 45, 2, .08);
+      text-align: left;
+      animation: wishIn .6s cubic-bezier(.3, 1.4, .5, 1) both
+    }
+
+    .wish:nth-child(2n) {
+      border-radius: 18px 18px 4px 18px;
+      background: #fbfdf0
+    }
+
+    .wish-av {
+      flex: 0 0 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: #fff;
+      box-shadow: 0 0 0 3px #fff, 0 0 0 5px rgba(249, 128, 147, .35);
+      animation: avPulse 3s ease-in-out infinite
+    }
+
+    .wish-body {
+      flex: 1;
+      min-width: 0
+    }
+
+    .wish-top {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap
+    }
+
+    .wish b {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: #2c3a03
+    }
+
+    .wish em {
+      margin: 0;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-style: normal;
+      font-size: .48rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: #fff;
+      background: #699407
+    }
+
+    .wish em.no { background: #d9566e }
+    .wish em.mb { background: #c9962b }
+
+    .wish p {
+      margin-top: 4px;
+      font-size: .86rem;
+      line-height: 1.5;
+      color: #4a5a1a
+    }
+
+    .wish-empty {
+      text-align: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      color: #8a9a5a
+    }
+
+    @keyframes wishIn {
+      from {
+        opacity: 0;
+        transform: translateY(16px) scale(.92)
+      }
+    }
+
+    @keyframes avPulse {
+
+      0%,
+      100% {
+        box-shadow: 0 0 0 3px #fff, 0 0 0 5px rgba(249, 128, 147, .35)
+      }
+
+      50% {
+        box-shadow: 0 0 0 3px #fff, 0 0 0 9px rgba(249, 128, 147, 0)
+      }
+    }
+
+    /* animasi masuk isi formulir */
+    #rsvpForm.in>* {
+      animation: hinUp .6s cubic-bezier(.2, .7, .3, 1) both
+    }
+
+    #rsvpForm.in>:nth-child(2) { animation-delay: .25s }
+    #rsvpForm.in>:nth-child(3) { animation-delay: .35s }
+    #rsvpForm.in>:nth-child(4) { animation-delay: .45s }
+    #rsvpForm.in>:nth-child(5) { animation-delay: .55s }
+    #rsvpForm.in>:nth-child(6) { animation-delay: .65s }
+
+    #rsvpForm.in .rs-envelope {
+      animation: hinPop .6s cubic-bezier(.3, 1.5, .5, 1) both, floatY 2.4s .6s ease-in-out infinite alternate
+    }
+
+    .rs-stats.in div {
+      animation: hinPop .6s cubic-bezier(.3, 1.5, .5, 1) both
+    }
+
+    .rs-stats.in div:nth-child(2) { animation-delay: .12s }
+    .rs-stats.in div:nth-child(3) { animation-delay: .24s }
+
+    /* ===================== TANDA KASIH (kartu e-wallet / bank) ===================== */
+    .gift-intro {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1rem;
+      color: #5b6b2a;
+      margin: 6px 0 18px
+    }
+
+    .gift-tabs {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding: 5px;
+      margin: 0 auto 20px;
+      max-width: 300px;
+      border-radius: 40px;
+      background: #fff;
+      box-shadow: 0 8px 20px rgba(35, 45, 2, .1)
+    }
+
+    .gift-tabs button {
+      position: relative;
+      z-index: 1;
+      padding: 10px 6px;
+      border: 0;
+      background: none;
+      cursor: pointer;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: .66rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: #5b6b2a;
+      transition: color .4s
+    }
+
+    .gift-tabs button.active {
+      color: #fff
+    }
+
+    .gift-tab-ind {
+      position: absolute;
+      top: 5px;
+      bottom: 5px;
+      left: 5px;
+      width: calc(50% - 5px);
+      border-radius: 40px;
+      background: linear-gradient(135deg, #F98093, #d9566e);
+      box-shadow: 0 6px 14px rgba(217, 86, 110, .35);
+      transition: transform .5s cubic-bezier(.3, 1.3, .5, 1)
+    }
+
+    .gift-tabs.iman .gift-tab-ind {
+      transform: translateX(100%);
+      background: linear-gradient(135deg, #699407, #384704)
+    }
+
+    .gift-pane {
+      display: none;
+      gap: 16px;
+      perspective: 900px
+    }
+
+    .gift-pane.active {
+      display: grid
+    }
+
+    .gift-pane.active .pay {
+      animation: payIn .8s cubic-bezier(.2, .8, .3, 1) both
+    }
+
+    .gift-pane.active .pay:nth-child(2) {
+      animation-delay: .15s
+    }
+
+    .pay {
+      position: relative;
+      overflow: hidden;
+      padding: 18px 18px 16px;
+      border-radius: 20px;
+      color: #fff;
+      text-align: left;
+      aspect-ratio: 1.75;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 16px 30px rgba(0, 0, 0, .2)
+    }
+
+    .pay::before {
+      content: "";
+      position: absolute;
+      right: -30%;
+      top: -60%;
+      width: 90%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .12)
+    }
+
+    .pay::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -60%;
+      width: 40%;
+      height: 100%;
+      background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .35), transparent);
+      animation: shine 4.5s ease-in-out infinite
+    }
+
+    .pay.dana {
+      background: linear-gradient(135deg, #36a6f2, #118eea 50%, #0b63b5)
+    }
+
+    .pay.bca {
+      background: linear-gradient(135deg, #2f74c8, #0060af 50%, #003f7d)
+    }
+
+    .pay.sea {
+      background: linear-gradient(135deg, #ff8a3d, #ff6a13 50%, #d94a00)
+    }
+
+    .pay-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between
+    }
+
+    .pay-chip {
+      width: 38px;
+      height: 28px;
+      border-radius: 6px;
+      background: linear-gradient(135deg, #fff1b8, #e6c35a 50%, #b8902a);
+      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .15)
+    }
+
+    .pay-brand {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 1.15rem;
+      font-style: italic;
+      letter-spacing: .02em
+    }
+
+    .pay-num {
+      position: relative;
+      z-index: 1;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 500;
+      font-size: clamp(1.15rem, 5.6vw, 1.4rem);
+      letter-spacing: .12em;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, .25)
+    }
+
+    .pay-bot {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 8px
+    }
+
+    .pay-bot small {
+      display: block;
+      font-family: 'Montserrat', sans-serif;
+      font-size: .48rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      opacity: .8
+    }
+
+    .pay-bot b {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem
+    }
+
+    .pay-copy {
+      flex: 0 0 auto;
+      padding: 7px 12px;
+      border: 1px solid rgba(255, 255, 255, .6);
+      border-radius: 20px;
+      background: rgba(255, 255, 255, .18);
+      color: #fff;
+      cursor: pointer;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: .6rem;
+      -webkit-backdrop-filter: blur(4px);
+      backdrop-filter: blur(4px)
+    }
+
+    .pay-copy.done {
+      background: #fff;
+      color: #384704
+    }
+
+    @keyframes payIn {
+      from {
+        opacity: 0;
+        transform: rotateX(-50deg) translateY(30px)
+      }
+    }
+
+    /* ===================== PENUTUP (modern) ===================== */
+    #penutup {
+      overflow: hidden;
+      padding-bottom: 170px
+    }
+
+    .pt-photo {
+      position: relative;
+      width: 180px;
+      aspect-ratio: 1;
+      margin: 14px auto 18px
+    }
+
+    .pt-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 50% 25%;
+      border-radius: 50%;
+      border: 5px solid #fff;
+      box-shadow: 0 14px 30px rgba(217, 86, 110, .3)
+    }
+
+    .pt-ring {
+      position: absolute;
+      inset: -12px;
+      border-radius: 50%;
+      border: 2px dashed #F98093;
+      animation: spinSlow 20s linear infinite
+    }
+
+    .pt-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      line-height: 1.6;
+      color: #4a5a1a
+    }
+
+    .pt-thanks {
+      margin: 14px 0 4px;
+      font-family: var(--ff-script);
+      font-size: clamp(2.6rem, 12vw, 3.4rem);
+      line-height: 1.1;
+      background: linear-gradient(100deg, #384704 0%, #384704 38%, #b6d84a 47%, #fff6c8 50%, #b6d84a 53%, #384704 62%, #384704 100%);
+      background-size: 250% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmerText 5s linear infinite
+    }
+
+    .pt-aksara {
+      font-family: var(--ff-jawa);
+      font-size: 1.1rem;
+      color: #d9566e
+    }
+
+    .pt-label {
+      margin-top: 22px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: .58rem;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: #699407
+    }
+
+    .pt-names {
+      font-family: var(--ff-script);
+      font-size: 2.4rem;
+      color: #384704
+    }
+
+    .pt-names em {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: .6em;
+      color: #d9566e;
+      margin: 0 8px
+    }
+
+    .pt-fam {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 12px
+    }
+
+    .pt-fam div {
+      padding: 12px 8px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, .8);
+      box-shadow: 0 8px 18px rgba(35, 45, 2, .08)
+    }
+
+    .pt-fam small {
+      display: block;
+      margin-bottom: 4px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: .48rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: #d9566e
+    }
+
+    .pt-fam b {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: .98rem;
+      line-height: 1.3;
+      color: #2c3a03
+    }
+
+    .pt-salam {
+      margin-top: 20px;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: .95rem;
+      color: #5b6b2a
+    }
+
+    .pt-hearts i {
+      position: absolute;
+      bottom: -20px;
+      font-style: normal;
+      color: rgba(249, 128, 147, .35);
+      animation: heartRise linear infinite;
+      pointer-events: none
+    }
+
+    .pt-hearts i:nth-child(1) { left: 8%; font-size: 1.2rem; animation-duration: 10s }
+    .pt-hearts i:nth-child(2) { left: 26%; font-size: .8rem; animation-duration: 8s; animation-delay: -3s }
+    .pt-hearts i:nth-child(3) { left: 46%; font-size: 1.6rem; animation-duration: 12s; animation-delay: -6s }
+    .pt-hearts i:nth-child(4) { left: 64%; font-size: 1rem; animation-duration: 9s; animation-delay: -1s }
+    .pt-hearts i:nth-child(5) { left: 80%; font-size: 1.4rem; animation-duration: 11s; animation-delay: -8s }
+    .pt-hearts i:nth-child(6) { left: 93%; font-size: .9rem; animation-duration: 9.5s; animation-delay: -4s }
+
+    .pt-photo.in .pt-ring {
+      animation: hinPop .8s .3s both, spinSlow 20s 1.1s linear infinite
+    }
+
+    /* ===================== FOOTER PROMOSI ===================== */
+    .vz {
+      position: relative;
+      /* bagian bawah footer memberi ruang untuk navigasi melayang; latar footer sampai dasar layar */
+      padding: 26px 20px calc(96px + env(safe-area-inset-bottom));
+      text-align: center;
+      background: linear-gradient(160deg, #2c3a03, #384704 60%, #4f6a06);
+      color: #f4fdce;
+      overflow: hidden
+    }
+
+    .vz::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -60%;
+      width: 40%;
+      height: 100%;
+      background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .08), transparent);
+      animation: shine 6s ease-in-out infinite
+    }
+
+    .vz-made {
+      font-family: 'Montserrat', sans-serif;
+      font-size: .58rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      opacity: .8
+    }
+
+    .vz-made span {
+      display: inline-block;
+      color: #F98093;
+      animation: heartBeat2 1.2s ease-in-out infinite
+    }
+
+    .vz-brand {
+      display: inline-block;
+      margin: 0 0 2px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 1.5rem;
+      letter-spacing: .04em;
+      text-decoration: none;
+      background: linear-gradient(100deg, #fdb3c0 0%, #fdb3c0 40%, #fff 50%, #b6d84a 60%, #fdb3c0 100%);
+      background-size: 250% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmerText 4s linear infinite
+    }
+
+    .vz-tags {
+      margin-top: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: .6rem;
+      letter-spacing: .25em;
+      text-transform: uppercase
+    }
+
+    .vz-tags i {
+      font-style: normal;
+      color: #F98093
+    }
+
+    .vz-wa {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 12px;
+      padding: 8px 16px;
+      border-radius: 30px;
+      background: #25d366;
+      color: #fff;
+      text-decoration: none;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: .72rem;
+      box-shadow: 0 6px 16px rgba(37, 211, 102, .35);
+      animation: btnPulse 2.4s ease-in-out infinite
+    }
+
+    @keyframes heartBeat2 {
+
+      0%,
+      40%,
+      100% {
+        transform: scale(1)
+      }
+
+      20% {
+        transform: scale(1.3)
+      }
+    }
+
+    /* ===================== KISAH CINTA (benang cinta, tanpa kotak) ===================== */
+    .ls-intro {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.02rem;
+      color: #5b6b2a;
+      margin: 4px 0 26px
+    }
+
+    .lovestory {
+      position: relative;
+      padding-bottom: 10px
+    }
+
+    .ls-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+      pointer-events: none
+    }
+
+    .ls-thread-bg {
+      fill: none;
+      stroke: rgba(249, 128, 147, .18);
+      stroke-width: 2;
+      stroke-dasharray: 3 7
+    }
+
+    .ls-thread {
+      fill: none;
+      stroke: url(#ringGrad);
+      stroke-width: 3;
+      stroke-linecap: round
+    }
+
+    .ls-heart {
+      fill: #d9566e;
+      filter: drop-shadow(0 2px 4px rgba(217, 86, 110, .5))
+    }
+
+    .ls {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-height: 170px;
+      margin-bottom: 18px
+    }
+
+    .ls.r {
+      flex-direction: row-reverse
+    }
+
+    /* tahun besar bergaris luar di latar */
+    .ls-year {
+      position: absolute;
+      top: -18px;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 5.4rem;
+      line-height: 1;
+      color: transparent;
+      -webkit-text-stroke: 1.2px rgba(249, 128, 147, .45);
+      pointer-events: none;
+      z-index: -1
+    }
+
+    .ls.l .ls-year {
+      right: 0
+    }
+
+    .ls.r .ls-year {
+      left: 0;
+      -webkit-text-stroke-color: rgba(105, 148, 7, .4)
+    }
+
+    /* foto bulat di benang */
+    .ls-node {
+      position: relative;
+      flex: 0 0 104px;
+      height: 104px;
+      border-radius: 50%;
+      padding: 4px;
+      background: conic-gradient(#F98093, #fdb3c0, #699407, #F98093);
+      animation: nodeSpin 8s linear infinite;
+      box-shadow: 0 10px 24px rgba(217, 86, 110, .25)
+    }
+
+    .ls-node img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 50% 25%;
+      border-radius: 50%;
+      border: 3px solid #fff;
+      animation: nodeSpin 8s linear infinite reverse
+    }
+
+    .ls-node i {
+      position: absolute;
+      right: -4px;
+      bottom: -2px;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-style: normal;
+      font-size: 1rem;
+      background: #fff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, .12);
+      animation: nodeIconCounter 8s linear infinite, bob 1.8s ease-in-out infinite alternate
+    }
+
+    .ls.r .ls-node i {
+      right: auto;
+      left: -4px
+    }
+
+    @keyframes nodeSpin {
+      to {
+        transform: rotate(360deg)
+      }
+    }
+
+    @keyframes nodeIconCounter {
+      to {
+        rotate: -360deg
+      }
+    }
+
+    .ls-txt {
+      flex: 1;
+      min-width: 0;
+      text-align: left
+    }
+
+    .ls.r .ls-txt {
+      text-align: right
+    }
+
+    .ls-tag {
+      display: inline-block;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: .58rem;
+      letter-spacing: .3em;
+      color: #d9566e
+    }
+
+    .ls.r .ls-tag {
+      color: #699407
+    }
+
+    .ls-tag::after {
+      content: "";
+      display: inline-block;
+      vertical-align: middle;
+      width: 26px;
+      height: 1px;
+      margin-left: 6px;
+      background: currentColor
+    }
+
+    .ls.r .ls-tag::after {
+      display: none
+    }
+
+    .ls.r .ls-tag::before {
+      content: "";
+      display: inline-block;
+      vertical-align: middle;
+      width: 26px;
+      height: 1px;
+      margin-right: 6px;
+      background: currentColor
+    }
+
+    .ls-tag {
+      position: relative;
+      background: linear-gradient(90deg, transparent, rgba(255, 247, 248, .9) 20%, rgba(255, 247, 248, .9) 80%, transparent);
+      padding: 2px 6px
+    }
+
+    .ls-txt h4 {
+      font-family: var(--ff-script);
+      font-weight: 400;
+      font-size: 1.85rem;
+      line-height: 1.1;
+      color: #384704;
+      margin: 2px 0 4px
+    }
+
+    .ls-txt p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: .98rem;
+      line-height: 1.45;
+      color: #4a5a1a
+    }
+
+    .ls-end {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      margin-top: 4px
+    }
+
+    .ls-end span {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-size: 1.3rem;
+      background: linear-gradient(135deg, #F98093, #d9566e);
+      box-shadow: 0 0 0 8px rgba(249, 128, 147, .15);
+      animation: heartBeat2 1.3s ease-in-out infinite
+    }
+
+    .ls-end b {
+      font-family: var(--ff-script);
+      font-weight: 400;
+      font-size: 1.8rem;
+      color: #d9566e
+    }
+
+    /* animasi masuk tiap babak cerita */
+    .ls .ls-node,
+    .ls .ls-txt>*,
+    .ls .ls-year {
+      opacity: 0
+    }
+
+    .ls.in .ls-node {
+      animation: lsPop .8s cubic-bezier(.3, 1.5, .5, 1) both, nodeSpin 8s .8s linear infinite;
+      opacity: 1
+    }
+
+    .ls.in .ls-year {
+      animation: lsYear 1.2s cubic-bezier(.2, .7, .3, 1) both;
+      opacity: 1
+    }
+
+    .ls.in .ls-txt>* {
+      animation: lsSlideL .7s cubic-bezier(.2, .7, .3, 1) both;
+      opacity: 1
+    }
+
+    .ls.r.in .ls-txt>* {
+      animation-name: lsSlideR
+    }
+
+    .ls.in .ls-txt>:nth-child(1) { animation-delay: .25s }
+    .ls.in .ls-txt>:nth-child(2) { animation-delay: .4s }
+    .ls.in .ls-txt>:nth-child(3) { animation-delay: .55s }
+
+    @keyframes lsPop {
+      from {
+        opacity: 0;
+        transform: scale(.3) rotate(-90deg)
+      }
+    }
+
+    @keyframes lsYear {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+        letter-spacing: .3em
+      }
+    }
+
+    @keyframes lsSlideL {
+      from {
+        opacity: 0;
+        transform: translateX(30px)
+      }
+    }
+
+    @keyframes lsSlideR {
+      from {
+        opacity: 0;
+        transform: translateX(-30px)
+      }
+    }
+
+    /* ===================== MERPATI PEMBAWA BERKAH ===================== */
+    #blessing {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: min(100%, 480px);
+      margin: 0 auto;
+      z-index: 940;
+      pointer-events: none;
+      overflow: hidden
+    }
+
+    .dove {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 150px;
+      will-change: transform;
+      animation: doveFly 5s cubic-bezier(.45, .05, .55, .95) forwards
+    }
+
+    /* merpati tersusun dari badan + 4 sayap terpisah agar sayap bisa mengepak dari bahu */
+    .dove-sprite {
+      position: relative;
+      aspect-ratio: 300 / 321;
+      filter: drop-shadow(0 8px 12px rgba(56, 71, 4, .25)) drop-shadow(0 0 12px rgba(255, 246, 200, .7))
+    }
+
+    .dove-sprite img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%
+    }
+
+    .dove-sprite .badan {
+      animation: doveBob .34s ease-in-out infinite alternate
+    }
+
+    /* titik poros = bahu tiap sayap (persen dari gambar 300x321) */
+    .dove-sprite .w1 {
+      transform-origin: 43.3% 31.2%;
+      animation: flapNeg .34s ease-in-out infinite alternate
+    }
+
+    .dove-sprite .w2 {
+      transform-origin: 56.7% 33.6%;
+      animation: flapPos .34s ease-in-out infinite alternate
+    }
+
+    .dove-sprite .w3 {
+      transform-origin: 74% 74.1%;
+      animation: flapNeg .3s .08s ease-in-out infinite alternate
+    }
+
+    .dove-sprite .w4 {
+      transform-origin: 76% 67.9%;
+      animation: flapPos .3s .08s ease-in-out infinite alternate
+    }
+
+    @keyframes flapNeg {
+      from {
+        transform: rotate(10deg) scaleY(1.03)
+      }
+
+      to {
+        transform: rotate(-42deg) scaleY(.72)
+      }
+    }
+
+    @keyframes flapPos {
+      from {
+        transform: rotate(-10deg) scaleY(1.03)
+      }
+
+      to {
+        transform: rotate(42deg) scaleY(.72)
+      }
+    }
+
+    @keyframes doveBob {
+      from {
+        transform: translateY(0)
+      }
+
+      to {
+        transform: translateY(-3%)
+      }
+    }
+
+    /* jejak cahaya di belakang merpati */
+    .dove::after {
+      content: "";
+      position: absolute;
+      left: -60%;
+      top: 45%;
+      width: 80%;
+      height: 14px;
+      border-radius: 50%;
+      background: linear-gradient(90deg, transparent, rgba(255, 240, 180, .7));
+      filter: blur(4px)
+    }
+
+    @keyframes doveFly {
+      0% {
+        transform: translate(-170px, var(--y0)) rotate(6deg)
+      }
+
+      30% {
+        transform: translate(calc(var(--w) * .28), calc(var(--y0) + 30px)) rotate(-4deg)
+      }
+
+      60% {
+        transform: translate(calc(var(--w) * .58), calc(var(--y0) - 10px)) rotate(3deg)
+      }
+
+      100% {
+        transform: translate(calc(var(--w) + 40px), calc(var(--y0) - 60px)) rotate(-8deg)
+      }
+    }
+
+
+    /* cahaya keberkahan yang dijatuhkan */
+    .bless {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 18px;
+      height: 18px;
+      margin: -9px 0 0 -9px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #fff 0, #fff6c8 35%, rgba(246, 210, 120, .6) 60%, transparent 72%);
+      box-shadow: 0 0 18px 8px rgba(255, 236, 160, .75), 0 0 40px 16px rgba(249, 128, 147, .25);
+      animation: blessFall 2.8s cubic-bezier(.35, 0, .6, 1) forwards
+    }
+
+    .bless::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 50%;
+      width: 3px;
+      height: 70px;
+      margin-left: -1.5px;
+      border-radius: 3px;
+      background: linear-gradient(transparent, rgba(255, 246, 200, .85));
+      filter: blur(1px)
+    }
+
+    .bless-burst {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 20px;
+      height: 20px;
+      margin: -10px 0 0 -10px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 236, 160, .9);
+      box-shadow: 0 0 20px rgba(255, 236, 160, .9), inset 0 0 12px rgba(255, 255, 255, .8);
+      animation: blessBurst 1.1s ease-out forwards
+    }
+
+    .bless-spark {
+      position: absolute;
+      left: 0;
+      top: 0;
+      font-size: 14px;
+      color: #ffe9a0;
+      text-shadow: 0 0 8px #fff3c4;
+      animation: blessSpark 1.3s ease-out forwards
+    }
+
+    @keyframes blessFall {
+      0% {
+        transform: translate(var(--x), var(--y)) scale(.4);
+        opacity: 0
+      }
+
+      12% {
+        opacity: 1;
+        transform: translate(var(--x), calc(var(--y) + 20px)) scale(1)
+      }
+
+      100% {
+        transform: translate(calc(var(--x) + var(--dx)), calc(var(--y) + var(--fall))) scale(1.15);
+        opacity: 1
+      }
+    }
+
+    @keyframes blessBurst {
+      from {
+        transform: translate(var(--x), var(--y)) scale(.3);
+        opacity: 1
+      }
+
+      to {
+        transform: translate(var(--x), var(--y)) scale(7);
+        opacity: 0
+      }
+    }
+
+    @keyframes blessSpark {
+      from {
+        transform: translate(var(--x), var(--y)) scale(.4);
+        opacity: 1
+      }
+
+      to {
+        transform: translate(calc(var(--x) + var(--sx)), calc(var(--y) + var(--sy))) scale(1) rotate(180deg);
+        opacity: 0
+      }
+    }
+
+    /* --- merpati yang hinggap di judul bagian --- */
+    .perch-dove {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 84px;
+      z-index: 7;
+      pointer-events: none;
+      will-change: transform
+    }
+
+    .perch-dove .dove-sprite {
+      filter: drop-shadow(0 6px 8px rgba(56, 71, 4, .22))
+    }
+
+    .dove-face {
+      transition: none
+    }
+
+    .dove-sprite.one {
+      aspect-ratio: 268 / 195
+    }
+
+    .dove-sprite.one .w1 {
+      transform-origin: 48.5% 51.3%
+    }
+
+    .dove-sprite.one .w2 {
+      transform-origin: 63.4% 55.4%;
+      transition: opacity .3s
+    }
+
+    /* hinggap: sayap terlipat, sesekali mengepak kecil, badan bergoyang pelan */
+    .dove-sprite.one.perched .w1 {
+      animation: perchWing 4.5s ease-in-out infinite
+    }
+
+    .dove-sprite.one.perched .w2 {
+      animation: none;
+      opacity: 0
+    }
+
+    .dove-sprite.one.perched .badan {
+      transform-origin: 50% 100%;
+      animation: perchBob 2.6s ease-in-out infinite
+    }
+
+    .perch-dove.land {
+      animation: landHop .55s cubic-bezier(.3, 1.6, .5, 1)
+    }
+
+    @keyframes perchWing {
+
+      0%,
+      78%,
+      100% {
+        transform: rotate(-72deg) scale(.82, .5)
+      }
+
+      84% {
+        transform: rotate(-12deg) scale(.95, .9)
+      }
+
+      89% {
+        transform: rotate(-60deg) scale(.85, .55)
+      }
+
+      93% {
+        transform: rotate(-20deg) scale(.95, .85)
+      }
+    }
+
+    @keyframes perchBob {
+
+      0%,
+      100% {
+        transform: rotate(0)
+      }
+
+      50% {
+        transform: rotate(-3deg) translateY(-2%)
+      }
+    }
+
+    @keyframes landHop {
+      0% {
+        transform: translateY(-10px) scale(1.05)
+      }
+
+      60% {
+        transform: translateY(2px) scale(.96, 1.04)
+      }
+
+      100% {
+        transform: none
+      }
+    }
+
+    /* ===================== PEMBATAS ANTAR BAGIAN (bentuk berbeda-beda) ===================== */
+    .sec-sep {
+      position: absolute;
+      top: -1px;
+      left: 0;
+      width: 100%;
+      height: 46px;
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      z-index: 2;
+      pointer-events: none
+    }
+
+    .sec-sep-orn {
+      position: absolute;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: .9rem;
+      color: #fff;
+      background: linear-gradient(135deg, #F98093, #d9566e);
+      box-shadow: 0 4px 12px rgba(217, 86, 110, .3)
+    }
+
+    /* sembunyikan batang scroll (halaman tetap bisa digulir) */
+    html,
+    body,
+    #wishes {
+      scrollbar-width: none;
+      -ms-overflow-style: none
+    }
+
+    html::-webkit-scrollbar,
+    body::-webkit-scrollbar,
+    #wishes::-webkit-scrollbar {
+      display: none;
+      width: 0;
+      height: 0
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+      * {
+        animation-iteration-count: 1 !important;
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important
+      }
+    }
+  </style>
+</head>
+
+<body class="locked">
+
+  <!-- Kelopak melati jatuh -->
+  <div id="petals" aria-hidden="true"></div>
+
+  <!-- ===================== COVER ===================== -->
+  <div id="cover">
+    <!-- gapura, pintu gerbang, dan taman diisi oleh JS dari CONFIG.asetCover -->
+    <div class="stage"></div>
+    <div class="corner l"></div>
+    <div class="corner r"></div>
+    <div class="cover-head">
+      <div class="tag">The Wedding of</div>
+      <div class="cover-aksara" id="coverAksara"></div>
+      <!-- GANTI: nama panggilan -->
+      <div class="cover-names"><span data-p="pria">Iman</span> &amp; <span data-p="wanita">Rifa</span></div>
+      <!-- GANTI: tanggal -->
+      <div class="cover-date">Sabtu, 05 / 12 / 2026</div>
+    </div>
+    <div class="cover-foot">*Mohon maaf bila ada kesalahan penulisan nama/gelar.</div>
+  </div>
+
+  <div id="flash" aria-hidden="true"></div>
+  <!-- merpati pembawa cahaya keberkahan (muncul saat masuk bagian Mempelai & Kisah Cinta) -->
+  <div id="blessing" aria-hidden="true"></div>
+
+  <button id="musicBtn" aria-label="Putar/jeda musik gamelan">
+    <span class="mb-disc"><img src="aset/herofoto-web.jpg" alt=""></span>
+    <span class="mb-icon" aria-hidden="true"><i class="pause">❚❚</i><i class="playi">▶</i></span>
+    <span class="mb-eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+  </button>
+
+  <nav id="nav" aria-label="Navigasi">
+    <a href="#hero" title="Awal">🏠</a>
+    <a href="#salam" title="Salam">🙏</a>
+    <a href="#mempelai" title="Mempelai">💑</a>
+    <a href="#acara" title="Acara">📅</a>
+    <a href="#galeri" title="Galeri">🖼️</a>
+    <a href="#rsvp" title="Ucapan">💌</a>
+    <a href="#amplop" title="Amplop">🎁</a>
+  </nav>
+  <div id="toast"></div>
+
+  <!-- ===================== HERO ===================== -->
+  <section id="hero">
+    <div class="hero-scene"></div>
+    <!-- GANTI: foto mempelai (aset/herofoto-web.jpg = versi kecil dari herofoto.jpeg) -->
+    <div class="hero-top"><img src="aset/herofoto-web.jpg" alt="Foto kedua mempelai"></div>
+    <div id="gleams"></div>
+    <div class="wrap">
+      <div class="hero-tag hin">The Wedding of</div>
+      <div class="hero-names hin"><span data-p="pria">Iman</span><span class="hero-amp">&amp;</span><span
+          data-p="wanita">Rifa</span></div>
+      <div class="hero-orn hin">❀</div>
+      <!-- GANTI: tanggal acara utama -->
+      <div class="hero-date hin"><small>Sabtu</small><b>05</b><small>Des 2026</small></div>
+      <div class="hero-cd-label hin">Menuju hari bahagia</div>
+      <div class="hero-cd">
+        <div class="hin"><b id="hcdD">0</b><span>Hari</span></div>
+        <div class="hin"><b id="hcdH">00</b><span>Jam</span></div>
+        <div class="hin"><b id="hcdM">00</b><span>Menit</span></div>
+        <div class="hin"><b id="hcdS">00</b><span>Detik</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SALAM ===================== -->
+  <section id="salam" class="bg-batik">
+    <img class="salam-garland" src="aset/untaian-salam.png" alt="" aria-hidden="true">
+    <div class="wrap">
+      <div class="salam-bismillah rv zoom">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
+      <div class="sec-sub rv up">Pambuka</div>
+      <h2 class="salam-title rv up">Assalamu'alaikum<br><em>Warahmatullahi Wabarakatuh</em></h2>
+      <div class="divider rv">❀</div>
+
+      <p class="salam-greet rv up">Sugeng Rawuh</p>
+      <p class="salam-greet-id rv up d1">— selamat datang, semoga kita semua senantiasa dalam keselamatan —</p>
+
+      <div class="salam-intro rv up d1">
+        <p class="jv-lead"><span class="dropcap">K</span>anthi asmaning Gusti Allah ingkang Maha Welas Asih, kawula
+          ngaturaken pambage dhumateng Bapak/Ibu/Sadherek sedaya, anggenipun badhe nindakaken pahargyan pawiwahan
+          putra-putri kawula.</p>
+        <p class="id-lead">Dengan menyebut nama Allah Yang Maha Pengasih, kami mengundang Bapak/Ibu/Saudara/i
+          untuk hadir dalam pernikahan putra-putri kami.</p>
+      </div>
+
+      <div class="quote-box rv zoom d2">
+        <span class="quote-mark">“</span>
+        <!-- Kutipan boleh diganti sesuai keinginan keluarga -->
+        <p class="jv">Sinaosa wonten ing donya punika katah warni, Gusti Allah paring pasangan saking ing jiwa
+          piyambak, supados manggih <b>ayem tentrem</b>, sarta tuwuh <b>katresnan lan kawelasan</b> ing antawisipun.</p>
+        <div class="quote-sep">✦</div>
+        <p class="id">Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan pasangan untukmu dari jenismu
+          sendiri, agar kamu merasa tenteram kepadanya, dan dijadikan-Nya di antaramu rasa kasih dan sayang.</p>
+        <span class="quote-src">QS. Ar-Rum : 21</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== MEMPELAI ===================== -->
+  <section id="mempelai" class="bg-dark">
+    <div class="wrap">
+      <div class="sec-sub rv up">Pengantin</div>
+      <h2 class="sec-title rv up">Kedua Mempelai</h2>
+      <p class="mp-intro rv up d1">Dengan memohon rahmat &amp; ridha Allah SWT, kami mempersembahkan</p>
+
+      <!-- GANTI: data mempelai pria -->
+      <article class="mp groom">
+        <span class="mp-initial" aria-hidden="true">R</span>
+        <div class="mp-row">
+          <div class="mp-photo">
+            <div class="mp-frame"><img id="imgPria" alt="Foto mempelai pria" src=""></div>
+          </div>
+          <div class="mp-text">
+            <span class="mp-label">The Groom</span>
+            <h3 class="mp-name"><span class="first">Rokhiman</span><span class="last">Sodiq<small>, S.Pd.</small></span></h3>
+            <span class="mp-orn">❀</span>
+            <div class="mp-aksara" data-aksara="pria"></div>
+          </div>
+        </div>
+        <div class="mp-info">
+          <p class="mp-child">Putra dari pasangan</p>
+          <p class="mp-parents">Bapak Muh. Arofiq <em>&amp;</em> Ibu Sri Winarti</p>
+          <p class="mp-addr"><i>📍</i>Dk. Banaran RT 03/RW 02, Ds. Babadan, Kec. Limpung, Kab. Batang</p>
+        </div>
+      </article>
+
+      <div class="mp-amp rv zoom"><span>&amp;</span></div>
+
+      <!-- GANTI: data mempelai wanita -->
+      <article class="mp bride">
+        <span class="mp-initial" aria-hidden="true">N</span>
+        <div class="mp-row">
+          <div class="mp-photo">
+            <div class="mp-frame"><img id="imgWanita" alt="Foto mempelai wanita" src=""></div>
+          </div>
+          <div class="mp-text">
+            <span class="mp-label">The Bride</span>
+            <h3 class="mp-name mp-name-rev"><span class="last">Nurul</span><span class="first">Arifah</span></h3>
+            <span class="mp-orn">❀</span>
+            <div class="mp-aksara" data-aksara="wanita"></div>
+          </div>
+        </div>
+        <div class="mp-info">
+          <p class="mp-child">Putri dari pasangan</p>
+          <p class="mp-parents">Bapak Makhsun <em>&amp;</em> Ibu Sarini</p>
+          <p class="mp-addr"><i>📍</i>Dk. Kepatihan RT 02/RW 02, Ds. Tersono, Kec. Tersono, Kab. Batang</p>
+        </div>
+      </article>
+    </div>
+    <img class="mp-bloom" src="aset/bunga1-bawah.png" alt="" aria-hidden="true">
+  </section>
+
+  <!-- ===================== ACARA ===================== -->
+  <section id="acara" class="bg-batik">
+    <img class="acara-garland" src="aset/untaian-salam.png" alt="" aria-hidden="true">
+    <div class="map-compass" aria-hidden="true"><span>N</span>✦</div>
+    <div class="wrap">
+      <div class="sec-sub rv up">Pahargyan</div>
+      <h2 class="sec-title rv up">Rangkaian Acara</h2>
+      <p class="route-intro rv up d1">Ikuti rute perjalanan hari bahagia kami</p>
+
+      <!-- GANTI: tanggal, jam, alamat tiap acara. data-maps = kunci link di CONFIG.linkMaps -->
+      <div class="route" id="route">
+        <svg class="route-svg" aria-hidden="true"><path class="route-bg" /><path class="route-line" /><circle class="route-dot" r="7" /></svg>
+
+        <div class="route-flag start rv up"><span>🚩</span> Mulai</div>
+
+        <div class="stop rv up">
+          <div class="pin"><span>1</span></div>
+          <div class="bubble-wrap">
+            <div class="typing" aria-hidden="true"><i></i><i></i><i></i></div>
+            <div class="stop-card">
+              <div class="bb-date"><span class="bb-day">3–4</span><span class="bb-dm"><b>Kamis – Jumat</b>Desember 2026</span></div>
+              <h3 class="bb-title">Ramah Tamah</h3>
+              <p class="bb-sub">Kediaman Mempelai Wanita</p>
+              <p class="bb-addr">Dk. Kepatihan RT 02/RW 02, Ds. Tersono, Kec. Tersono, Kab. Batang</p>
+              <div class="bb-actions"><a class="stop-btn mapLink" data-maps="cpw" target="_blank" rel="noopener">📍 Lihat Lokasi</a></div>
+              <span class="bb-meta">Iman &amp; Rifa <b>✓✓</b></span>
+            </div>
+          </div>
+        </div>
+        <div class="stop alt rv up">
+          <div class="pin"><span>2</span></div>
+          <div class="bubble-wrap">
+            <div class="typing" aria-hidden="true"><i></i><i></i><i></i></div>
+            <div class="stop-card">
+              <div class="bb-date"><span class="bb-day">05</span><span class="bb-dm"><b>Sabtu</b>Desember 2026</span></div>
+              <div class="bb-headline"><h3 class="bb-title">Akad Nikah</h3><p class="bb-time"><span class="bb-clock">⏰</span>08.00<small> WIB</small></p></div>
+              <p class="bb-sub">Ijab Qabul</p>
+              <p class="bb-addr">Kediaman Mempelai Wanita · Dk. Kepatihan RT 02/RW 02, Ds. Tersono, Kec. Tersono, Kab. Batang</p>
+              <div class="bb-actions"><a class="stop-btn mapLink" data-maps="cpw" target="_blank" rel="noopener">📍 Lihat Lokasi</a></div>
+              <span class="bb-meta">08.00 <b>✓✓</b></span>
+            </div>
+          </div>
+        </div>
+        <div class="stop rv up">
+          <div class="pin"><span>3</span></div>
+          <div class="bubble-wrap">
+            <div class="typing" aria-hidden="true"><i></i><i></i><i></i></div>
+            <div class="stop-card">
+              <div class="bb-date"><span class="bb-day">05</span><span class="bb-dm"><b>Sabtu</b>Desember 2026</span></div>
+              <div class="bb-headline"><h3 class="bb-title">Resepsi</h3><p class="bb-time"><span class="bb-clock">⏰</span>13.00<small> WIB – Selesai</small></p></div>
+              <p class="bb-sub">Pahargyan Dhaup</p>
+              <p class="bb-addr">Kediaman Mempelai Wanita · Dk. Kepatihan RT 02/RW 02, Ds. Tersono, Kec. Tersono, Kab. Batang</p>
+              <div class="bb-actions"><a class="stop-btn mapLink" data-maps="cpw" target="_blank" rel="noopener">📍 Lihat Lokasi</a><button class="stop-btn ghost" id="calBtn">🗓️ Simpan ke Kalender</button></div>
+              <span class="bb-meta">13.00 <b>✓✓</b></span>
+            </div>
+          </div>
+        </div>
+        <div class="stop alt rv up">
+          <div class="pin"><span>4</span></div>
+          <div class="bubble-wrap">
+            <div class="typing" aria-hidden="true"><i></i><i></i><i></i></div>
+            <div class="stop-card">
+              <div class="bb-date"><span class="bb-day">4–6</span><span class="bb-dm"><b>Jumat – Minggu</b>Desember 2026</span></div>
+              <h3 class="bb-title long">Acara Mempelai Pria</h3>
+              <p class="bb-sub">Kediaman Mempelai Pria</p>
+              <p class="bb-addr">Dk. Banaran RT 03/RW 02, Ds. Babadan, Kec. Limpung, Kab. Batang</p>
+              <div class="bb-actions"><a class="stop-btn mapLink" data-maps="cpp" target="_blank" rel="noopener">📍 Lihat Lokasi</a></div>
+              <span class="bb-meta">Iman &amp; Rifa <b>✓✓</b></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="route-flag end rv up"><span>💞</span> Bahagia Selamanya</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== COUNTDOWN ===================== -->
+  <section id="hitung" class="bg-maroon">
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+      <defs><linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F98093" /><stop offset=".55" stop-color="#d9566e" /><stop offset="1" stop-color="#699407" /></linearGradient></defs>
+    </svg>
+    <div class="cd-hearts" aria-hidden="true"><i>♥</i><i>♥</i><i>♥</i><i>♥</i><i>♥</i><i>♥</i><i>♥</i></div>
+    <div class="wrap">
+      <div class="sec-sub rv up">Tansah Eling</div>
+      <h2 class="sec-title rv up">Menuju Hari Bahagia</h2>
+      <!-- GANTI: tanggal acara -->
+      <div class="cd-date rv up d1"><span>Sabtu</span><b>05<i>·</i>12<i>·</i>2026</b><span>08.00 WIB</span></div>
+      <div class="cd-rings">
+        <div class="ring rv zoom d1">
+          <svg viewBox="0 0 100 100" aria-hidden="true"><circle class="trk" cx="50" cy="50" r="44" /><circle class="bar" id="rgD" cx="50" cy="50" r="44" /></svg>
+          <div class="ring-val"><b id="cdD">0</b><span>Hari</span></div>
+        </div>
+        <div class="ring rv zoom d2">
+          <svg viewBox="0 0 100 100" aria-hidden="true"><circle class="trk" cx="50" cy="50" r="44" /><circle class="bar" id="rgH" cx="50" cy="50" r="44" /></svg>
+          <div class="ring-val"><b id="cdH">0</b><span>Jam</span></div>
+        </div>
+        <div class="ring rv zoom d3">
+          <svg viewBox="0 0 100 100" aria-hidden="true"><circle class="trk" cx="50" cy="50" r="44" /><circle class="bar" id="rgM" cx="50" cy="50" r="44" /></svg>
+          <div class="ring-val"><b id="cdM">0</b><span>Menit</span></div>
+        </div>
+        <div class="ring rv zoom d3">
+          <svg viewBox="0 0 100 100" aria-hidden="true"><circle class="trk" cx="50" cy="50" r="44" /><circle class="bar" id="rgS" cx="50" cy="50" r="44" /></svg>
+          <div class="ring-val"><b id="cdS">0</b><span>Detik</span></div>
+        </div>
+      </div>
+      <div class="cd-pulse rv up" aria-hidden="true">
+        <svg viewBox="0 0 300 40" preserveAspectRatio="none"><path d="M0 20H110L120 8L130 32L140 20H160L170 4L180 36L190 20H300" /></svg>
+        <span class="cd-heart">♥</span>
+      </div>
+      <p class="cd-quote rv up">Setiap detik terasa berarti<br><em>saat menanti hari bahagia</em></p>
+      <p id="cdMsg" class="cd-msg"></p>
+    </div>
+    <img class="sec-bloom" src="aset/bunga1-bawah.png" alt="" aria-hidden="true">
+  </section>
+
+
+  <!-- ===================== GALERI ===================== -->
+  <section id="galeri" class="bg-dark">
+    <img class="sec-garland" src="aset/untaian-salam.png" alt="" aria-hidden="true">
+    <div class="wrap">
+      <div class="sec-sub rv up">Kenangan</div>
+      <h2 class="sec-title rv up">Galeri Prewedding</h2>
+      <p class="gal-intro rv up d1">Sepenggal cerita kami dalam bingkai</p>
+
+      <div class="gal-stage rv zoom d1">
+        <div class="gal-track" id="galTrack"></div>
+        <div class="gal-count"><b id="galNow">01</b><span>/</span><em id="galAll">06</em></div>
+        <button class="gal-nav prev" aria-label="Foto sebelumnya">‹</button>
+        <button class="gal-nav next" aria-label="Foto berikutnya">›</button>
+      </div>
+      <div class="gal-progress"><i id="galBar"></i></div>
+      <div class="gal-thumbs rv up d2" id="galThumbs"></div>
+      <p class="gal-hint rv up d3">Ketuk foto untuk memperbesar</p>
+    </div>
+  </section>
+  <div id="lightbox"><img alt="Foto"></div>
+
+  <!-- ===================== KISAH CINTA ===================== -->
+  <section id="kisah" class="bg-maroon">
+    <div class="wrap">
+      <div class="sec-sub rv up">Lelakon Katresnan</div>
+      <h2 class="sec-title rv up">Kisah Cinta Kami</h2>
+      <p class="ls-intro rv up d1">Setiap langkah membawa kami pada satu tujuan</p>
+
+      <!-- GANTI: cerita kalian (tahun, ikon, foto, judul, cerita) -->
+      <div class="lovestory" id="lovestory">
+        <svg class="ls-svg" aria-hidden="true"><path class="ls-thread-bg" /><path class="ls-thread" /><text class="ls-heart" font-size="18" text-anchor="middle" dominant-baseline="central">♥</text></svg>
+        <div class="ls l">
+          <span class="ls-year">2019</span>
+          <div class="ls-node"><img src="aset/galeri/2.jpg" alt=""><i>✨</i></div>
+          <div class="ls-txt">
+            <span class="ls-tag">2019</span>
+            <h4>Pertemuan Pertama</h4>
+            <p>Kami dipertemukan dalam sebuah acara kampus di Yogyakarta. Sebuah senyum sederhana menjadi awal semuanya.</p>
+          </div>
+        </div>
+        <div class="ls r">
+          <span class="ls-year">2021</span>
+          <div class="ls-node"><img src="aset/galeri/4.jpg" alt=""><i>💬</i></div>
+          <div class="ls-txt">
+            <span class="ls-tag">2021</span>
+            <h4>Saling Mengenal</h4>
+            <p>Perjalanan, diskusi panjang, dan doa bersama menumbuhkan keyakinan bahwa kami saling melengkapi.</p>
+          </div>
+        </div>
+        <div class="ls l">
+          <span class="ls-year">2025</span>
+          <div class="ls-node"><img src="aset/galeri/3.jpg" alt=""><i>💍</i></div>
+          <div class="ls-txt">
+            <span class="ls-tag">2025</span>
+            <h4>Lamaran</h4>
+            <p>Dengan restu kedua keluarga, Iman datang melamar Rifa dalam suasana penuh haru dan kebahagiaan.</p>
+          </div>
+        </div>
+        <div class="ls r">
+          <span class="ls-year">2026</span>
+          <div class="ls-node"><img src="aset/galeri/1.jpg" alt=""><i>🕊️</i></div>
+          <div class="ls-txt">
+            <span class="ls-tag">2026</span>
+            <h4>Hari Bahagia</h4>
+            <p>Dengan ridha Allah SWT dan doa restu Bapak/Ibu/Saudara/i, kami melangkah ke jenjang pernikahan.</p>
+          </div>
+        </div>
+        <div class="ls-end"><span>♥</span><b>Selamanya</b></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== RSVP ===================== -->
+  <section id="rsvp" class="bg-batik">
+    <img class="sec-garland" src="aset/untaian-salam.png" alt="" aria-hidden="true">
+    <div class="wrap">
+      <div class="sec-sub rv up">Pangestu</div>
+      <h2 class="sec-title rv up">RSVP &amp; Doa Restu</h2>
+      <p class="rs-intro rv up d1">Kehadiran &amp; doa Anda adalah hadiah terindah bagi kami</p>
+
+      <form id="rsvpForm" class="rs-card rv up d2">
+        <div class="rs-envelope" aria-hidden="true">💌</div>
+        <div class="fl">
+          <input id="fNama" required maxlength="60" placeholder=" " autocomplete="name">
+          <label for="fNama">Nama Anda</label>
+        </div>
+        <p class="rs-label">Konfirmasi Kehadiran</p>
+        <div class="rs-choice" role="radiogroup">
+          <label><input type="radio" name="hadir" value="Hadir" checked><span><i>✅</i>Hadir</span></label>
+          <label><input type="radio" name="hadir" value="Tidak Hadir"><span><i>🙏</i>Berhalangan</span></label>
+          <label><input type="radio" name="hadir" value="Masih Ragu"><span><i>🤔</i>Ragu</span></label>
+        </div>
+        <div class="fl">
+          <textarea id="fUcap" required maxlength="400" placeholder=" "></textarea>
+          <label for="fUcap">Ucapan &amp; doa restu</label>
+          <span class="rs-count" id="ucapCount">0/400</span>
+        </div>
+        <button class="rs-send" type="submit"><span>Kirim Ucapan</span><i>➤</i></button>
+      </form>
+
+      <div class="rs-wall-head rv up"><b>Untaian Doa</b><span id="wishCount">0 ucapan</span></div>
+      <div id="wishes"></div>
+    </div>
+  </section>
+
+  <!-- ===================== AMPLOP DIGITAL ===================== -->
+  <section id="amplop" class="bg-dark">
+    <div class="wrap">
+      <div class="sec-sub rv up">Tanda Kasih</div>
+      <h2 class="sec-title rv up">Amplop Digital</h2>
+      <p class="gift-intro rv up d1">Doa restu Anda merupakan karunia terindah bagi kami. Namun bila berkenan memberikan
+        tanda kasih, dapat melalui:</p>
+
+      <div class="gift-tabs rv up d1" role="tablist">
+        <button class="active" data-tab="rifa">Untuk Rifa</button>
+        <button data-tab="iman">Untuk Iman</button>
+        <i class="gift-tab-ind"></i>
+      </div>
+
+      <!-- GANTI: nomor rekening / e-wallet -->
+      <div class="gift-panes rv zoom d2">
+        <div class="gift-pane active" data-pane="rifa">
+          <div class="pay dana">
+            <div class="pay-top"><span class="pay-chip"></span><span class="pay-brand">DANA</span></div>
+            <div class="pay-num" id="rekRifa1" data-raw="088902983558">0889 0298 3558</div>
+            <div class="pay-bot"><div><small>Atas nama</small><b>Nurul Arifah</b></div>
+              <button class="pay-copy" data-copy="rekRifa1">📋 Salin</button></div>
+          </div>
+          <div class="pay bca">
+            <div class="pay-top"><span class="pay-chip"></span><span class="pay-brand">BCA</span></div>
+            <div class="pay-num" id="rekRifa2" data-raw="5915081689">5915 0816 89</div>
+            <div class="pay-bot"><div><small>Atas nama</small><b>Nurul Arifah</b></div>
+              <button class="pay-copy" data-copy="rekRifa2">📋 Salin</button></div>
+          </div>
+        </div>
+        <div class="gift-pane" data-pane="iman">
+          <div class="pay dana">
+            <div class="pay-top"><span class="pay-chip"></span><span class="pay-brand">DANA</span></div>
+            <div class="pay-num" id="rekIman1" data-raw="081390717370">0813 9071 7370</div>
+            <div class="pay-bot"><div><small>Atas nama</small><b>Rokhiman Sodiq</b></div>
+              <button class="pay-copy" data-copy="rekIman1">📋 Salin</button></div>
+          </div>
+          <div class="pay sea">
+            <div class="pay-top"><span class="pay-chip"></span><span class="pay-brand">SeaBank</span></div>
+            <div class="pay-num" id="rekIman2" data-raw="901484227537">9014 8422 7537</div>
+            <div class="pay-bot"><div><small>Atas nama</small><b>Rokhiman Sodiq</b></div>
+              <button class="pay-copy" data-copy="rekIman2">📋 Salin</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PENUTUP ===================== -->
+  <section id="penutup">
+    <div class="pt-hearts" aria-hidden="true"><i>♥</i><i>♥</i><i>♥</i><i>♥</i><i>♥</i><i>♥</i></div>
+    <div class="wrap">
+      <div class="sec-sub rv up">Panutup</div>
+      <div class="pt-photo rv zoom d1"><img src="aset/herofoto-web.jpg" alt="Iman &amp; Rifa"><span class="pt-ring"></span></div>
+      <p class="pt-text rv up d1">Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i
+        berkenan hadir dan memberikan doa restu kepada kedua mempelai.</p>
+      <div class="pt-thanks rv zoom d2">Matur Sembah Nuwun</div>
+      <div class="pt-aksara rv up d2" id="closeAksara"></div>
+      <p class="pt-label rv up d3">Kami yang berbahagia</p>
+      <div class="pt-names rv up d3"><span data-p="pria">Iman</span><em>&amp;</em><span data-p="wanita">Rifa</span></div>
+      <!-- GANTI: nama keluarga -->
+      <div class="pt-fam rv up d3">
+        <div><small>Keluarga Mempelai Pria</small><b>Bapak Muh. Arofiq</b><b>&amp; Ibu Sri Winarti</b></div>
+        <div><small>Keluarga Mempelai Wanita</small><b>Bapak Makhsun</b><b>&amp; Ibu Sarini</b></div>
+      </div>
+      <p class="pt-salam rv up">Wassalamu'alaikum Warahmatullahi Wabarakatuh</p>
+    </div>
+    <img class="sec-bloom" src="aset/bunga1-bawah.png" alt="" aria-hidden="true">
+  </section>
+
+  <!-- ===================== FOOTER / PROMOSI ===================== -->
+  <footer class="vz">
+    <a class="vz-brand" href="https://wa.me/6285640168132" target="_blank" rel="noopener">vizzyproject</a>
+    <p class="vz-made">Solusi <span>♥</span> untuk kebutuhan digital Anda</p>
+    <div class="vz-tags"><span>Website</span><i>•</i><span>Aplikasi</span><i>•</i><span>Desain</span></div>
+    <a class="vz-wa" href="https://wa.me/6285640168132" target="_blank" rel="noopener"><b>💬</b> 0856-4016-8132</a>
+  </footer>
+
+  <script>
+    // muat ulang selalu mulai dari cover (posisi gulir tidak dipulihkan browser)
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    window.scrollTo(0, 0);
+
+    /* ============================================================
+       KONFIGURASI — GANTI BAGIAN INI
+       ============================================================ */
+    const CONFIG = {
+      namaPria: "Iman",                      // nama panggilan pria
+      namaWanita: "Rifa",                    // nama panggilan wanita
+      // Tanggal & jam akad (zona WIB = +07:00) untuk hitung mundur & kalender
+      tanggalAcara: "2026-12-05T08:00:00+07:00",
+      tanggalSelesai: "2026-12-05T17:00:00+07:00",   // perkiraan selesai resepsi
+      lokasiKalender: "Dk. Kepatihan RT 02/RW 02, Ds. Tersono, Kec. Tersono, Kab. Batang",
+      // Link Google Maps tombol "Lihat Lokasi" (cpw = rumah mempelai wanita, cpp = rumah mempelai pria)
+      linkMaps: {
+        cpw: "https://maps.app.goo.gl/TXeDsGnJpcREqrvcA?g_st=ac",   // rumah mempelai wanita
+        cpp: "https://maps.app.goo.gl/KQMuYRo8zZx7ZFx27"            // rumah mempelai pria
+      },
+      // Foto mempelai (kosong = placeholder)
+      fotoPria: "aset/fotocowo-web.jpg",
+      fotoWanita: "aset/fotocewe-web.jpg",
+      // Foto galeri prewedding: isi dengan URL / path gambar, mis. "foto/1.jpg"
+      // Foto galeri prewedding, tampil sesuai urutan (versi kecil dari aset/1.jpeg ... 6.jpeg)
+      galeri: ["aset/galeri/1.jpg", "aset/galeri/2.jpg", "aset/galeri/3.jpg", "aset/galeri/4.jpg", "aset/galeri/5.jpg", "aset/galeri/6.jpg"],
+      // Musik gamelan: isi URL file mp3 (mis. "gamelan.mp3"). Kosong = gamelan sintetis bawaan.
+      musikUrl: "",
+      // Layer cover (PNG transparan). gapura & latar berukuran sama (1152x2048) dan ditumpuk penuh layar:
+      // gapura di paling belakang, lalu joglo dan latar taman/janur/wayang menimpanya,
+      // lalu rangkaian mawar (pojok) di kiri atas dan cerminannya di kanan atas.
+      asetCover: { gapura: "aset/gapura-t.png",
+        // taman dipecah per bagian agar bisa bergerak sendiri-sendiri (urutan belakang -> depan)
+        lapisTaman: ["pohon-l", "pohon-r", "janur-l", "janur-r", "wayang-l", "wayang-r", "tanaman"], joglo: "aset/joglo-t.png",
+        // bunga atas (dari bunga2.jpg): pojok kiri & kanan atas
+        bungaKiri: "aset/bunga2-kiri.png", bungaKanan: "aset/bunga2-kanan.png",
+        // bunga bawah (dari bunga1.png, landscape): selebar layar di bagian bawah
+        bungaBawah: "aset/bunga1-bawah.png" }
+    };
+
+    /* ============================================================
+       UTILITAS
+       ============================================================ */
+    const $ = (s, r = document) => r.querySelector(s);
+    const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+    function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('show'), 2200); }
+    function esc(s) { return s.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
+
+    /* Placeholder gambar (SVG) agar mudah diganti */
+    function placeholder(label, hue) {
+      const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='600' height='800'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='hsl(${hue},45%,35%)'/><stop offset='1' stop-color='hsl(${hue + 20},55%,18%)'/></linearGradient></defs><rect width='600' height='800' fill='url(#g)'/><text x='300' y='400' font-size='48' fill='#fdb3c0' text-anchor='middle' font-family='serif'>${label}</text><text x='300' y='450' font-size='22' fill='#fdb3c0' opacity='.7' text-anchor='middle' font-family='serif'>ganti foto</text></svg>`;
+      return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+    }
+
+    /* ============================================================
+       AKSARA JAWA (transliterasi Latin → Hanacaraka)
+       ============================================================ */
+    const AJ = (() => {
+      const cons = { h: 'ꦲ', n: 'ꦤ', c: 'ꦕ', r: 'ꦫ', k: 'ꦏ', d: 'ꦢ', t: 'ꦠ', s: 'ꦱ', w: 'ꦮ', l: 'ꦭ', p: 'ꦥ', dh: 'ꦝ', j: 'ꦗ', y: 'ꦪ', ny: 'ꦚ', m: 'ꦩ', g: 'ꦒ', b: 'ꦧ', th: 'ꦡ', ng: 'ꦔ', f: 'ꦥ', v: 'ꦮ', q: 'ꦏ', z: 'ꦗ', x: 'ꦏ' };
+      const indep = { a: 'ꦄ', i: 'ꦆ', u: 'ꦈ', e: 'ꦌ', o: 'ꦎ', é: 'ꦌ', ê: 'ꦌ' };
+      const sand = { a: '', i: 'ꦶ', u: 'ꦸ', e: 'ꦺ', é: 'ꦺ', o: 'ꦺꦴ', ê: 'ꦼ' };
+      const PANGKON = '꧀';
+      const isV = c => 'aiueoéê'.includes(c);
+      function word(w) {
+        w = w.toLowerCase().replace(/ə/g, 'ê');
+        let out = '', i = 0, pendingCons = false;
+        while (i < w.length) {
+          const two = w.substr(i, 2);
+          let key = null;
+          if (['ng', 'ny', 'dh', 'th'].includes(two)) key = two;
+          else if (cons[w[i]] !== undefined) key = w[i];
+          if (key) {
+            i += key.length;
+            // pasangan bila konsonan menyusul konsonan
+            if (pendingCons) out += PANGKON;
+            out += cons[key];
+            if (i < w.length && isV(w[i])) { out += sand[w[i]]; i++; pendingCons = false; }
+            else if (i >= w.length) {
+              // konsonan penutup kata
+              if (key === 'ng') out = out.slice(0, -1) + 'ꦁ';
+              else if (key === 'r') out = out.slice(0, -1) + 'ꦂ';
+              else if (key === 'h') out = out.slice(0, -1) + 'ꦃ';
+              else out += PANGKON;
+            } else pendingCons = true;
+          } else if (isV(w[i])) {
+            out += indep[w[i]]; if (w[i] === 'o') out += ''; i++; pendingCons = false;
+          } else i++;
+        }
+        return out;
+      }
+      return t => t.split(/\s+/).filter(Boolean).map(word).join(' ');
+    })();
+
+    /* ============================================================
+       INISIALISASI TEKS
+       ============================================================ */
+    (function init() {
+      // Nama panggilan & aksara
+      $$('[data-p="pria"]').forEach(e => e.textContent = CONFIG.namaPria);
+      $$('[data-p="wanita"]').forEach(e => e.textContent = CONFIG.namaWanita);
+      const aks = AJ(CONFIG.namaPria) + '  ꧇  ' + AJ(CONFIG.namaWanita);
+      ['coverAksara', 'closeAksara'].forEach(id => $('#' + id).textContent = aks);
+      $$('[data-aksara="pria"]').forEach(e => e.textContent = AJ(CONFIG.namaPria));
+      $$('[data-aksara="wanita"]').forEach(e => e.textContent = AJ(CONFIG.namaWanita));
+
+      // Foto
+      $('#imgPria').src = CONFIG.fotoPria || placeholder('Mempelai Pria', 20);
+      $('#imgWanita').src = CONFIG.fotoWanita || placeholder('Mempelai Wanita', 340);
+      // Maps
+      $$('.mapLink').forEach(a => a.href = CONFIG.linkMaps[a.dataset.maps]);
+      // Galeri: slider dengan foto aktif di tengah, berganti otomatis, plus deretan thumbnail bernomor
+      (function gallery() {
+        const track = $('#galTrack'), thumbs = $('#galThumbs'), list = CONFIG.galeri;
+        const nn = i => String(i + 1).padStart(2, '0');
+        $('#galAll').textContent = nn(list.length - 1);
+        list.forEach((src, i) => {
+          src = src || placeholder('Foto ' + (i + 1), (i * 50) % 360);
+          const sl = document.createElement('figure'); sl.className = 'gal-slide';
+          sl.innerHTML = `<img src="${src}" alt="Foto prewedding ${i + 1}" loading="lazy"><span class="gal-num">${nn(i)}</span>`;
+          sl.onclick = () => { if (cur !== i) go(i); else { const lb = $('#lightbox'); $('img', lb).src = src; lb.classList.add('show'); } };
+          track.appendChild(sl);
+          const t = document.createElement('button'); t.setAttribute('aria-label', 'Foto ' + (i + 1));
+          t.innerHTML = `<img src="${src}" alt="" loading="lazy"><span>${nn(i)}</span>`;
+          t.onclick = () => go(i);
+          thumbs.appendChild(t);
+        });
+        const slides = [...track.children], tbs = [...thumbs.children];
+        let cur = 0, timer;
+        function mark(i) {
+          cur = i;
+          slides.forEach((s, k) => s.classList.toggle('active', k === i));
+          tbs.forEach((s, k) => s.classList.toggle('active', k === i));
+          $('#galNow').textContent = nn(i);
+          const bar = $('#galBar'); bar.classList.remove('run'); void bar.offsetWidth; bar.classList.add('run');
+          clearTimeout(timer); timer = setTimeout(() => go((cur + 1) % slides.length), 4000);
+        }
+        let auto = false, autoT;
+        function go(i) {
+          const sl = slides[i];
+          auto = true; clearTimeout(autoT); autoT = setTimeout(() => auto = false, 900); // abaikan event scroll dari geseran otomatis
+          track.scrollTo({ left: sl.offsetLeft - (track.clientWidth - sl.clientWidth) / 2, behavior: 'smooth' });
+          mark(i);
+        }
+        // geser manual: tandai foto yang paling dekat ke tengah
+        let st;
+        track.addEventListener('scroll', () => {
+          if (auto) return;
+          clearTimeout(st);
+          st = setTimeout(() => {
+            const c = track.scrollLeft + track.clientWidth / 2;
+            let best = 0, bd = 1e9;
+            slides.forEach((s, k) => { const d = Math.abs(s.offsetLeft + s.clientWidth / 2 - c); if (d < bd) { bd = d; best = k; } });
+            if (best !== cur) mark(best);
+          }, 120);
+        });
+        $('.gal-nav.prev').onclick = () => go((cur - 1 + slides.length) % slides.length);
+        $('.gal-nav.next').onclick = () => go((cur + 1) % slides.length);
+        mark(0);
+      })();
+      $('#lightbox').onclick = e => e.currentTarget.classList.remove('show');
+      // Kilau emas di hero
+      const g = $('#gleams');
+      for (let i = 0; i < 22; i++) {
+        const s = document.createElement('i'); s.className = 'gleam';
+        s.style.left = Math.random() * 100 + '%'; s.style.top = Math.random() * 100 + '%'; s.style.animationDelay = Math.random() * 3 + 's'; s.style.animationDuration = 2 + Math.random() * 3 + 's'; g.appendChild(s);
+      }
+      // Butiran cahaya turun dari atas
+      const P = $('#petals');
+      for (let i = 0; i < 20; i++) {
+        const p = document.createElement('div'); p.className = 'petal';
+        p.style.left = Math.random() * 100 + '%'; const sz = 4 + Math.random() * 4; p.style.width = p.style.height = sz + 'px';
+        p.style.animationDuration = 9 + Math.random() * 10 + 's'; p.style.animationDelay = -Math.random() * 15 + 's'; P.appendChild(p);
+      }
+    })();
+
+    /* ============================================================
+       COVER: susunan (belakang -> depan): gapura, joglo, taman/janur/wayang, mawar pojok
+       ============================================================ */
+    (function buildCover() {
+      const A = CONFIG.asetCover;
+      const img = (src, cls) => src ? `<img class="layer ${cls}" src="${src}" alt="" draggable="false">` : '';
+
+      const scene = `<div class="scene-set">${A.lapisTaman.map(n => `<img class="${n}" src="aset/${n}.png" alt="" draggable="false">`).join('')}</div>`;
+      $('#hero .hero-scene').innerHTML = scene;
+      // bunga bawah yang sama dengan cover
+      $('#hero .hero-scene').insertAdjacentHTML('afterend', `<img class="bloom" src="${A.bungaBawah}" alt="">`);
+      $('#cover .stage').innerHTML =
+        img(A.gapura, 'gapura') +
+        `<div class="rays"></div>` +
+        (A.joglo ? `<img class="joglo" src="${A.joglo}" alt="" draggable="false">` : '') +
+        scene +
+        `<div class="door-text">
+          <small>Kepada Yth.<br>Bapak/Ibu/Saudara/i</small>
+          <b id="guestName">Tamu Undangan</b>
+          <button class="btn" id="openBtn">💌 Buka Undangan</button>
+        </div>`;
+      // bunga bawah menempel di dasar layar (bukan panggung) agar tetap terlihat di HP pendek
+      $('#cover .stage').insertAdjacentHTML('afterend', `<img class="bloom" src="${A.bungaBawah}" alt="">`);
+      $('#cover .corner.l').innerHTML = `<img src="${A.bungaKiri}" alt="" draggable="false">`;
+      $('#cover .corner.r').innerHTML = `<img src="${A.bungaKanan}" alt="" draggable="false">`;
+
+      // percikan cahaya yang terus melayang naik
+      let sparks = '';
+      for (let i = 0; i < 16; i++) {
+        sparks += `<i class="spark" style="left:${(i * 37) % 100}%;animation-duration:${7 + (i % 5) * 1.6}s;animation-delay:${-(i * 1.3)}s"></i>`;
+      }
+      $('#cover').insertAdjacentHTML('beforeend', sparks);
+
+      // Nama tamu dari ?to=
+      const to = new URLSearchParams(location.search).get('to');
+      if (to) $('#guestName').textContent = to;
+    })();
+
+
+    /* ============================================================
+       PEMBATAS ANTAR BAGIAN: bentuk berganti-ganti, diwarnai sesuai warna bawah bagian sebelumnya
+       ============================================================ */
+    (function separators() {
+      const shapes = {
+        wave: 'M0 0H400V18C340 46 270 46 200 24S60 0 0 26Z',
+        arch: 'M0 0H400V8Q200 70 0 8Z',
+        zigzag: 'M0 0H400V22' + Array.from({ length: 20 }, (_, i) => `L${400 - i * 20 - 10} ${i % 2 ? 22 : 38}`).join('') + 'L0 22Z',
+        scallop: 'M0 0H400V16' + Array.from({ length: 10 }, (_, i) => `A20 20 0 0 1 ${400 - (i + 1) * 40} 16`).join('') + 'Z',
+        tilt: 'M0 0H400V8L0 40Z',
+        double: 'M0 0H400V14C350 34 300 34 250 14S150 -6 100 14S30 34 0 22Z'
+      };
+      // warna bagian bawah tiap bagian (sesuai gradasinya)
+      const bottom = { salam: '#fde6ea', mempelai: '#e2efb4', acara: '#f5edd6', hitung: '#fde6ea', prosesi: '#f5edd6', galeri: '#e2efb4', kisah: '#fde6ea', rsvp: '#f5edd6', amplop: '#e2efb4' };
+      const plan = [
+        ['mempelai', 'salam', 'wave', '❀'], ['hitung', 'acara', 'arch', '✦'],
+        ['kisah', 'galeri', 'tilt'],
+        ['amplop', 'rsvp', 'wave'], ['penutup', 'amplop', 'arch', '❀']
+      ];
+      plan.forEach(([id, prev, shape, orn]) => {
+        const sec = document.getElementById(id); if (!sec) return;
+        const svg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 46' preserveAspectRatio='none'><path d='${shapes[shape]}' fill='${bottom[prev]}'/></svg>`;
+        sec.insertAdjacentHTML('afterbegin', `<div class="sec-sep" style="background-image:url(&quot;data:image/svg+xml,${encodeURIComponent(svg)}&quot;)"></div>` +
+          (orn ? `<span class="sec-sep-orn">${orn}</span>` : ''));
+      });
+    })();
+
+
+    /* ============================================================
+       RUTE PETA ACARA: garis berkelok melewati setiap pin + titik yang berjalan
+       ============================================================ */
+    (function route() {
+      const box = $('#route'); if (!box) return;
+      const svg = $('.route-svg', box);
+      function draw() {
+        const b = box.getBoundingClientRect();
+        const pts = [$('.route-flag.start', box), ...$$('.stop .pin', box), $('.route-flag.end', box)].map(el => {
+          const r = el.getBoundingClientRect();
+          return [r.left - b.left + r.width / 2, r.top - b.top + r.height / 2];
+        });
+        let d = `M${pts[0][0]} ${pts[0][1]}`;
+        for (let i = 1; i < pts.length; i++) {
+          const [x0, y0] = pts[i - 1], [x1, y1] = pts[i], my = (y1 - y0) / 2;
+          d += ` C${x0} ${y0 + my} ${x1} ${y1 - my} ${x1} ${y1}`;
+        }
+        svg.setAttribute('viewBox', `0 0 ${b.width} ${b.height}`);
+        $$('path', svg).forEach(p => p.setAttribute('d', d));
+        const dot = $('.route-dot', svg);
+        dot.innerHTML = `<animateMotion dur="9s" repeatCount="indefinite" path="${d}" />`;
+      }
+      draw();
+      addEventListener('resize', draw);
+      addEventListener('load', draw);
+      document.fonts && document.fonts.ready.then(draw);
+      new ResizeObserver(draw).observe(box);
+    })();
+
+
+    /* ============================================================
+       KISAH CINTA: benang berkelok antar foto, tergambar mengikuti gulir, hati berjalan di atasnya
+       ============================================================ */
+    (function loveStory() {
+      const box = $('#lovestory'); if (!box) return;
+      const svg = $('.ls-svg', box), bg = $('.ls-thread-bg', svg), line = $('.ls-thread', svg), heart = $('.ls-heart', svg);
+      let len = 0;
+      function draw() {
+        const b = box.getBoundingClientRect();
+        const pts = [...$$('.ls-node', box), $('.ls-end span', box)].map(el => {
+          const r = el.getBoundingClientRect();
+          return [r.left - b.left + r.width / 2, r.top - b.top + r.height / 2];
+        });
+        let d = `M${pts[0][0]} ${pts[0][1]}`;
+        for (let i = 1; i < pts.length; i++) {
+          const [x0, y0] = pts[i - 1], [x1, y1] = pts[i], my = (y1 - y0) / 2;
+          d += ` C${x0} ${y0 + my} ${x1} ${y1 - my} ${x1} ${y1}`;
+        }
+        svg.setAttribute('viewBox', `0 0 ${b.width} ${b.height}`);
+        bg.setAttribute('d', d); line.setAttribute('d', d);
+        len = line.getTotalLength();
+        line.style.strokeDasharray = len;
+        progress();
+      }
+      // benang tergambar sesuai seberapa jauh bagian ini digulir
+      function progress() {
+        if (!len) return;
+        const r = box.getBoundingClientRect(), vh = innerHeight;
+        const t = Math.min(1, Math.max(0, (vh * .75 - r.top) / r.height));
+        line.style.strokeDashoffset = len * (1 - t);
+        const p = line.getPointAtLength(len * t);
+        heart.setAttribute('x', p.x); heart.setAttribute('y', p.y);
+        heart.style.opacity = t > 0 && t < 1 ? 1 : 0;
+      }
+      draw();
+      addEventListener('resize', draw);
+      addEventListener('load', draw);
+      document.fonts && document.fonts.ready.then(draw);
+      new ResizeObserver(draw).observe(box);
+      addEventListener('scroll', progress, { passive: true });
+      // animasi masuk tiap babak (diputar ulang saat muncul lagi dari bawah)
+      const ioLs = new IntersectionObserver(es => es.forEach(e => {
+        if (e.isIntersecting) e.target.classList.add('in');
+        else if (e.boundingClientRect.top > 0) e.target.classList.remove('in');
+      }), { threshold: .3 });
+      $$('.ls', box).forEach(el => ioLs.observe(el));
+    })();
+
+
+    /* ============================================================
+       MERPATI: terbang melintas & menjatuhkan cahaya keberkahan
+       saat masuk bagian Mempelai dan Kisah Cinta (diulang tiap kali bagian dimasuki)
+       ============================================================ */
+    (function doves() {
+      const stage = $('#blessing'); if (!stage) return;
+      const DW = 84, DH = DW * 195 / 268;                  // ukuran merpati saat hinggap/terbang
+      const blessed = new Set(['mempelai', 'kisah']);       // bagian yang diberi taburan cahaya keberkahan
+      function burst(x, y) {
+        const b = document.createElement('i'); b.className = 'bless-burst';
+        b.style.cssText = `--x:${x}px;--y:${y}px`; stage.appendChild(b); setTimeout(() => b.remove(), 1200);
+        for (let k = 0; k < 7; k++) {
+          const sp = document.createElement('i'); sp.className = 'bless-spark'; sp.textContent = '✦';
+          const ang = k / 7 * Math.PI * 2, r = 30 + Math.random() * 30;
+          sp.style.cssText = `--x:${x - 6}px;--y:${y - 8}px;--sx:${Math.cos(ang) * r}px;--sy:${Math.sin(ang) * r - 10}px`;
+          stage.appendChild(sp); setTimeout(() => sp.remove(), 1400);
+        }
+      }
+      function drop(x, y, fall, dx) {
+        const o = document.createElement('i'); o.className = 'bless';
+        o.style.cssText = `--x:${x}px;--y:${y}px;--fall:${fall}px;--dx:${dx}px`;
+        stage.appendChild(o);
+        setTimeout(() => { o.remove(); burst(x + dx, y + fall); }, 2750);
+      }
+      // dua merpati: satu hinggap di kiri judul, satu di kanan, saling berhadapan
+      function makeDove(side) {
+        const dove = document.createElement('div'); dove.className = 'perch-dove';
+        dove.innerHTML = `<div class="dove-face"><div class="dove-sprite one flying">${['w2', 'badan', 'w1']
+          .map(n => `<img class="${n}" src="aset/merpati1-${n}.png" alt="">`).join('')}</div></div>`;
+        const face = $('.dove-face', dove), sprite = $('.dove-sprite', dove);
+        const perchFace = side === 'r' ? 'scaleX(-1)' : '';
+        let cur = null, busy = false, pending = null;
+        // titik hinggap: tepat di atas ujung kiri / kanan teks judul (koordinat layar)
+        function spot(h) {
+          const r = document.createRange(); r.selectNodeContents(h);
+          const t = r.getBoundingClientRect();
+          return { x: side === 'l' ? t.left - DW * .45 : t.right - DW * .55, y: t.top - DH * .78 };
+        }
+        function land(h) {
+          const sec = h.closest('section'), sr = sec.getBoundingClientRect(), p = spot(h);
+          dove.style.transform = '';
+          dove.style.left = p.x - sr.left + 'px'; dove.style.top = p.y - sr.top + 'px';
+          sec.appendChild(dove);
+          face.style.transform = perchFace;
+          sprite.classList.replace('flying', 'perched');
+          dove.classList.remove('land'); void dove.offsetWidth; dove.classList.add('land');
+        }
+        // terbang mengikuti kurva bezier yang dihitung tiap frame; titik tujuan ikut bergerak bila halaman digulir
+        const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        function fly(h) {
+          if (busy) { pending = h; return; }
+          if (h === cur) return;
+          busy = true; pending = null;
+          const sb0 = stage.getBoundingClientRect();
+          let sx, sy;
+          if (dove.isConnected) { const r = dove.getBoundingClientRect(); sx = r.left - sb0.left; sy = r.top - sb0.top; }
+          else { sx = side === 'l' ? -DW - 20 : sb0.width + 20; sy = sb0.height * (side === 'l' ? .12 : .18); }
+          dove.classList.remove('land');
+          dove.style.left = '0px'; dove.style.top = '0px';
+          dove.style.transform = `translate3d(${sx}px,${sy}px,0)`;
+          stage.appendChild(dove);
+          const t0 = spot(h);
+          face.style.transform = t0.x - sb0.left < sx ? 'scaleX(-1)' : '';
+          sprite.classList.replace('perched', 'flying');
+          const id = h.closest('section').id, DUR = 1800, start = performance.now();
+          const lift = side === 'l' ? 80 : 60;
+          let px = sx, py = sy, dropped = 0;
+          const drops = blessed.has(id) ? (side === 'l' ? [.2, .42, .64] : [.3, .55]) : [];
+          function frame(now) {
+            const raw = Math.min(1, (now - start) / DUR), k = ease(raw);
+            const sb = stage.getBoundingClientRect(), t = spot(h);
+            const tx = t.x - sb.left, ty = t.y - sb.top;
+            const cx = (sx + tx) / 2, cy = Math.min(sy, ty) - lift;
+            const u = 1 - k;
+            const x = u * u * sx + 2 * u * k * cx + k * k * tx;
+            const y = u * u * sy + 2 * u * k * cy + k * k * ty;
+            const tilt = Math.max(-14, Math.min(14, Math.atan2(y - py, Math.abs(x - px) + .001) * 57.3 * .5));
+            dove.style.transform = `translate3d(${x}px,${y}px,0) rotate(${(x < px ? -1 : 1) * tilt}deg)`;
+            px = x; py = y;
+            if (dropped < drops.length && raw >= drops[dropped]) {
+              dropped++;
+              drop(x + DW / 2, y + DH * .8, sb.height * (.3 + Math.random() * .15), (Math.random() - .5) * 40);
+            }
+            if (raw < 1) return requestAnimationFrame(frame);
+            land(h); cur = h; busy = false;
+            if (blessed.has(id)) burst(x + DW / 2, y + DH);
+            if (pending && pending !== cur) fly(pending);
+          }
+          requestAnimationFrame(frame);
+        }
+        return { fly };
+      }
+      const pair = [makeDove('l'), makeDove('r')];
+      const fly = h => { pair[0].fly(h); setTimeout(() => pair[1].fly(h), 180); };
+      // setiap judul bagian yang masuk ke tengah layar menjadi tempat hinggap berikutnya
+      const heads = $$('section').filter(sec => sec.id && sec.id !== 'hero')
+        .map(sec => $('.salam-title, .sec-title, .pt-thanks', sec)).filter(Boolean);
+      const io = new IntersectionObserver(es => es.forEach(e => {
+        if (e.isIntersecting && !$('#cover')) fly(e.target);
+      }), { rootMargin: '-25% 0px -50% 0px' });
+      heads.forEach(h => io.observe(h));
+    })();
+
+    /* ============================================================
+       MUSIK GAMELAN
+       ============================================================ */
+    const Music = (() => {
+      let ctx, playing = false, timer, step = 0, audio, master;
+      // Laras slendro (pentatonik) — frekuensi saron
+      const sl = [293.66, 329.63, 370.0, 440.0, 493.88, 587.33, 659.25];
+      const melody = [2, 3, 5, 3, 2, 3, 5, 6, 5, 3, 2, 3, 1, 2, 3, 2, 3, 5, 6, 5, 3, 2, 1, 2, 3, 5, 3, 2, 1, 2, 1, 0];
+      function bell(f, t, vol, dur, type = 'sine') {
+        const o = ctx.createOscillator(), o2 = ctx.createOscillator(), g = ctx.createGain();
+        o.type = type; o.frequency.value = f; o2.type = 'sine'; o2.frequency.value = f * 2.76; // overtone logam
+        const g2 = ctx.createGain(); g2.gain.value = .25;
+        o.connect(g); o2.connect(g2); g2.connect(g); g.connect(master);
+        g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(vol, t + .01); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+        o.start(t); o2.start(t); o.stop(t + dur + .05); o2.stop(t + dur + .05);
+      }
+      function tick() {
+        const t = ctx.currentTime + .05, i = step % melody.length;
+        bell(sl[melody[i]], t, .22, 1.4, 'triangle');                 // saron
+        if (i % 2 === 0) bell(sl[melody[i]] / 2, t, .18, 2.2);                // bonang rendah
+        if (i % 4 === 2) bell(sl[(melody[i] + 2) % 7] * 2, t + .25, .08, .9);       // hiasan
+        if (i % 8 === 0) bell(110, t, .35, 3.5, 'sine');                     // kenong/gong
+        if (i === 0) bell(55, t, .5, 6, 'sine');                           // gong ageng
+        if (i % 4 === 0) { // kendang (noise pendek)
+          const b = ctx.createBuffer(1, ctx.sampleRate * .08, ctx.sampleRate), d = b.getChannelData(0);
+          for (let k = 0; k < d.length; k++)d[k] = (Math.random() * 2 - 1) * (1 - k / d.length);
+          const s = ctx.createBufferSource(), g = ctx.createGain(), f = ctx.createBiquadFilter();
+          f.type = 'lowpass'; f.frequency.value = 380; s.buffer = b; g.gain.value = .5; s.connect(f); f.connect(g); g.connect(master); s.start(t);
+        }
+        step++;
+      }
+      function start() {
+        if (CONFIG.musikUrl) {
+          audio = audio || Object.assign(new Audio(CONFIG.musikUrl), { loop: true });
+          audio.play().catch(() => { });
+        } else {
+          ctx = ctx || new (window.AudioContext || window.webkitAudioContext)();
+          if (!master) { master = ctx.createGain(); master.gain.value = .8; master.connect(ctx.destination); }
+          ctx.resume(); timer = setInterval(tick, 620); tick();
+        }
+        playing = true; ui();
+      }
+      function stop() {
+        if (audio) audio.pause();
+        clearInterval(timer); if (ctx && ctx.state === 'running') ctx.suspend();
+        playing = false; ui();
+      }
+      function ui() { const b = $('#musicBtn'); b.classList.toggle('play', playing); b.setAttribute('aria-pressed', playing); }
+      return { start, stop, toggle() { playing ? stop() : start(); } };
+    })();
+    $('#musicBtn').onclick = () => Music.toggle();
+
+    /* ============================================================
+       BUKA UNDANGAN
+       ============================================================ */
+    $('#openBtn').onclick = () => {
+      document.body.classList.remove('locked');
+      window.scrollTo(0, 0);
+      Music.start();
+      $('#musicBtn').classList.add('show');
+      // 0s     : cahaya mulai memancar dari tengah gapura, cover maju sedikit
+      // 0.8s   : layar putih penuh -> cover dihapus, halaman pembuka mulai masuk di balik cahaya
+      // 1.2-2.6s: cahaya memudar perlahan memperlihatkan halaman pembuka
+      requestAnimationFrame(() => {
+        $('#cover').classList.add('open');
+        $('#flash').classList.add('on');
+      });
+      setTimeout(() => {
+        $('#cover').remove();
+        $('#hero').classList.add('enter');
+        $$('#hero .rv').forEach(e => e.classList.add('in'));
+      }, 820);
+      setTimeout(() => $('#nav').classList.add('show'), 1900);
+      setTimeout(() => $('#flash').remove(), 2700);
+    };
+
+    /* ============================================================
+       ANIMASI SCROLL & NAV AKTIF
+       ============================================================ */
+    // Animasi masuk diputar ulang setiap kali bagian muncul di layar (bukan hanya sekali),
+    // dan selalu tampil dari awal setiap halaman dimuat ulang.
+    const io = new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('in');
+      else if (e.boundingClientRect.top > 0) e.target.classList.remove('in'); // keluar lewat bawah -> siap animasi lagi
+    }), { threshold: .15 });
+    $$('.rv').forEach(e => { if (!e.closest('#hero')) io.observe(e); });
+    // animasi masuk kartu mempelai
+    const ioMp = new IntersectionObserver(es => es.forEach(e => {
+      const m = e.target;
+      if (e.isIntersecting) {
+        m.classList.add('show');
+        clearTimeout(m._t); m._t = setTimeout(() => m.classList.add('done'), 3600); // pengaman bila animasi tidak berjalan
+      } else if (e.boundingClientRect.top > 0) {
+        clearTimeout(m._t); m.classList.remove('show', 'done');
+      }
+    }), { threshold: .25 });
+    $$('.mp').forEach(m => ioMp.observe(m));
+
+    const secs = $$('section[id]');
+    const io2 = new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting) { $$('#nav a').forEach(a => a.classList.toggle('act', a.getAttribute('href') === '#' + e.target.id)); }
+    }), { rootMargin: '-45% 0px -50% 0px' });
+    secs.forEach(s => io2.observe(s));
+
+    /* ============================================================
+       COUNTDOWN
+       ============================================================ */
+    (function countdown() {
+      const target = new Date(CONFIG.tanggalAcara).getTime();
+      const C = 276.46;
+      function set(u, val, frac) {
+        const el = $('#cd' + u);
+        if (el.textContent !== val) { el.textContent = val; el.classList.remove('tick'); void el.offsetWidth; el.classList.add('tick'); }
+        $('#rg' + u).style.strokeDashoffset = C * (1 - frac);
+      }
+      function upd() {
+        let d = target - Date.now();
+        if (d <= 0) {
+          ['D', 'H', 'M', 'S'].forEach(k => set(k, '0', 1)); ['D', 'H', 'M', 'S'].forEach(k => $('#hcd' + k).textContent = '0');
+          $('#cdMsg').textContent = 'Alhamdulillah, acara telah dimulai. Terima kasih atas doa Anda 🙏'; return;
+        }
+        const s = Math.floor(d / 1000), D = Math.floor(s / 86400), H = Math.floor(s % 86400 / 3600), M = Math.floor(s % 3600 / 60), S = s % 60;
+        set('D', String(D), Math.max(.04, 1 - D / 365));   // makin dekat hari H, lingkaran makin penuh
+        set('H', String(H).padStart(2, '0'), H / 24);
+        set('M', String(M).padStart(2, '0'), M / 60);
+        set('S', String(S).padStart(2, '0'), S / 60);
+        $('#hcdD').textContent = D;
+        $('#hcdH').textContent = String(H).padStart(2, '0');
+        $('#hcdM').textContent = String(M).padStart(2, '0');
+        $('#hcdS').textContent = String(S).padStart(2, '0');
+      }
+      upd(); setInterval(upd, 1000);
+    })();
+
+    /* ============================================================
+       SIMPAN KE KALENDER (.ics)
+       ============================================================ */
+    $('#calBtn').onclick = () => {
+      const f = d => new Date(d).toISOString().replace(/[-:]|\.\d{3}/g, '');
+      const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Undangan//ID', 'BEGIN:VEVENT',
+        'UID:' + Date.now() + '@undangan', 'DTSTAMP:' + f(Date.now()),
+        'DTSTART:' + f(CONFIG.tanggalAcara), 'DTEND:' + f(CONFIG.tanggalSelesai),
+        `SUMMARY:Pernikahan ${CONFIG.namaPria} & ${CONFIG.namaWanita}`,
+        'LOCATION:' + CONFIG.lokasiKalender.replace(/,/g, '\\,'),
+        `DESCRIPTION:Akad Nikah 08.00 WIB\\, Resepsi 13.00 WIB di kediaman mempelai wanita.`,
+        'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([ics], { type: 'text/calendar' }));
+      a.download = 'pernikahan.ics'; a.click();
+      toast('Berkas kalender diunduh 🗓️');
+    };
+
+    /* ============================================================
+       SALIN NOMOR REKENING
+       ============================================================ */
+
+    // Tab Tanda Kasih (Untuk Rifa / Untuk Iman)
+    $$('.gift-tabs button').forEach(btn => btn.onclick = () => {
+      const t = btn.dataset.tab;
+      $$('.gift-tabs button').forEach(b => b.classList.toggle('active', b === btn));
+      $('.gift-tabs').classList.toggle('iman', t === 'iman');
+      $$('.gift-pane').forEach(p => p.classList.toggle('active', p.dataset.pane === t));
+    });
+    $$('[data-copy]').forEach(b => b.onclick = async () => {
+      const el = $('#' + b.dataset.copy), txt = (el.dataset.raw || el.textContent).trim();
+      try { await navigator.clipboard.writeText(txt); } catch (e) {
+        const t = document.createElement('textarea'); t.value = txt; document.body.appendChild(t); t.select(); document.execCommand('copy'); t.remove();
+      }
+      toast('Nomor rekening disalin ✔');
+      if (b.classList.contains('pay-copy')) { const o = b.innerHTML; b.classList.add('done'); b.innerHTML = '✔ Tersalin'; setTimeout(() => { b.classList.remove('done'); b.innerHTML = o; }, 1800); }
+    });
+
+    /* ============================================================
+       RSVP & UCAPAN
+       Disimpan di localStorage browser (hanya terlihat di perangkat ini).
+       Agar semua tamu saling melihat ucapan, sambungkan ke backend
+       (Google Apps Script / Firebase) pada fungsi saveWish() & loadWishes().
+       ============================================================ */
+    const KEY = 'undangan_wishes_v1';
+    function loadWishes() { try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch (e) { return []; } }
+    function saveWish(w) { const a = loadWishes(); a.unshift(w); try { localStorage.setItem(KEY, JSON.stringify(a.slice(0, 100))); } catch (e) { } }
+    const avColors = ['#F98093', '#699407', '#d9566e', '#8fb12a', '#c9962b', '#a3567c'];
+    function renderWish(w, animate, i) {
+      const d = document.createElement('div'); d.className = 'wish';
+      if (!animate) d.style.animationDelay = Math.min(i || 0, 6) * .08 + 's';
+      const av = document.createElement('span'); av.className = 'wish-av';
+      av.textContent = (w.nama.trim()[0] || '?').toUpperCase();
+      av.style.background = avColors[[...w.nama].reduce((a, c) => a + c.charCodeAt(0), 0) % avColors.length];
+      const body = document.createElement('div'); body.className = 'wish-body';
+      const top = document.createElement('div'); top.className = 'wish-top';
+      const b = document.createElement('b'); b.textContent = w.nama;
+      const em = document.createElement('em'); em.textContent = w.hadir;
+      em.className = w.hadir === 'Hadir' ? '' : w.hadir === 'Tidak Hadir' ? 'no' : 'mb';
+      const p = document.createElement('p'); p.textContent = w.ucap;
+      top.append(b, em); body.append(top, p); d.append(av, body); return d;
+    }
+    function stats() {
+      $('#wishCount').textContent = loadWishes().length + ' ucapan';
+    }
+    function renderAll() {
+      const c = $('#wishes'); c.innerHTML = '';
+      const a = loadWishes();
+      if (!a.length) c.innerHTML = '<p class="wish-empty">Jadilah yang pertama mengirimkan doa restu 🌸</p>';
+      a.forEach((w, i) => c.appendChild(renderWish(w, false, i)));
+      stats();
+    }
+    renderAll();
+    $('#fUcap').addEventListener('input', e => $('#ucapCount').textContent = e.target.value.length + '/400');
+    $('#rsvpForm').onsubmit = e => {
+      e.preventDefault();
+      const w = { nama: $('#fNama').value.trim(), hadir: $('input[name="hadir"]:checked').value, ucap: $('#fUcap').value.trim() };
+      if (!w.nama || !w.ucap) return;
+      const first = !loadWishes().length;
+      saveWish(w);
+      if (first) $('#wishes').innerHTML = '';
+      $('#wishes').prepend(renderWish(w, true));
+      stats();
+      const btn = $('.rs-send'); btn.classList.add('sent'); setTimeout(() => btn.classList.remove('sent'), 900);
+      e.target.reset(); $('#ucapCount').textContent = '0/400';
+      toast('Matur nuwun, ucapan Anda terkirim 🙏');
+    };
+  </script>
+</body>
+
+</html>
