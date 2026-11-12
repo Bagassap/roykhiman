@@ -5136,7 +5136,7 @@
       align-items: center;
       gap: 14px;
       min-height: 170px;
-      margin-bottom: 18px
+      margin-bottom: 46px
     }
 
     .ls.r {
@@ -6759,22 +6759,22 @@
       let len = 0;
       function draw() {
         const b = box.getBoundingClientRect();
-        // titik jalur: tengah foto, lalu turun lurus di kolom foto sampai melewati teks babak itu,
-        // agar benang tidak memotong tulisan
-        const pts = [];
-        $$('.ls', box).forEach(ls => {
+        // Jalur benang: turun lurus di kolom foto, menyeberang mendatar di celah kosong
+        // antarbabak (sudut dibulatkan), lalu turun ke foto berikutnya -> tidak pernah melintasi teks.
+        const nodes = $$('.ls', box).map(ls => {
           const r = $('.ls-node', ls).getBoundingClientRect(), lr = ls.getBoundingClientRect();
-          const x = r.left - b.left + r.width / 2, y = r.top - b.top + r.height / 2;
-          pts.push([x, y]);
-          const bottom = lr.bottom - b.top;
-          if (bottom - y > 40) pts.push([x, bottom]);
+          return { x: r.left - b.left + r.width / 2, y: r.top - b.top + r.height / 2, top: lr.top - b.top, bottom: lr.bottom - b.top };
         });
-        const er = $('.ls-end span', box).getBoundingClientRect();
-        pts.push([er.left - b.left + er.width / 2, er.top - b.top + er.height / 2]);
-        let d = `M${pts[0][0]} ${pts[0][1]}`;
-        for (let i = 1; i < pts.length; i++) {
-          const [x0, y0] = pts[i - 1], [x1, y1] = pts[i], my = (y1 - y0) / 2;
-          d += ` C${x0} ${y0 + my} ${x1} ${y1 - my} ${x1} ${y1}`;
+        const er = $('.ls-end span', box).getBoundingClientRect(), endTop = $('.ls-end', box).getBoundingClientRect().top - b.top;
+        nodes.push({ x: er.left - b.left + er.width / 2, y: er.top - b.top + er.height / 2, top: endTop, bottom: 0 });
+        const R = 22;
+        let d = `M${nodes[0].x} ${nodes[0].y}`;
+        for (let i = 1; i < nodes.length; i++) {
+          const p0 = nodes[i - 1], p1 = nodes[i];
+          const gy = (p0.bottom + p1.top) / 2, dir = Math.sign(p1.x - p0.x), r = Math.min(R, Math.abs(p1.x - p0.x) / 2);
+          if (!dir) { d += ` L${p1.x} ${p1.y}`; continue; }
+          d += ` L${p0.x} ${gy - r} Q${p0.x} ${gy} ${p0.x + dir * r} ${gy}`;
+          d += ` L${p1.x - dir * r} ${gy} Q${p1.x} ${gy} ${p1.x} ${gy + r} L${p1.x} ${p1.y}`;
         }
         svg.setAttribute('viewBox', `0 0 ${b.width} ${b.height}`);
         bg.setAttribute('d', d); line.setAttribute('d', d);
@@ -7021,8 +7021,9 @@
       // 0.8s   : layar putih penuh -> cover dihapus, halaman pembuka mulai masuk di balik cahaya
       // 1.2-2.6s: cahaya memudar perlahan memperlihatkan halaman pembuka
       requestAnimationFrame(() => {
-        $('#cover').classList.add('open');
-        $('#flash').classList.add('on');
+        const c = $('#cover'), f = $('#flash');
+        if (c) c.classList.add('open');
+        if (f) f.classList.add('on');
       });
       setTimeout(() => {
         $('#cover').remove();
