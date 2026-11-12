@@ -5690,6 +5690,27 @@
       }
     }
 
+    /* ===================== CEGAH HALAMAN MELEBAR DI HP =====================
+       Hiasan (untaian, bunga, galeri) sengaja lebih lebar dari layar; kelebihannya dipotong
+       per sumbu-X saja, agar Chrome HP tidak memperlebar halaman (cover jadi bergeser). */
+    html {
+      overflow-x: hidden;
+      overflow-x: clip
+    }
+
+    body {
+      overflow-x: hidden;
+      overflow-x: clip;
+      width: 100%
+    }
+
+    section,
+    footer,
+    #cover,
+    #hero {
+      overflow-x: clip
+    }
+
     /* ===================== HEMAT TENAGA HP ===================== */
     /* bagian yang sedang tidak terlihat di layar: semua animasinya dijeda */
     .off *,
