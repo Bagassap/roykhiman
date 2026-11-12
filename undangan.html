@@ -5750,6 +5750,27 @@
       color: #d9566e
     }
 
+    /* ===================== UNTAIAN MAWAR PEMBATAS (deretan mendatar) =====================
+       Deretan mawar diletakkan tepat di atas garis batas antarbagian sehingga menutupinya. */
+    .salam-garland,
+    .acara-garland,
+    .sec-garland {
+      top: calc(min(100vw, 480px) * -.115) !important;
+      left: -6% !important;
+      width: 112% !important;
+      -webkit-mask-image: none !important;
+      mask-image: none !important;
+      transform-origin: 50% 50% !important;
+      filter: drop-shadow(0 6px 8px rgba(56, 71, 4, .15))
+    }
+
+    #salam,
+    #acara,
+    #galeri,
+    #rsvp {
+      padding-top: calc(min(100vw, 480px) * .17 + 16px) !important
+    }
+
     /* ===================== CEGAH HALAMAN MELEBAR DI HP =====================
        Hiasan (untaian, bunga, galeri) sengaja lebih lebar dari layar; kelebihannya dipotong
        per sumbu-X saja, agar Chrome HP tidak memperlebar halaman (cover jadi bergeser). */
@@ -6051,7 +6072,7 @@
 
   <!-- ===================== SALAM ===================== -->
   <section id="salam" class="bg-batik">
-    <img class="salam-garland" src="aset/untaian-salam.webp" alt="" aria-hidden="true">
+    <img class="salam-garland" src="aset/untaian-rosa.webp" alt="" aria-hidden="true">
     <div class="wrap">
       <div class="salam-bismillah rv zoom">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
       <div class="sec-sub rv up">Pambuka</div>
@@ -6138,7 +6159,7 @@
 
   <!-- ===================== ACARA ===================== -->
   <section id="acara" class="bg-batik">
-    <img class="acara-garland" src="aset/untaian-mawar.webp" alt="" aria-hidden="true">
+    <img class="acara-garland" src="aset/untaian-rosa.webp" alt="" aria-hidden="true">
     <div class="map-compass" aria-hidden="true"><span>N</span>✦</div>
     <div class="wrap">
       <div class="sec-sub rv up">Pahargyan</div>
@@ -6255,7 +6276,7 @@
 
   <!-- ===================== GALERI ===================== -->
   <section id="galeri" class="bg-dark">
-    <img class="sec-garland" src="aset/untaian-mawar.webp" alt="" aria-hidden="true">
+    <img class="sec-garland" src="aset/untaian-rosa.webp" alt="" aria-hidden="true">
     <div class="wrap">
       <div class="sec-sub rv up">Kenangan</div>
       <h2 class="sec-title rv up">Galeri Prewedding</h2>
@@ -6335,7 +6356,7 @@
 
   <!-- ===================== RSVP ===================== -->
   <section id="rsvp" class="bg-batik">
-    <img class="sec-garland" src="aset/untaian-mawar.webp" alt="" aria-hidden="true">
+    <img class="sec-garland" src="aset/untaian-rosa.webp" alt="" aria-hidden="true">
     <div class="wrap">
       <div class="sec-sub rv up">Pangestu</div>
       <h2 class="sec-title rv up">RSVP &amp; Doa Restu</h2>
