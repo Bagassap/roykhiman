@@ -1832,11 +1832,11 @@
     /* tombol musik: piringan hitam berputar + equalizer + ikon putar/jeda */
     #musicBtn {
       position: fixed;
-      right: max(14px, calc(50vw - 226px));
-      bottom: 94px;
+      right: max(12px, calc(50vw - 228px));
+      top: calc(12px + env(safe-area-inset-top));
       z-index: 950;
-      width: 54px;
-      height: 54px;
+      width: 44px;
+      height: 44px;
       padding: 0;
       border: 0;
       border-radius: 50%;
@@ -5696,6 +5696,73 @@
     .off *::before,
     .off *::after {
       animation-play-state: paused !important
+    }
+
+    /* ===================== PENYESUAIAN LAYAR HP ===================== */
+    /* equalizer tombol musik di bawah piringan (tidak menimpa isi di samping) */
+    .mb-eq {
+      left: 50%;
+      top: auto;
+      bottom: -16px;
+      transform: translateX(-50%) scale(.6)
+    }
+
+    #musicBtn.play .mb-eq {
+      transform: translateX(-50%) scale(.8)
+    }
+
+    /* angka tahun di Kisah Cinta lebih kecil & samar agar tidak menimpa judul */
+    .ls-year {
+      top: -30px;
+      font-size: 3.6rem;
+      -webkit-text-stroke-width: 1px;
+      opacity: .55
+    }
+
+    @media (max-width: 400px) {
+      #hero .wrap {
+        width: calc(100% - 28px);
+        padding: 12px 10px 14px
+      }
+
+      .hero-cd {
+        gap: 6px
+      }
+
+      .hero-cd div {
+        max-width: 66px
+      }
+
+      .hero-names {
+        font-size: 2.4rem
+      }
+
+      section {
+        padding-left: 16px;
+        padding-right: 16px
+      }
+
+      .ls-node {
+        flex-basis: 88px;
+        height: 88px
+      }
+
+      .ls-txt h4 {
+        font-size: 1.6rem
+      }
+
+      .rs-choice span {
+        font-size: .55rem;
+        padding: 8px 2px
+      }
+
+      .mp-photo {
+        flex-basis: 42%
+      }
+
+      .mp-name .first {
+        font-size: 2rem
+      }
     }
 
     /* ===================== LAYAR PEMUATAN ===================== */
