@@ -6402,8 +6402,8 @@
       // Foto galeri prewedding: isi dengan URL / path gambar, mis. "foto/1.jpg"
       // Foto galeri prewedding, tampil sesuai urutan (versi kecil dari aset/1.jpeg ... 6.jpeg)
       galeri: ["aset/galeri/1.jpg", "aset/galeri/2.jpg", "aset/galeri/3.jpg", "aset/galeri/4.jpg", "aset/galeri/5.jpg", "aset/galeri/6.jpg"],
-      // Musik gamelan: isi URL file mp3 (mis. "gamelan.mp3"). Kosong = gamelan sintetis bawaan.
-      musikUrl: "",
+      // Musik latar: taruh file lagu di aset/musik.mp3. Bila file tidak ada, otomatis memakai gamelan bawaan.
+      musikUrl: "aset/musik.mp3",
       // Layer cover (PNG transparan). gapura & latar berukuran sama (1152x2048) dan ditumpuk penuh layar:
       // gapura di paling belakang, lalu joglo dan latar taman/janur/wayang menimpanya,
       // lalu rangkaian mawar (pojok) di kiri atas dan cerminannya di kanan atas.
@@ -6885,15 +6885,21 @@
         }
         step++;
       }
+      let useFile = !!CONFIG.musikUrl;
+      function gamelan() {
+        ctx = ctx || new (window.AudioContext || window.webkitAudioContext)();
+        if (!master) { master = ctx.createGain(); master.gain.value = .8; master.connect(ctx.destination); }
+        ctx.resume(); clearInterval(timer); timer = setInterval(tick, 620); tick();
+      }
       function start() {
-        if (CONFIG.musikUrl) {
-          audio = audio || Object.assign(new Audio(CONFIG.musikUrl), { loop: true });
+        if (useFile) {
+          if (!audio) {
+            audio = Object.assign(new Audio(CONFIG.musikUrl), { loop: true, preload: 'auto' });
+            // file lagu tidak ditemukan / gagal dimuat -> pakai gamelan bawaan
+            audio.addEventListener('error', () => { useFile = false; audio = null; if (playing) gamelan(); }, { once: true });
+          }
           audio.play().catch(() => { });
-        } else {
-          ctx = ctx || new (window.AudioContext || window.webkitAudioContext)();
-          if (!master) { master = ctx.createGain(); master.gain.value = .8; master.connect(ctx.destination); }
-          ctx.resume(); timer = setInterval(tick, 620); tick();
-        }
+        } else gamelan();
         playing = true; ui();
       }
       function stop() {
