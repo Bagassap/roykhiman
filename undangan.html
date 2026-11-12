@@ -183,6 +183,7 @@
       left: 0;
       top: var(--st);
       width: 100%;
+      height: calc(var(--cw) * 1.7778);
       aspect-ratio: 1152 / 2048;
       transform-origin: 50.2% 49%;
       transition: transform .8s cubic-bezier(.5, 0, .75, 0)
@@ -313,9 +314,6 @@
 
     .scene-set img {
       position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
       pointer-events: none;
       user-select: none;
       -webkit-user-drag: none
@@ -324,34 +322,28 @@
     /* pohon: tertiup angin. Poros di tepi layar & pangkal batang, dan pohon hanya condong ke arah
        luar layar, sehingga tepi pohon tidak pernah tertarik ke dalam (tidak ada celah kosong). */
     .scene-set .pohon-l {
-      transform-origin: 0 87.4%;
       animation: treeL 5s ease-in-out infinite alternate
     }
 
     .scene-set .pohon-r {
-      transform-origin: 100% 87.4%;
       animation: treeR 5.6s ease-in-out infinite alternate
     }
 
     /* janur: melambai dari pangkalnya di sisi gapura */
     .scene-set .janur-l {
-      transform-origin: 1% 42%;
       animation: janurL 3.6s ease-in-out infinite alternate
     }
 
     .scene-set .janur-r {
-      transform-origin: 99% 42%;
       animation: janurR 4s ease-in-out infinite alternate
     }
 
     /* wayang: bergoyang pelan seperti dimainkan dalang, berporos di kaki */
     .scene-set .wayang-l {
-      transform-origin: 17% 90%;
       animation: wayangL 3.4s ease-in-out infinite
     }
 
     .scene-set .wayang-r {
-      transform-origin: 80% 90%;
       animation: wayangR 3.8s ease-in-out infinite
     }
 
@@ -386,7 +378,6 @@
     }
 
     .scene-set .tanaman {
-      transform-origin: 50% 100%;
       animation: breathe 6s ease-in-out infinite alternate
     }
 
@@ -1032,6 +1023,7 @@
       left: 0;
       top: var(--st);
       width: 100%;
+      height: calc(var(--cw) * 1.7778);
       aspect-ratio: 1152 / 2048;
       pointer-events: none
     }
@@ -2098,7 +2090,7 @@
       background: repeating-conic-gradient(rgba(255, 236, 170, .55) 0 5deg, transparent 5deg 15deg);
       -webkit-mask-image: radial-gradient(circle, #000 0, transparent 60%);
       mask-image: radial-gradient(circle, #000 0, transparent 60%);
-      animation: spinRays 40s linear infinite
+      animation: none
     }
 
     .stage .rays::after {
@@ -5412,8 +5404,7 @@
     /* merpati tersusun dari badan + 4 sayap terpisah agar sayap bisa mengepak dari bahu */
     .dove-sprite {
       position: relative;
-      aspect-ratio: 300 / 321;
-      filter: drop-shadow(0 8px 12px rgba(56, 71, 4, .25)) drop-shadow(0 0 12px rgba(255, 246, 200, .7))
+      aspect-ratio: 300 / 321
     }
 
     .dove-sprite img {
@@ -5613,7 +5604,7 @@
     }
 
     .perch-dove .dove-sprite {
-      filter: drop-shadow(0 6px 8px rgba(56, 71, 4, .22))
+      filter: none
     }
 
     .dove-face {
@@ -5697,6 +5688,14 @@
       100% {
         transform: none
       }
+    }
+
+    /* ===================== HEMAT TENAGA HP ===================== */
+    /* bagian yang sedang tidak terlihat di layar: semua animasinya dijeda */
+    .off *,
+    .off *::before,
+    .off *::after {
+      animation-play-state: paused !important
     }
 
     /* ===================== LAYAR PEMUATAN ===================== */
@@ -5809,6 +5808,27 @@
       }
     }
   </style>
+  <script>
+    /* pengaman untuk browser HP lama & mode debug (?debug=1 menampilkan error di layar) */
+    (function () {
+      if (/[?&]debug=1/.test(location.search)) {
+        window.addEventListener('error', function (e) {
+          var d = document.createElement('div');
+          d.style.cssText = 'position:fixed;left:0;right:0;top:0;z-index:99999;background:#b00;color:#fff;font:12px monospace;padding:6px';
+          d.textContent = 'ERROR: ' + e.message + ' @' + e.lineno;
+          (document.body || document.documentElement).appendChild(d);
+        });
+      }
+      if (!window.IntersectionObserver) {
+        window.IntersectionObserver = function (cb) {
+          var self = this;
+          this.observe = function (el) { setTimeout(function () { cb([{ target: el, isIntersecting: true, boundingClientRect: el.getBoundingClientRect() }], self); }, 50); };
+          this.unobserve = this.disconnect = function () { };
+        };
+      }
+      if (!window.ResizeObserver) window.ResizeObserver = function () { this.observe = this.unobserve = this.disconnect = function () { }; };
+    })();
+  </script>
 </head>
 
 <body class="locked">
@@ -6436,7 +6456,7 @@
       }
       // Butiran cahaya turun dari atas
       const P = $('#petals');
-      for (let i = 0; i < 20; i++) {
+      for (let i = 0; i < 10; i++) {
         const p = document.createElement('div'); p.className = 'petal';
         p.style.left = Math.random() * 100 + '%'; const sz = 4 + Math.random() * 4; p.style.width = p.style.height = sz + 'px';
         p.style.animationDuration = 9 + Math.random() * 10 + 's'; p.style.animationDelay = -Math.random() * 15 + 's'; P.appendChild(p);
@@ -6450,7 +6470,20 @@
       const A = CONFIG.asetCover;
       const img = (src, cls) => src ? `<img class="layer ${cls}" src="${src}" alt="" draggable="false">` : '';
 
-      const scene = `<div class="scene-set">${A.lapisTaman.map(n => `<img class="${n}" src="aset/${n}.webp" alt="" draggable="false">`).join('')}</div>`;
+      // tiap lapisan dipotong sesuai isinya (hemat memori grafis HP): [kiri, atas, lebar, tinggi, porosX, porosY] dalam %
+      const BOX = {
+        'pohon-l': [0.0, 40.332, 31.944, 47.266, 0.0, 99.58],
+        'pohon-r': [64.41, 40.381, 35.59, 47.217, 100.0, 99.58],
+        'janur-l': [0.0, 11.475, 46.267, 38.037, 2.16, 80.25],
+        'janur-r': [53.299, 11.719, 46.701, 41.846, 97.86, 72.36],
+        'wayang-l': [3.212, 67.285, 28.646, 24.707, 48.13, 91.94],
+        'wayang-r': [64.323, 66.943, 28.038, 25.049, 55.91, 92.05],
+        'tanaman': [0.0, 87.207, 100.0, 12.793, 50.0, 100.0]
+      };
+      const scene = `<div class="scene-set">${A.lapisTaman.map(n => {
+        const [l, t, w, h, ox, oy] = BOX[n];
+        return `<img class="${n}" src="aset/${n}-c.webp" alt="" draggable="false" style="left:${l}%;top:${t}%;width:${w}%;height:${h}%;transform-origin:${ox}% ${oy}%">`;
+      }).join('')}</div>`;
       $('#hero .hero-scene').innerHTML = scene;
       // bunga bawah yang sama dengan cover
       $('#hero .hero-scene').insertAdjacentHTML('afterend', `<img class="bloom" src="${A.bungaBawah}" alt="">`);
@@ -6716,6 +6749,21 @@
         else { im.addEventListener('load', tick, { once: true }); im.addEventListener('error', tick, { once: true }); }
       });
       setTimeout(finish, 10000);   // pengaman: jangan menunggu lebih dari 10 detik
+    })();
+
+
+    /* ============================================================
+       HEMAT TENAGA: jeda animasi bagian di luar layar; halaman pembuka dijeda selama cover tampil
+       ============================================================ */
+    (function powerSave() {
+      const hero = $('#hero');
+      if ($('#cover')) hero.classList.add('off');
+      const io = new IntersectionObserver(es => es.forEach(e => {
+        if (e.target === hero && $('#cover')) return;
+        e.target.classList.toggle('off', !e.isIntersecting);
+      }), { rootMargin: '150px 0px' });
+      $$('section').forEach(sec => io.observe(sec));
+      $('#openBtn').addEventListener('click', () => hero.classList.remove('off'));
     })();
 
     /* ============================================================
