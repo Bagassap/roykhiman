@@ -5699,6 +5699,62 @@
       }
     }
 
+    /* ===================== LAYAR PEMUATAN ===================== */
+    #loader {
+      position: fixed;
+      inset: 0;
+      z-index: 3000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      background: radial-gradient(ellipse at 50% 45%, #fff 0, #fbffe8 45%, #F4FDCE 100%);
+      transition: opacity .6s, visibility .6s
+    }
+
+    #loader.done {
+      opacity: 0;
+      visibility: hidden
+    }
+
+    .ld-ring {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      border: 3px solid #fbd3da;
+      border-top-color: #d9566e;
+      display: grid;
+      place-items: center;
+      animation: spin 1s linear infinite
+    }
+
+    .ld-ring span {
+      color: #699407;
+      font-size: 1.4rem;
+      animation: spin 1s linear infinite reverse
+    }
+
+    .ld-txt {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      color: #384704
+    }
+
+    .ld-txt em {
+      font-style: normal;
+      font-weight: 700;
+      color: #d9566e;
+      margin-left: 6px
+    }
+
+    /* animasi cover ditahan sampai semua gambar siap */
+    #cover.loading *,
+    #cover.loading *::before,
+    #cover.loading *::after {
+      animation-play-state: paused !important
+    }
+
     /* ===================== PEMBATAS ANTAR BAGIAN (bentuk berbeda-beda) ===================== */
     .sec-sep {
       position: absolute;
@@ -5761,7 +5817,11 @@
   <div id="petals" aria-hidden="true"></div>
 
   <!-- ===================== COVER ===================== -->
-  <div id="cover">
+  <div id="loader" aria-label="Memuat undangan">
+    <div class="ld-ring"><span>❀</span></div>
+    <p class="ld-txt">Memuat undangan<em id="ldPct">0%</em></p>
+  </div>
+  <div id="cover" class="loading">
     <!-- gapura, pintu gerbang, dan taman diisi oleh JS dari CONFIG.asetCover -->
     <div class="stage"></div>
     <div class="corner l"></div>
@@ -5823,7 +5883,7 @@
 
   <!-- ===================== SALAM ===================== -->
   <section id="salam" class="bg-batik">
-    <img class="salam-garland" src="aset/untaian-salam.png" alt="" aria-hidden="true">
+    <img class="salam-garland" src="aset/untaian-salam.webp" alt="" aria-hidden="true">
     <div class="wrap">
       <div class="salam-bismillah rv zoom">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
       <div class="sec-sub rv up">Pambuka</div>
@@ -5905,12 +5965,12 @@
         </div>
       </article>
     </div>
-    <img class="mp-bloom" src="aset/bunga1-bawah.png" alt="" aria-hidden="true">
+    <img class="mp-bloom" src="aset/bunga1-bawah.webp" alt="" aria-hidden="true">
   </section>
 
   <!-- ===================== ACARA ===================== -->
   <section id="acara" class="bg-batik">
-    <img class="acara-garland" src="aset/untaian-salam.png" alt="" aria-hidden="true">
+    <img class="acara-garland" src="aset/untaian-salam.webp" alt="" aria-hidden="true">
     <div class="map-compass" aria-hidden="true"><span>N</span>✦</div>
     <div class="wrap">
       <div class="sec-sub rv up">Pahargyan</div>
@@ -6021,13 +6081,13 @@
       <p class="cd-quote rv up">Setiap detik terasa berarti<br><em>saat menanti hari bahagia</em></p>
       <p id="cdMsg" class="cd-msg"></p>
     </div>
-    <img class="sec-bloom" src="aset/bunga1-bawah.png" alt="" aria-hidden="true">
+    <img class="sec-bloom" src="aset/bunga1-bawah.webp" alt="" aria-hidden="true">
   </section>
 
 
   <!-- ===================== GALERI ===================== -->
   <section id="galeri" class="bg-dark">
-    <img class="sec-garland" src="aset/untaian-salam.png" alt="" aria-hidden="true">
+    <img class="sec-garland" src="aset/untaian-salam.webp" alt="" aria-hidden="true">
     <div class="wrap">
       <div class="sec-sub rv up">Kenangan</div>
       <h2 class="sec-title rv up">Galeri Prewedding</h2>
@@ -6099,7 +6159,7 @@
 
   <!-- ===================== RSVP ===================== -->
   <section id="rsvp" class="bg-batik">
-    <img class="sec-garland" src="aset/untaian-salam.png" alt="" aria-hidden="true">
+    <img class="sec-garland" src="aset/untaian-salam.webp" alt="" aria-hidden="true">
     <div class="wrap">
       <div class="sec-sub rv up">Pangestu</div>
       <h2 class="sec-title rv up">RSVP &amp; Doa Restu</h2>
@@ -6197,7 +6257,7 @@
       </div>
       <p class="pt-salam rv up">Wassalamu'alaikum Warahmatullahi Wabarakatuh</p>
     </div>
-    <img class="sec-bloom" src="aset/bunga1-bawah.png" alt="" aria-hidden="true">
+    <img class="sec-bloom" src="aset/bunga1-bawah.webp" alt="" aria-hidden="true">
   </section>
 
   <!-- ===================== FOOTER / PROMOSI ===================== -->
@@ -6239,13 +6299,13 @@
       // Layer cover (PNG transparan). gapura & latar berukuran sama (1152x2048) dan ditumpuk penuh layar:
       // gapura di paling belakang, lalu joglo dan latar taman/janur/wayang menimpanya,
       // lalu rangkaian mawar (pojok) di kiri atas dan cerminannya di kanan atas.
-      asetCover: { gapura: "aset/gapura-t.png",
+      asetCover: { gapura: "aset/gapura-t.webp",
         // taman dipecah per bagian agar bisa bergerak sendiri-sendiri (urutan belakang -> depan)
-        lapisTaman: ["pohon-l", "pohon-r", "janur-l", "janur-r", "wayang-l", "wayang-r", "tanaman"], joglo: "aset/joglo-t.png",
+        lapisTaman: ["pohon-l", "pohon-r", "janur-l", "janur-r", "wayang-l", "wayang-r", "tanaman"], joglo: "aset/joglo-t.webp",
         // bunga atas (dari bunga2.jpg): pojok kiri & kanan atas
-        bungaKiri: "aset/bunga2-kiri.png", bungaKanan: "aset/bunga2-kanan.png",
+        bungaKiri: "aset/bunga2-kiri.webp", bungaKanan: "aset/bunga2-kanan.webp",
         // bunga bawah (dari bunga1.png, landscape): selebar layar di bagian bawah
-        bungaBawah: "aset/bunga1-bawah.png" }
+        bungaBawah: "aset/bunga1-bawah.webp" }
     };
 
     /* ============================================================
@@ -6390,7 +6450,7 @@
       const A = CONFIG.asetCover;
       const img = (src, cls) => src ? `<img class="layer ${cls}" src="${src}" alt="" draggable="false">` : '';
 
-      const scene = `<div class="scene-set">${A.lapisTaman.map(n => `<img class="${n}" src="aset/${n}.png" alt="" draggable="false">`).join('')}</div>`;
+      const scene = `<div class="scene-set">${A.lapisTaman.map(n => `<img class="${n}" src="aset/${n}.webp" alt="" draggable="false">`).join('')}</div>`;
       $('#hero .hero-scene').innerHTML = scene;
       // bunga bawah yang sama dengan cover
       $('#hero .hero-scene').insertAdjacentHTML('afterend', `<img class="bloom" src="${A.bungaBawah}" alt="">`);
@@ -6557,7 +6617,7 @@
       function makeDove(side) {
         const dove = document.createElement('div'); dove.className = 'perch-dove';
         dove.innerHTML = `<div class="dove-face"><div class="dove-sprite one flying">${['w2', 'badan', 'w1']
-          .map(n => `<img class="${n}" src="aset/merpati1-${n}.png" alt="">`).join('')}</div></div>`;
+          .map(n => `<img class="${n}" src="aset/merpati1-${n}.webp" alt="">`).join('')}</div></div>`;
         const face = $('.dove-face', dove), sprite = $('.dove-sprite', dove);
         const perchFace = side === 'r' ? 'scaleX(-1)' : '';
         let cur = null, busy = false, pending = null;
@@ -6630,6 +6690,32 @@
         if (e.isIntersecting && !$('#cover')) fly(e.target);
       }), { rootMargin: '-25% 0px -50% 0px' });
       heads.forEach(h => io.observe(h));
+    })();
+
+
+    /* ============================================================
+       PEMUATAN: tunggu gambar cover & halaman pembuka siap, baru tampilkan cover
+       ============================================================ */
+    (function preload() {
+      const imgs = [...document.querySelectorAll('#cover img, #hero img')];
+      let n = 0, finished = false;
+      const total = imgs.length || 1;
+      function finish() {
+        if (finished) return; finished = true;
+        $('#cover').classList.remove('loading');
+        $('#loader').classList.add('done');
+        setTimeout(() => $('#loader').remove(), 700);
+      }
+      function tick() {
+        n++;
+        $('#ldPct').textContent = Math.min(100, Math.round(n / total * 100)) + '%';
+        if (n >= total) finish();
+      }
+      imgs.forEach(im => {
+        if (im.complete) tick();
+        else { im.addEventListener('load', tick, { once: true }); im.addEventListener('error', tick, { once: true }); }
+      });
+      setTimeout(finish, 10000);   // pengaman: jangan menunggu lebih dari 10 detik
     })();
 
     /* ============================================================
