@@ -263,7 +263,16 @@
     }
 
     .door-text b {
-      margin-bottom: 12px
+      margin-bottom: 0
+    }
+
+    .guest-addr {
+      display: block;
+      margin: 0 0 12px;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: .9rem;
+      color: #5b6b2a
     }
 
     .cover-foot {
@@ -6672,6 +6681,7 @@
         `<div class="door-text">
           <small>Kepada Yth.<br>Bapak/Ibu/Saudara/i</small>
           <b id="guestName">Tamu Undangan</b>
+          <span class="guest-addr" id="guestAddr">di Tempat</span>
           <button class="btn" id="openBtn">💌 Buka Undangan</button>
         </div>`;
       // bunga bawah menempel di dasar layar (bukan panggung) agar tetap terlihat di HP pendek
@@ -6687,8 +6697,10 @@
       $('#cover').insertAdjacentHTML('beforeend', sparks);
 
       // Nama tamu dari ?to=
-      const to = new URLSearchParams(location.search).get('to');
-      if (to) $('#guestName').textContent = to;
+      // Nama & alamat tamu dari link: ?to=Nama&di=Alamat (tanpa di= -> "di Tempat")
+      const q = new URLSearchParams(location.search), to = q.get('to'), di = (q.get('di') || '').trim();
+      if (to) $('#guestName').textContent = to.trim();
+      $('#guestAddr').textContent = 'di ' + (di || 'Tempat');
     })();
 
 
