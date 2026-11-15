@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/:kode([a-z0-9-]+)",
+      "destination": "/index.html"
+    }
+  ]
+}

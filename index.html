@@ -6698,9 +6698,20 @@
 
       // Nama tamu dari ?to=
       // Nama & alamat tamu dari link: ?to=Nama&di=Alamat (tanpa di= -> "di Tempat")
-      const q = new URLSearchParams(location.search), to = q.get('to'), di = (q.get('di') || '').trim();
-      if (to) $('#guestName').textContent = to.trim();
-      $('#guestAddr').textContent = 'di ' + (di || 'Tempat');
+      // Nama & alamat tamu:
+      //  - link pendek  https://.../adi-sasono      -> dicari di tamu.json  ([nama, alamat])
+      //  - link lama    https://.../?to=Nama&di=Alamat
+      // tanpa alamat -> "di Tempat"
+      const setGuest = (to, di) => {
+        if (to) $('#guestName').textContent = to.trim();
+        $('#guestAddr').textContent = 'di ' + ((di || '').trim() || 'Tempat');
+      };
+      const q = new URLSearchParams(location.search);
+      setGuest(q.get('to'), q.get('di'));
+      const code = decodeURIComponent(location.pathname.split('/').pop() || '').replace(/\.html$/, '');
+      if (code && code !== 'index' && code !== 'undangan' && !q.get('to')) {
+        fetch('tamu.json').then(r => r.json()).then(d => { if (d[code]) setGuest(d[code][0], d[code][1]); }).catch(() => { });
+      }
     })();
 
 
